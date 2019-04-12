@@ -18,13 +18,13 @@ public:
     Line() : Curve() {}
 
 
-    Line(Point, Point);
+    Line(Point center, Point direct);
 
     Point Value(double) override;
 
     bool isClosed() override;
 
-    Point tangent();
+    Point tangent(double t) override;
 };
 
 

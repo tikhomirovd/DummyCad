@@ -1,0 +1,26 @@
+//
+// Created by dimas on 4/12/19.
+//
+
+#include "Circle.h"
+#import "Point.h"
+
+
+Circle::Circle(Point ccenter, double r) {
+    center = ccenter;
+    radius = r;
+}
+
+Point Circle::Value(double t) {
+    double cordX = center.x() + radius * sin(t);
+    double cordY = center.y() + radius * cos(t);
+    return {cordX, cordY, center.z()};
+}
+
+bool Circle::isClosed() {
+    return true;
+}
+
+Point Circle::tangent(double t) {
+    return {-radius * sin(t), radius * cos(t), 0};
+}

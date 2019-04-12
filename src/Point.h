@@ -5,12 +5,13 @@
 #ifndef CURVE_POINT_H
 #define CURVE_POINT_H
 
+#include "Curve_def.h"
 #include <iostream>
 
 using namespace std;
 
 
-class Point {
+class Curve_EXPORT Point {
 private:
     double _x = 0, _y = 0, _z = 0;
 

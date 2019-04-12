@@ -9,7 +9,7 @@
 #include "Curve.h"
 #include "Point.h"
 
-class Line : Curve {
+class Curve_EXPORT Line : Curve {
 private:
     Point center, direct;
 

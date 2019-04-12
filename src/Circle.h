@@ -10,7 +10,7 @@
 #include "Curve.h"
 #include <cmath>
 
-class Circle : Curve {
+class Curve_EXPORT Circle : Curve {
 private:
     Point center;
     double radius{};

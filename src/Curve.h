@@ -6,9 +6,10 @@
 #define CURVE_CURVE_H
 
 
+#include "Curve_def.h"
 #include "Point.h"
 
-class Curve {
+class Curve_EXPORT Curve {
 
 
 public:

@@ -12,7 +12,7 @@ using namespace std;
 
 class Point {
 private:
-    double _x, _y, _z;
+    double _x = 0, _y = 0, _z = 0;
 
 
 public:

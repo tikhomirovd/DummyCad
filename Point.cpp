@@ -41,6 +41,6 @@ void Point::setCoord(double x, double y, double z) {
 }
 
 void Point::getCoord() {
-    cout << "x = " << _x << "\ny = " << _y << "\nz = " << _z << endl;
+    cout << "x = " << _x << "; y = " << _y << "; z = " << _z << endl;
 }
 

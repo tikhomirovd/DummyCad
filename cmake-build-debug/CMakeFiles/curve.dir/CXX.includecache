@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/dimas/CLionProjects/dummycad/Circle.cpp
-Circle.h
-/home/dimas/CLionProjects/dummycad/Circle.h
-Point.h
-/home/dimas/CLionProjects/dummycad/Point.h
-
 /home/dimas/CLionProjects/dummycad/Circle.h
 Point.h
 /home/dimas/CLionProjects/dummycad/Point.h
@@ -24,17 +18,9 @@ cmath
 Point.h
 /home/dimas/CLionProjects/dummycad/Point.h
 
-/home/dimas/CLionProjects/dummycad/Line.cpp
-Line.h
-/home/dimas/CLionProjects/dummycad/Line.h
-
 /home/dimas/CLionProjects/dummycad/Line.h
 Curve.h
 /home/dimas/CLionProjects/dummycad/Curve.h
-Point.h
-/home/dimas/CLionProjects/dummycad/Point.h
-
-/home/dimas/CLionProjects/dummycad/Point.cpp
 Point.h
 /home/dimas/CLionProjects/dummycad/Point.h
 

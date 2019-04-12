@@ -19,7 +19,7 @@ bool Line::isClosed() {
     return false;
 }
 
-Point Line::tangent() {
+Point Line::tangent(double t)  {
     return direct;
 }
 

@@ -11,14 +11,15 @@ Line::Line(Point ccenter, Point ddirect) {
 }
 
 Point Line::Value(double t) {
-    return direct * t + center ;
+    Point new_direct = direct * t;
+    return new_direct + center ;
 }
 
 bool Line::isClosed() {
     return false;
 }
 
-Point Line::tangent(double t) {
+Point Line::tangent() {
     return direct;
 }
 

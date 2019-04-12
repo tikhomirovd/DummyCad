@@ -3,7 +3,6 @@
 //
 
 #include "Circle.h"
-#import "Point.h"
 
 
 Circle::Circle(Point ccenter, double r) {
@@ -22,5 +21,5 @@ bool Circle::isClosed() {
 }
 
 Point Circle::tangent(double t) {
-    return {-radius * sin(t), radius * cos(t), 0};
+    return {-radius * sin(t), radius * cos(t), center.z()};
 }

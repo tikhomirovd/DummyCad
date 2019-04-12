@@ -1,7 +1,0 @@
-/home/dimas/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/191.6183.77/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/dimas/CLionProjects/dummycad
-CMake Error at CMakeLists.txt:6 (add_directory):
-  Unknown CMake command "add_directory".
-
-
--- Configuring incomplete, errors occurred!
-See also "/home/dimas/CLionProjects/dummycad/cmake-build-debug/CMakeFiles/CMakeOutput.log".

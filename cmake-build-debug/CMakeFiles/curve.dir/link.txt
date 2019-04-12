@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/curve.dir/main.cpp.o CMakeFiles/curve.dir/Point.cpp.o CMakeFiles/curve.dir/Line.cpp.o CMakeFiles/curve.dir/Circle.cpp.o  -o curve 

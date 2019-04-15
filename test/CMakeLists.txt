@@ -6,3 +6,4 @@ target_include_directories(CurveTest PUBLIC ${GTEST_INCLUDE_DIRS} "${CMAKE_CURRE
 target_link_libraries(CurveTest ${GTEST_BOTH_LIBRARIES} Curve)
 
 gtest_add_tests(CurveTest "" AUTO)
+set_test_environment(CurveTest)

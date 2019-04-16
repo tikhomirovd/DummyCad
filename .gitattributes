@@ -30,6 +30,7 @@
 *.conf      eol=lf
 res/*       eol=lf
 *.in        eol=lf
+*.yml       eol=lf
 *.bat       eol=crlf
 *.cmd       eol=crlf
 *.bat.in    eol=crlf

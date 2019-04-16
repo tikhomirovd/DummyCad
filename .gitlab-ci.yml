@@ -1,0 +1,16 @@
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - cmake -B buildDir -S .
+    - cmake --build buildDir
+
+test:
+  stage: test
+  script:
+    - cmake --build buildDir --target test
+  dependencies:
+    - build

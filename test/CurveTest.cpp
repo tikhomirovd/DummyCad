@@ -105,6 +105,27 @@ Test(Circle, CircleIsClosedTest) {
 }
 
 
+Test(Circle, CircleTangent) {
+  double x = 1.0, y = 2.0, z = 3.0;
+  double radius = 5.0;
+  double t = 2.0;
+
+  static const double tol = 1.e-7;
+
+  Point p(x, y, z);
+  Circle C(p, radius);
+  Line l(p, direct);
+
+  double x_true = radius  * cos(t);
+  double y_true = -radius  * sin(t);
+  double z_true = 0;
+  
+  ASSERT_NEAR(c.tangent(t).x(), x_true, tol);
+  ASSERT_NEAR(c.tangent(t).y(), y_true, tol);
+  ASSERT_NEAR(c.tangent(t).z(), z_true, tol);
+
+}
+
 
 //=============================================================================
 //function : main

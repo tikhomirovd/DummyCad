@@ -21,5 +21,5 @@ bool Circle::isClosed() {
 }
 
 Point Circle::tangent(double t) {
-    return {-radius * sin(t), radius * cos(t), center.z()};
+    return {radius * cos(t), -radius * sin(t), 0};
 }

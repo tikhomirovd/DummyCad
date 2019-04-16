@@ -5,6 +5,8 @@
 
 #include <Point.h>
 #include <Line.h>
+#include <cmath>
+#include <Circle.h>
 
 TEST(PointTest, Constructor)
 {
@@ -17,10 +19,11 @@ TEST(PointTest, Constructor)
   ASSERT_NEAR(p.z(), z, tol);
 }
 
-TEST(LineValueTest, Line) {
+TEST(Line, LineValueTest) {
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
-    static const double tol = 1.e-7, t = 2;
+    double t = 2.0;
+    static const double tol = 1.e-7;
     double x_true = x1 + x2  * t;
     double y_true = y1 + y2  * t;
     double z_true = z1 + z2  * t;
@@ -28,14 +31,61 @@ TEST(LineValueTest, Line) {
     Point p(x1, y1, z1);
     Point direct(x2, y2, z2);
 
-
-    Point d_true(x1 + x2 * t, y1 + y2 * t, z1 + z2 * t);
     Line l(p, direct);
 
     ASSERT_NEAR(l.Value(t).x(), x_true, tol);
     ASSERT_NEAR(l.Value(t).y(), y_true, tol);
     ASSERT_NEAR(l.Value(t).z(), z_true, tol);
 
+}
+
+Test(Line, LineIsClosedTest) {
+  double x1 = 1.0, y1 = 2.0, z1 = 3.0;
+  double x2 = 2.0, y2 = 3.0, z2 = 3.0;
+
+  Point p(x1, y1, z1);
+  Point direct(x2, y2, z2);
+
+  Line l(p, direct);
+
+  bool answer = false;
+  ASSERT_EQ(l.isClosed(), answer);
+
+}
+
+TEST(Circle, CircleValueTest) {
+    double x = 1.0, y = 2.0, z = 3.0;
+    double radius = 5.0;
+    double t = 2.0
+    static const double tol = 1.e-7;
+    double x_true = x + radius  * sin(t);
+    double y_true = y + radius  * cos(t);
+    double z_true = z;
+    Point p(x, y, z);
+
+    Circle c(p, radius);
+
+    ASSERT_NEAR(c.Value(t).x(), x_true, tol);
+    ASSERT_NEAR(c.Value(t).y(), y_true, tol);
+    ASSERT_NEAR(c.Value(t).z(), z_true, tol);
+
+}
+
+Test(Circle, CircleIsClosedTest) {
+  double x = 1.0, y = 2.0, z = 3.0;
+  double radius = 5.0;  
+  Point p1(x + 10, y - 13, z * 35);
+  Point p2(x - 25, y + 3, z - 7);  
+  Point p3(x * 2, y / 3, z ** 3);
+
+  Circle c1(p1, radius);
+  Circle c2(p2, radius + 7);
+  Circle c3(3, radius ** 2);  
+
+  bool answer = true;
+  ASSERT_EQ(c1.isClosed(), answer);
+  ASSERT_EQ(c2.isClosed(), answer);
+  ASSERT_EQ(c3.isClosed(), answer);
 }
 
 

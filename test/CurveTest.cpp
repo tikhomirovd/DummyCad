@@ -53,6 +53,22 @@ Test(Line, LineIsClosedTest) {
 
 }
 
+Test(Line, LineTangent) {
+  double x1 = 1.0, y1 = 2.0, z1 = 3.0;
+  double x2 = 2.0, y2 = 3.0, z2 = 3.0;
+  double t = 2.0;
+  static const double tol = 1.e-7;
+
+  Point p(x1, y1, z1);
+  Point direct(x2, y2, z2);
+
+  Line l(p, direct);
+
+  bool answer = false;
+  ASSERT_NEAR(l.tangent(t), direct, tol);
+
+}
+
 TEST(Circle, CircleValueTest) {
     double x = 1.0, y = 2.0, z = 3.0;
     double radius = 5.0;
@@ -87,6 +103,7 @@ Test(Circle, CircleIsClosedTest) {
   ASSERT_EQ(c2.isClosed(), answer);
   ASSERT_EQ(c3.isClosed(), answer);
 }
+
 
 
 //=============================================================================

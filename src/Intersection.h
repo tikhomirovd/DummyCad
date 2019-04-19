@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 
+#include "Export.h"
 #include "Point.h"
 #include "Curve.h"
 #include "Vector.h"
@@ -13,5 +14,5 @@ class Intersections
 {
 public:
 	//метод поиска точкек пересечения, принимающий указатели на тип кривой
-	vector<Points> Intersection(shared_ptr<Curve> ptr1, shared_ptr<Curve> ptr2);
+	Intersection_EXPORT vector<Points> Intersection(shared_ptr<Curve> ptr1, shared_ptr<Curve> ptr2);
 };

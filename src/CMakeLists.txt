@@ -5,6 +5,7 @@
 set(LIBRARY_NAME "Intersection")
 
 set(LIBRARY_HEADERS
+    Export.h
     Curve.h
     Intersection.h
 	Point.h
@@ -17,7 +18,6 @@ set(LIBRARY_SOURCES
 	Straight.cpp
 )
 
-add_definitions(-DEQUATION_EXPORTS)
 add_library(${LIBRARY_NAME} SHARED ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})
 install(TARGETS ${LIBRARY_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})
 

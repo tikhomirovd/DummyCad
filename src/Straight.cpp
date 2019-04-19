@@ -13,7 +13,8 @@ private:
 	double dot1, dot2;
 
 public:
-	Straight(double x, double y, double _dot1, double _dot2) : Curve(x,y)
+	Straight(double x, double y, double _dot1, double _dot2)
+	: Curve(x,y)
 	{
 		dot1 = _dot1;
 		dot2= _dot2;
@@ -32,9 +33,9 @@ public:
 	};
 	Points* PointCalcul(double t)
 	{
-		dot1 = point->getX()*t - point->getX();
-		dot2 = point->getY()*t - point->getY();
-		return new Points(dot1, dot2);
+		double x = point->getX()*t - point->getX();
+		double y = point->getY()*t - point->getY();
+		return new Points(x, y);
 	};
 
 	Points* TangentCalcul(double t)

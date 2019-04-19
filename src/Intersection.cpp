@@ -26,14 +26,17 @@ vector<Points> Intersections::Intersection(shared_ptr<Curve> ptr1, shared_ptr<Cu
 			{
 				// реализация метода - найти точку пересечения 2 прямых
 				vector<Points> points;
-				Points* firstLinePoint = straightPtr1->PointCalcul(5);
+
+				//Points* firstLinePoint = straightPtr1->PointCalcul(5);
+				Points* firstLinePoint = straightPtr1->getCurvePoint();
 				double firstLinePtX = firstLinePoint->getX();
 				double firstLinePtY = firstLinePoint->getY();
 				// получение направляющего вектора первой прямой
 				double firstDot1 = straightPtr1->getDot1();
 				double firstDot2 = straightPtr1->getDot2();
 
-				Points* secondLinePoint = straightPtr2->PointCalcul(3);
+				//Points* secondLinePoint = straightPtr2->PointCalcul(3);
+				Points* secondLinePoint = straightPtr2->getCurvePoint();
 				//получение координат второй прямой
 				double secondLinePtX = secondLinePoint->getX();
 				double secondLinePtY = secondLinePoint->getY();
@@ -41,14 +44,14 @@ vector<Points> Intersections::Intersection(shared_ptr<Curve> ptr1, shared_ptr<Cu
 				double secondDot1 = straightPtr2->getDot1();
 				double secondDot2 = straightPtr2->getDot2();
 
-				double determinant1 = -secondDot1 - (-firstDot1);
+				double determinant1 = secondDot1 - firstDot1;
 				// решаем систему y-p2*t=y0 ; y-p21*t=y01; determinant1 = 1*(-p21)-(-p2)*1
-				double determinant2 = -secondDot2 - (-firstDot2);
+				double determinant2 = secondDot2 - firstDot2;
 
 				if (determinant1 != 0 && determinant2 != 0)
 				{
-					points.push_back(Points((firstLinePtX * (-secondDot1) - (-firstDot1 * secondLinePtX)) / determinant1,
-						(secondLinePtY - firstLinePtY) / determinant2));
+					points.push_back(Points((firstLinePtX * (secondDot1) - (firstDot1 * secondLinePtX)) / determinant1,
+						(firstLinePtY*firstDot1 - firstDot2* secondLinePtY) / determinant2));
 				}
 				return points;
 			}

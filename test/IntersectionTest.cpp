@@ -19,19 +19,31 @@
 static const double THE_TOLERANCE = 1.e-7;
 
 // одна точка пересечения двух прямых 
-TEST(LineLineTest, OneSolutions)
+TEST(LineLineTest, OneSolution_01)
 {
-  double A = 1.0, B = -3.0, C = 2.0, D = 5.0;
-  
-  shared_ptr<Curve> straid1 = shared_ptr<Straight>(new Straight(A, B, C, D));
-  shared_ptr<Curve> straid2 = shared_ptr<Straight>(new Straight(A, C, D, B));
+  shared_ptr<Curve> straid1 = shared_ptr<Straight>(new Straight(0.0, 0.0, 1.0, 0.0));
+  shared_ptr<Curve> straid2 = shared_ptr<Straight>(new Straight(0.0, 0.0, 0.0, 1.0));
   
   Intersections intersection;
   std::vector<Points> points = intersection.Intersection(straid1,straid2);
   
   ASSERT_EQ(points.size(), 1);
-  ASSERT_NEAR(points[0].getX(), 1.0, THE_TOLERANCE);
-  ASSERT_NEAR(points[0].getY(), 2.375, THE_TOLERANCE);
+  ASSERT_NEAR(points[0].getX(), 0.0, THE_TOLERANCE);
+  ASSERT_NEAR(points[0].getY(), 0.0, THE_TOLERANCE);
+}
+
+// одна точка пересечения двух прямых 
+TEST(LineLineTest, OneSolution_02)
+{
+	shared_ptr<Curve> straid1 = shared_ptr<Straight>(new Straight(2.0, 0.0, 0.0, 2.0));
+	shared_ptr<Curve> straid2 = shared_ptr<Straight>(new Straight(0.0, -1.0, 2.0, 0.0));
+
+	Intersections intersection;
+	std::vector<Points> points = intersection.Intersection(straid1, straid2);
+
+	ASSERT_EQ(points.size(), 1);
+	ASSERT_NEAR(points[0].getX(), 2.0, THE_TOLERANCE);
+	ASSERT_NEAR(points[0].getY(), -1.0, THE_TOLERANCE);
 }
 
 //нет точек пересечения прямых
@@ -48,6 +60,8 @@ TEST(LineLineTest, ZeroSolutions)
   ASSERT_EQ(points.size(), 0);
 }
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// пересечение прямой с окружностью !
 //две точки пересечения прямой и окружности
 TEST(LineCircleTest, TwoSolution)
 {

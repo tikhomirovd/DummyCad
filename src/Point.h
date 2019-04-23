@@ -11,7 +11,7 @@
 using namespace std;
 
 /**
- * Класс, который задаёт точку \f$ M \f$.
+ * \brief Класс, который задаёт точку \f$ M \f$.
  */
 class Curve_EXPORT Point {
 private:

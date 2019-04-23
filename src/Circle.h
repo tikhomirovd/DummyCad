@@ -36,7 +36,7 @@ public:
      *\brief Вычисляет координаты точки на окружности по заданному парметру
      *
      * @param t Параметр, по которому надо вычислить координаты
-     * @return \f$ \{x + r * sin t, y + r * cos t, z \} \f$
+     * @return \f$ \{x + r  \sin t, y + r  \cos t, z \} \f$
      */
     Point Value(double t) override;
 
@@ -55,7 +55,7 @@ public:
     /** \brief Вычисляет касательный вектор к окружности по заданному параметру
      *
      * @param t Параметр, по которому надо вычислить касательную к окружности
-     * @return \f$ \{r * cos t, - r * sin t, 0 \} \f$
+     * @return \f$ \{r \cos t, -r \sin t, 0 \} \f$
      */
     Point tangent(double t) override;
 

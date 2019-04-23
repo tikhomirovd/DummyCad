@@ -11,7 +11,7 @@
 
 
 /**
- * Класс, который задаёт линию.
+ * \brief Класс, который задаёт линию.
  */
 class Curve_EXPORT Line : public Curve {
 private:

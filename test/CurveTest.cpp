@@ -8,6 +8,7 @@
 #include <Line.h>
 #include <cmath>
 #include <Circle.h>
+#include <Intersection.h>
 
 TEST(PointTest, Constructor) {
     double x = 1.0, y = 2.0, z = 3.0;
@@ -19,7 +20,7 @@ TEST(PointTest, Constructor) {
     ASSERT_NEAR(p.z(), z, tol);
 }
 
-TEST(Line, LineValueTest) {
+TEST(LineTest, LineValueTest) {
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
     double t = 2.0;
@@ -39,7 +40,7 @@ TEST(Line, LineValueTest) {
 
 }
 
-TEST(Line, LineIsClosedTest) {
+TEST(LineTest, LineIsClosedTest) {
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
 
@@ -53,7 +54,7 @@ TEST(Line, LineIsClosedTest) {
 
 }
 
-TEST(Line, LineTangent) {
+TEST(LineTest, LineTangent) {
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
     double t = 2.0;
@@ -70,7 +71,7 @@ TEST(Line, LineTangent) {
 
 }
 
-TEST(Circle, CircleValueTest) {
+TEST(CircleTest, CircleValueTest) {
     double x = 1.0, y = 2.0, z = 3.0;
     double radius = 5.0;
     double t = 2.0;
@@ -88,7 +89,7 @@ TEST(Circle, CircleValueTest) {
 
 }
 
-TEST(Circle, CircleIsClosedTest) {
+TEST(CircleTest, CircleIsClosedTest) {
     double x = 1.0, y = 2.0, z = 3.0;
     double radius = 5.0;
     Point p1(x + 10, y - 13, z * 35);
@@ -106,7 +107,7 @@ TEST(Circle, CircleIsClosedTest) {
 }
 
 
-TEST(Circle, CircleTangent) {
+TEST(CircleTest, CircleTangent) {
     double x = 1.0, y = 2.0, z = 3.0;
     double radius = 5.0;
     double t = 2.0;
@@ -124,6 +125,114 @@ TEST(Circle, CircleTangent) {
     ASSERT_NEAR(c.tangent(t).y(), y_true, tol);
     ASSERT_NEAR(c.tangent(t).z(), z_true, tol);
 
+}
+
+TEST(IntersectionTest, LineLine) {
+    Point O = Point(3, 4, 5);
+    Point D = Point(1, 5, 8);
+    Point O1 = Point(4, 5, 6);
+    Point D1 = Point(2, 6, 9);
+
+
+    shared_ptr<Line> line(new Line(O, D));
+    shared_ptr<Line> line2(new Line(O1, D1));
+
+    Intersection test_line1 = Intersection(line, line);
+    Intersection test_line2 = Intersection(line, line2);
+
+    Point first_point = test_line1.First_Point();
+
+
+    double x_true1 = NAN, y_true1 = NAN;
+    double x_true2 = 2, y_true2 = -1;
+
+//
+//    ASSERT_EQ(test_line1.First_Point().x(), x_true1);
+//    ASSERT_EQ(test_line1.First_Point().y(), y_true1);
+
+    ASSERT_EQ(test_line2.First_Point().x(), x_true2);
+    ASSERT_EQ(test_line2.First_Point().y(), y_true2);
+
+
+}
+
+TEST(IntersectionTest, LineCircle) {
+    Point O = Point(0, 0, 0);
+    Point D = Point(1, 0, 0);
+    Point center = Point(0, 0, 0);
+    Point center2 = Point(0, 5, 0);
+    Point center3 = Point(0, 6, 0);
+    double radius1 = 5;
+
+    shared_ptr<Line> line1(new Line(O, D));
+    shared_ptr<Circle> circle1(new Circle(center, radius1));
+    shared_ptr<Circle> circle2(new Circle(center2, radius1));
+    shared_ptr<Circle> circle3(new Circle(center3, radius1));
+
+
+    Point O1 = Point(4, 5, 6);
+    Point D1 = Point(2, 6, 9);
+
+
+    shared_ptr<Line> line2(new Line(O1, D1));
+
+    Intersection test_line1 = Intersection(line1, circle1);
+    Intersection test_line2 = Intersection(line1, circle2);
+    Intersection test_line3 = Intersection(line1, circle3);
+
+
+    double x_true1 = NAN, y_true1 = NAN;
+    double x_true2 = -5, y_true2 = 0;
+    double x_true3 = 5, y_true3 = 0;
+    
+    double x_true4 = 0, y_true4 = 5;
+    static const double tol = 1.e-7;
+
+    ASSERT_NEAR(test_line1.First_Point().x(), x_true2, tol);
+    ASSERT_NEAR(test_line1.First_Point().y(), y_true2, tol);
+    ASSERT_NEAR(test_line1.Second_Point().x(), x_true3, tol);
+    ASSERT_NEAR(test_line1.Second_Point().y(), y_true3, tol);
+
+    ASSERT_NEAR(abs(test_line2.First_Point().x()), x_true4, tol);
+    ASSERT_NEAR(abs(test_line2.First_Point().y()), y_true4, tol);
+
+//
+//    ASSERT_EQ(test_line3.First_Point().x(), x_true1);
+//    ASSERT_EQ(test_line3.First_Point().y(), y_true1);
+
+
+}
+
+TEST(IntersectionTest, CircleCircle) {
+    Point center = Point(0, 0, 0);
+    Point center2 = Point(0, 10, 0);
+    Point center3 = Point(1, 7, 1);
+    double radius1 = 5;
+    static const double tol = 1.e-7;
+
+    shared_ptr<Circle> circle1(new Circle(center, radius1));
+    shared_ptr<Circle> circle2(new Circle(center2, radius1));
+    shared_ptr<Circle> circle3(new Circle(center3, radius1));
+
+
+    Intersection test_line1 = Intersection(circle1, circle1);
+    Intersection test_line2 = Intersection(circle1, circle2);
+    Intersection test_line3 = Intersection(circle1, circle3);
+
+
+    double x_true1 = NAN, y_true1 = NAN;
+    double x_true2 = 0, y_true2 = 5;
+    double x_true3 = -3, y_true3 = 4;
+    double x_true4 = 4, y_true4 = 3;
+
+
+    ASSERT_NEAR(test_line2.First_Point().x(), x_true2, tol);
+    ASSERT_NEAR(test_line2.First_Point().y(), y_true2, tol);
+
+    ASSERT_NEAR(test_line3.First_Point().x(), x_true3, tol);
+    ASSERT_NEAR(test_line3.First_Point().y(), y_true3, tol);
+    ASSERT_NEAR(test_line3.Second_Point().x(), x_true4, tol);
+    ASSERT_NEAR(test_line3.Second_Point().y(), y_true4, tol);
 }
 
 

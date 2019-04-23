@@ -23,3 +23,8 @@ Point Line::tangent(double t)  {
     return direct;
 }
 
+Point Line::coef_equation() {
+    return {direct.y(), -direct.x(), direct.x() * center.y() - direct.y() * center.x()};
+}
+
+

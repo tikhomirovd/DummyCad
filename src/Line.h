@@ -9,7 +9,7 @@
 #include "Curve.h"
 #include "Point.h"
 
-class Curve_EXPORT Line : Curve {
+class Curve_EXPORT Line : public Curve {
 private:
     Point center, direct;
 
@@ -18,13 +18,16 @@ public:
     Line() : Curve() {}
 
 
-    Line(Point center, Point direct);
+    Line(Point, Point);
 
     Point Value(double) override;
 
     bool isClosed() override;
 
     Point tangent(double t) override;
+
+
+    Point coef_equation();
 };
 
 

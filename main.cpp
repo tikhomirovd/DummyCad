@@ -9,7 +9,15 @@
 
 using namespace std;
 
-
+/**
+ * \brief Функция, которая выдаёт всю информацию по кривой.
+ * Данная функция выводит на экран вектор касательной к кривой в данной точке,
+ * значение координат точки на кривой по заданному параметру,
+ * выдаёт информацию о том, является ли кривая замкнутой.
+ * @param tangent Вектор касательной
+ * @param value Значение координат точки на кривой
+ * @param isclosed Булевская функция, которая говорит, является ли кривая замкнутой
+ */
 void PrintResult(Point tangent, Point value, bool isclosed) {
     cout << "Tangent is \n";
     tangent.getCoord();
@@ -22,48 +30,15 @@ void PrintResult(Point tangent, Point value, bool isclosed) {
     }
 }
 
-
+/**
+ * \brief Функция, которая выводит координаты точки
+ * @param a Точка или вектор в трёхмерном пространстве
+ */
 void PrintPoins(Point a) {
     cout << "Cord is ";
     cout << a.x() << ", " << a.y() << ", " << a.z() << ';' << endl;
 }
 
-bool isnotNan(Point a) {
-    return a.x() != NAN && a.y() != NAN && a.z() != NAN;
-}
-
-void InterResult(Intersection test_line, Intersection test_mix, Intersection test_circle) {
-
-    Point test_line_point = test_line.First_Point();
-    Point test_mix_point = test_mix.First_Point();
-    Point test_circle_point = test_circle.First_Point();
-
-
-    Point test_mix_point2 = test_mix.Second_Point();
-    Point test_circle_point2 = test_circle.Second_Point();
-
-    cout << "\n\nPoints for lines\n";
-    if (test_line.current_status())
-        PrintPoins(test_line_point);
-    else
-        cout << "There is no intersection\n";
-
-    cout << "\nPoints for circles\n";
-    if (test_circle.current_status()) {
-        PrintPoins(test_circle_point);
-        PrintPoins(test_circle_point2);
-    } else {
-        cout << "There is no intersection\n";
-    }
-
-    cout << "\nPoints for line and circle \n";
-    if (test_mix.current_status()) {
-        PrintPoins(test_mix_point);
-        PrintPoins(test_mix_point2);
-    } else {
-        cout << "There is no intersection\n";
-    }
-}
 
 int main() {
     Point O = Point(3, 4, 5);

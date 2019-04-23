@@ -99,7 +99,7 @@ void Intersection::InterCircle(double r, double a, double b, double c) {
         puts("2 points");
         cout << ax << ", " << ay << ";\n" << bx << ", " << by << ";\n";
         inter.emplace_back(ax, ay, 0);
-        inter.push_back(Point(bx, by, 0));
+        inter.emplace_back(bx, by, 0);
         status = true;
     }
 }

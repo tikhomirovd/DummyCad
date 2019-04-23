@@ -4,6 +4,8 @@
 
 #include "Circle.h"
 
+
+
 Circle::Circle(Point ccenter, double r) {
     center = ccenter;
     radius = r;

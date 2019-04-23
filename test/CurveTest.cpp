@@ -184,7 +184,7 @@ TEST(IntersectionTest, LineCircle) {
     double x_true1 = NAN, y_true1 = NAN;
     double x_true2 = -5, y_true2 = 0;
     double x_true3 = 5, y_true3 = 0;
-    
+
     double x_true4 = 0, y_true4 = 5;
     static const double tol = 1.e-7;
 

@@ -9,6 +9,10 @@
 #include "Curve_def.h"
 #include "Point.h"
 
+
+/**
+ * \brief Абстрактный класс кривая, от которой наследуются конкретные кривые
+ */
 class Curve_EXPORT Curve {
 
 

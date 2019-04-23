@@ -75,7 +75,7 @@ int main() {
     double radius = 5;
     double t = 5;
     shared_ptr<Circle> circle(new Circle(O, radius));
-    shared_ptr<Circle> circle2(new Circle(O1, radius));
+    //shared_ptr<Circle> circle2(new Circle(O1, radius));
 
 
     Point c_tangent = circle->tangent(t);
@@ -96,22 +96,8 @@ int main() {
     PrintResult(l_tangent, l_value, l_close);
 
 
-    cout << "\nFirst example\n";
-    Intersection test_line = Intersection(line, line);
-    Intersection test_mix = Intersection(line, circle);
-    Intersection test_circle = Intersection(circle, circle);
 
 
-    InterResult(test_line, test_mix, test_circle);
-
-
-    cout << "\nSecond example\n";
-    Intersection test_line2 = Intersection(line, line2);
-    Intersection test_mix2 = Intersection(line, circle);
-    Intersection test_circle2 = Intersection(circle, circle2);
-
-
-    InterResult(test_line2, test_mix2, test_circle2);
 
 
     return 0;

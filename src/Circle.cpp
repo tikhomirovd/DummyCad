@@ -22,3 +22,11 @@ bool Circle::isClosed() {
 Point Circle::tangent(double t) {
     return {radius * cos(t), -radius * sin(t), 0};
 }
+
+double Circle::Radius() {
+    return radius;
+}
+
+Point Circle::Center(){
+    return center;
+}

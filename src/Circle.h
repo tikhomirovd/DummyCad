@@ -10,10 +10,11 @@
 #include "Curve.h"
 #include <cmath>
 
-class Curve_EXPORT Circle : Curve {
+class Curve_EXPORT Circle : public Curve {
 private:
     Point center;
-    double radius{};
+    double radius;
+
 
 
 public:
@@ -24,8 +25,12 @@ public:
     Point Value(double t) override;
 
     bool isClosed() override;
+    double Radius();
 
     Point tangent(double t) override;
+
+    Point Center();
+
 
 };
 

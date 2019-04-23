@@ -16,7 +16,7 @@
 using namespace std;
 
 
-class Intersection {
+class Curve_EXPORT Intersection {
 private:
     vector <Point> inter = {};
     bool status = false;
@@ -43,12 +43,13 @@ public:
     bool isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
 
 
-    void InterCircle(double r, double a, double b, double c, double x, double y);
 
     Point First_Point();
     Point Second_Point();
 
     bool current_status();
+
+    void InterCircle(double r, double a, double b, double c);
 };
 
 

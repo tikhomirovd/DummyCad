@@ -3,4 +3,3 @@ cmake-build-debug/*
 gtest/*
 html/*
 latex/*
-cmake/*

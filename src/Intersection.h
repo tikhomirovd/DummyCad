@@ -11,13 +11,15 @@
 #include <Circle.h>
 #include <memory>
 #include <Point.h>
+#include <vector>
 
 using namespace std;
 
 
 class Intersection {
 private:
-    Point inter = Point(NAN, NAN, NAN);
+    vector <Point> inter = {};
+    bool status = false;
 
 
 public:
@@ -35,7 +37,6 @@ public:
     void InterPoints(const shared_ptr<Circle>& circle1, const shared_ptr<Circle>& circle2);
     void InterPoints(const shared_ptr<Line>& line1, const shared_ptr<Circle>& circle2);
 
-    Point Points();
 
     bool isParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
 
@@ -43,6 +44,11 @@ public:
 
 
     void InterCircle(double r, double a, double b, double c, double x, double y);
+
+    Point First_Point();
+    Point Second_Point();
+
+    bool current_status();
 };
 
 

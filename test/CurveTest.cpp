@@ -10,11 +10,12 @@
 #include <Circle.h>
 #include <Intersection.h>
 
+static const double tol = 1.e-7;
+
 TEST(PointTest, Constructor) {
     double x = 1.0, y = 2.0, z = 3.0;
     Point p(x, y, z);
 
-    static const double tol = 1.e-7;
     ASSERT_NEAR(p.x(), x, tol);
     ASSERT_NEAR(p.y(), y, tol);
     ASSERT_NEAR(p.z(), z, tol);
@@ -24,7 +25,7 @@ TEST(LineTest, LineValueTest) {
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
     double t = 2.0;
-    static const double tol = 1.e-7;
+
     double x_true = x1 + x2 * t;
     double y_true = y1 + y2 * t;
     double z_true = z1 + z2 * t;
@@ -58,7 +59,7 @@ TEST(LineTest, LineTangent) {
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
     double t = 2.0;
-    static const double tol = 1.e-7;
+
 
     Point p(x1, y1, z1);
     Point direct(x2, y2, z2);
@@ -75,7 +76,7 @@ TEST(CircleTest, CircleValueTest) {
     double x = 1.0, y = 2.0, z = 3.0;
     double radius = 5.0;
     double t = 2.0;
-    static const double tol = 1.e-7;
+
     double x_true = x + radius * sin(t);
     double y_true = y + radius * cos(t);
     double z_true = z;
@@ -112,7 +113,7 @@ TEST(CircleTest, CircleTangent) {
     double radius = 5.0;
     double t = 2.0;
 
-    static const double tol = 1.e-7;
+
 
     Point p(x, y, z);
     Circle c(p, radius);
@@ -186,7 +187,7 @@ TEST(IntersectionTest, LineCircle) {
     double x_true3 = 5, y_true3 = 0;
 
     double x_true4 = 0, y_true4 = 5;
-    static const double tol = 1.e-7;
+
 
     ASSERT_NEAR(test_line1.First_Point().x(), x_true2, tol);
     ASSERT_NEAR(test_line1.First_Point().y(), y_true2, tol);
@@ -208,7 +209,6 @@ TEST(IntersectionTest, CircleCircle) {
     Point center2 = Point(0, 10, 0);
     Point center3 = Point(1, 7, 1);
     double radius1 = 5;
-    static const double tol = 1.e-7;
 
     shared_ptr<Circle> circle1(new Circle(center, radius1));
     shared_ptr<Circle> circle2(new Circle(center2, radius1));

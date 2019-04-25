@@ -59,7 +59,7 @@ public:
      * @param b Точка \f$ B \f$
      * @return  Точка \f$ \{A_x + B_x, A_y + B_y, A_z + B_z \} \f$
      */
-    friend Point operator+(Point &a, Point &b) {
+    friend const Point operator+(const Point &a, const Point &b) {
 
         return {a.x() + b.x(), a.y() + b.y(), a.z() + b.z()};
     }
@@ -70,7 +70,7 @@ public:
      * @param i Скаляр \f$ i \f$
      * @return  Точка \f$ \{A_x * i, A_y * i, A_z * i \} \f$
      */
-    friend const Point operator*(Point &a, const double &i) {
+    friend const Point operator*(const Point &a, const double &i) {
 
         return {a.x() * i, a.y() * i, a.z() * i};
     }
@@ -81,7 +81,7 @@ public:
      * @param i Скаляр  \f$ i \f$
      * @return  Точка \f$ \{A_x + i, A_y + i, A_z + i\} \f$
      */
-    friend const Point operator+(Point &a, const double &i) {
+    friend const Point operator+(const Point &a, const double &i) {
 
         return {a.x() + i, a.y() + i, a.z() + i};
     }

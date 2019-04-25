@@ -11,7 +11,7 @@
 
 using namespace std;
 
-const double EPS = 1e-9;
+static const double EPS = 1e-9;
 
 
 Point Second_Point();

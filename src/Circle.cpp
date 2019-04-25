@@ -5,7 +5,6 @@
 #include "Circle.h"
 
 
-
 Circle::Circle(const Point &ccenter, double r) {
     center = ccenter;
     radius = r;
@@ -27,8 +26,9 @@ Point Circle::tangent(double t) {
 
 double Circle::Radius() {
     return radius;
-}
+};
 
-Point Circle::Center(){
+
+const Point &Circle::Center() const {
     return center;
 }

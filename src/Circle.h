@@ -64,7 +64,7 @@ public:
   *
   * \return Центр окружности
   */
-    Point Center();
+    const Point& Center() const;
 
 
 };

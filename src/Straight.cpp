@@ -31,16 +31,21 @@ public:
 	{
 		return dot2;
 	};
-	Points* PointCalcul(double t)
+	Point* PointCalcul(double t)
 	{
-		double x = point->getX()*t - point->getX();
-		double y = point->getY()*t - point->getY();
-		return new Points(x, y);
+		double x = point->getX() - dot1*t;
+		double y = point->getY() - dot2*t;
+		return new Point(x, y);
 	};
 
-	Points* TangentCalcul(double t)
+	/*Point* NormalVector()
+	{
+
+	}*/
+
+	Point* TangentCalcul(double t)
 	{
 		cout << "касательная к прямой - " << endl;
-		return new Points(0, 0);
+		return new Point(0, 0);
 	};
 };

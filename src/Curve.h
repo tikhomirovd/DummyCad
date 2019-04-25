@@ -6,20 +6,20 @@ class Curve
 {
 public :
 
-	Points* point;
+	Point* point;
 
 	Curve(double x, double y)
 	{
-		point = new Points(x, y);
+		point = new Point(x, y);
 	}
 
-	Points* getCurvePoint()
+	Point* getCurvePoint()
 	{
 		return point;
 	}
 
 public:
-	virtual Points* PointCalcul(double t) = 0; // координата в зависимости от параметра 
-	virtual Points* TangentCalcul(double t) = 0; // касательная к кривой
+	virtual Point* PointCalcul(double t) = 0; // координата в зависимости от параметра 
+	virtual Point* TangentCalcul(double t) = 0; // касательная к кривой
 	virtual bool ClosedCurve() = 0; // является ли кривая замкнутой
 };

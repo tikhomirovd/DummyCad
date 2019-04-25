@@ -1,32 +1,32 @@
 ﻿#include <iostream>
 #pragma once
 
-class Points 
+class Point
 {
 public:
 
-	double x;
-	double y;
+  double x;
+  double y;
 
 public:
 
-	Points() {};
+  Point() {};
 
-	Points(double _x, double _y)
-	{
-		x = _x;
-		y = _y;
-	}
+  Point(double _x, double _y)
+  {
+    x = _x;
+    y = _y;
+  }
 
-	// возврат координаты "x" у точки
-	double getX()
-	{
-		return x;
-	}
+  // возврат координаты "x" у точки
+  double getX()
+  {
+    return x;
+  }
 
-	// возврат координаты "y" у точки
-	double getY()
-	{
-		return y;
-	}
+  // возврат координаты "y" у точки
+  double getY()
+  {
+    return y;
+  }
 };

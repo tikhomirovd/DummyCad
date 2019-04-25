@@ -20,7 +20,7 @@ public:
 		return Radius;
 	}
 
-	Points* getCurvePoint()
+	Point* getCurvePoint()
 	{
 		return point;
 	}
@@ -30,15 +30,15 @@ public:
 		return true;
 	};
 
-	Points* TangentCalcul(double t)
+	Point* TangentCalcul(double t)
 	{
 		double x = Radius * (-sin(t));
 		double y = Radius * cos(t);
-		return new Points(x, y);
+		return new Point(x, y);
 	};
 
-	Points* PointCalcul(double t) 
+	Point* PointCalcul(double t) 
 	{
-		return new Points(Radius*cos(t), Radius*sin(t));
+		return new Point(Radius*cos(t), Radius*sin(t));
 	};
 };

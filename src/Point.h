@@ -29,35 +29,35 @@ public:
 
     /**
      * \brief Присваивает точке заданные координаты
-     * @param x  координата \f$ M_x \f$
-     * @param y  координата \f$ M_y \f$
-     * @param z  координата \f$ M_z \f$
+     * \param x  координата \f$ M_x \f$
+     * \param y  координата \f$ M_y \f$
+     * \param z  координата \f$ M_z \f$
      */
     void setCoord(double x, double y, double z);
 
     /**
      * Возвращает координату \f$ x \f$ у точки
-     * @return \f$ M_x \f$
+     * \return \f$ M_x \f$
      */
     double x() const;
 
     /**
      * Возвращает координату \f$ y \f$ у точки
-     * @return \f$ M_y \f$
+     * \return \f$ M_y \f$
      */
     double y() const;
 
     /**
      * Возвращает координату \f$ x \f$ у точки
-     * @return \f$ M_z \f$
+     * \return \f$ M_z \f$
      */
     double z() const;
 
     /**
      * Перегрузка оператора "+". Складывает точки покоординатно
-     * @param a Точка \f$ A \f$
-     * @param b Точка \f$ B \f$
-     * @return  Точка \f$ \{A_x + B_x, A_y + B_y, A_z + B_z \} \f$
+     * \param a Точка \f$ A \f$
+     * \param b Точка \f$ B \f$
+     * \return  Точка \f$ \{A_x + B_x, A_y + B_y, A_z + B_z \} \f$
      */
     friend const Point operator+(const Point &a, const Point &b) {
 
@@ -71,9 +71,9 @@ public:
 
     /**
      * Перегрузка оператора "*". Умножение вектора на число
-     * @param a Точка \f$ A \f$
-     * @param i Скаляр \f$ i \f$
-     * @return  Точка \f$ \{A_x * i, A_y * i, A_z * i \} \f$
+     * \param a Точка \f$ A \f$
+     * \param i Скаляр \f$ i \f$
+     * \return  Точка \f$ \{A_x * i, A_y * i, A_z * i \} \f$
      */
     friend const Point operator*(const Point &a, const double &i) {
 
@@ -82,9 +82,9 @@ public:
 
     /**
      * Перегрузка оператора "+". Прибавление к вектору число покоординатно
-     * @param a Точка \f$ A \f$
-     * @param i Скаляр  \f$ i \f$
-     * @return  Точка \f$ \{A_x + i, A_y + i, A_z + i\} \f$
+     * \param a Точка \f$ A \f$
+     * \param i Скаляр  \f$ i \f$
+     * \return  Точка \f$ \{A_x + i, A_y + i, A_z + i\} \f$
      */
     friend const Point operator+(const Point &a, const double &i) {
 

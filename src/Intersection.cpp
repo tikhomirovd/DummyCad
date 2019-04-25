@@ -58,7 +58,7 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<C
     double r = circle1->Radius(), a = line1->coef_equation().x(),
             b = line1->coef_equation().y(), c =
             line1->coef_equation().z() + circle1->Center().x() + circle1->Center().y();
-    Intersection::InterCircle(r, a, b, c);
+    Intersection::InterCircleLine(r, a, b, c);
 
 
 }
@@ -95,15 +95,13 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
 
 }
 
-void Intersection::InterCircle(double r, double a, double b, double c) {
+void Intersection::InterCircleLine(double r, double a, double b, double c) {
     double x0 = -a * c / (a * a + b * b), y0 = -b * c / (a * a + b * b);
     if (c * c > r * r * (a * a + b * b) + EPS) {
-       // status = false;
+        status = NOT_INTERSECTED;
     } else if (fabs(c * c - r * r * (a * a + b * b)) < EPS) {
-        puts("1 point");
-       // status = true;
+        status = DONE;
         inter.emplace_back(x0, y0, 0);
-       // status = true;
     } else {
         double d = r * r - c * c / (a * a + b * b);
         double mult = sqrt(d / (a * a + b * b));
@@ -115,7 +113,7 @@ void Intersection::InterCircle(double r, double a, double b, double c) {
         puts("2 points");
         inter.emplace_back(ax, ay, 0);
         inter.emplace_back(bx, by, 0);
-       // status = true;
+        status = DONE;
     }
 }
 

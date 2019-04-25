@@ -81,7 +81,7 @@ public:
  * Параметры \f$ a, b, c \f$ из общего уравнения прямой \f$ A x + B y + C = 0 \f$
  * \param r Радиус окружности
  */
-    void InterCircle(double r, double a, double b, double c);
+    void InterCircleLine(double r, double a, double b, double c);
 
 protected:
 

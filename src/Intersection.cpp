@@ -125,23 +125,17 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 
 bool Intersection::isParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2) {
 
-    if (abs(det(line1->coef_equation().x(), line1->coef_equation().y(),
-                line2->coef_equation().x(), line2->coef_equation().y())) < EPS) {
-        return true;
-    }
-    return false;
+    return abs(det(line1->coef_equation().x(), line1->coef_equation().y(),
+                   line2->coef_equation().x(), line2->coef_equation().y())) < EPS;
 }
 
 bool Intersection::isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2) {
-    if (abs(det(line1->coef_equation().x(), line1->coef_equation().y(),
-                line2->coef_equation().x(), line2->coef_equation().y())) < EPS
-        && abs(det(line1->coef_equation().x(), line2->coef_equation().z(),
-                   line2->coef_equation().x(), line2->coef_equation().z())) < EPS
-        && abs(det(line1->coef_equation().y(), line1->coef_equation().z(),
-                   line2->coef_equation().y(), line2->coef_equation().z())) < EPS) {
-        return true;
-    }
-    return false;
+    return abs(det(line1->coef_equation().x(), line1->coef_equation().y(),
+                   line2->coef_equation().x(), line2->coef_equation().y())) < EPS
+           && abs(det(line1->coef_equation().x(), line2->coef_equation().z(),
+                      line2->coef_equation().x(), line2->coef_equation().z())) < EPS
+           && abs(det(line1->coef_equation().y(), line1->coef_equation().z(),
+                      line2->coef_equation().y(), line2->coef_equation().z())) < EPS;
 }
 
 

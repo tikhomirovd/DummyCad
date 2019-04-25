@@ -21,7 +21,7 @@ public:
 
     virtual ~Curve() = default;
 
-    virtual Point Value(double t) = 0;
+    virtual Point Value(double t) const = 0;
 
     virtual bool isClosed() = 0;
 

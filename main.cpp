@@ -9,35 +9,6 @@
 
 using namespace std;
 
-/**
- * \brief Функция, которая выдаёт всю информацию по кривой.
- * Данная функция выводит на экран вектор касательной к кривой в данной точке,
- * значение координат точки на кривой по заданному параметру,
- * выдаёт информацию о том, является ли кривая замкнутой.
- * \param tangent Вектор касательной
- * \param value Значение координат точки на кривой
- * \param isclosed Булевская функция, которая говорит, является ли кривая замкнутой
- */
-void PrintResult(Point tangent, Point value, bool isclosed) {
-    cout << "Tangent is \n";
-    tangent.getCoord();
-    cout << "Value is\n";
-    value.getCoord();
-    if (isclosed) {
-        cout << "Curve is closed\n";
-    } else {
-        cout << "Curve is not closed\n";
-    }
-}
-
-/**
- * \brief Функция, которая выводит координаты точки
- * \param a Точка или вектор в трёхмерном пространстве
- */
-void PrintPoins(Point a) {
-    cout << "Cord is ";
-    cout << a.x() << ", " << a.y() << ", " << a.z() << ';' << endl;
-}
 
 
 int main() {
@@ -63,12 +34,6 @@ int main() {
     Point l_tangent = line->tangent(t);
     Point l_value = line->Value(t);
     bool l_close = line->isClosed();
-
-    cout << "\nInformation for circle\n";
-    PrintResult(c_tangent, c_value, c_close);
-
-    cout << "\nInformation for line\n";
-    PrintResult(l_tangent, l_value, l_close);
 
 
 

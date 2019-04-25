@@ -23,9 +23,9 @@ public:
 
     virtual Point Value(double t) const = 0;
 
-    virtual bool isClosed() = 0;
+    virtual bool isClosed() const = 0;
 
-    virtual Point tangent(double t) = 0;
+    virtual Point tangent(double t) const = 0;
 
 
 };

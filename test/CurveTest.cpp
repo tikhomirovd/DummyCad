@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-err58-cpp"
 // GoogleTest includes
 #pragma warning(disable : 4251)
 #pragma warning(disable : 4275)
@@ -82,7 +84,7 @@ TEST(LineTest, LineValueTest) {
 
 }
 
-TEST(LineTest, LineIsClosedTest) {
+TEST(LineTest, LineIsClosedTest) { // NOLINT(cert-err58-cpp)
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
 
@@ -273,3 +275,5 @@ int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
+
+#pragma clang diagnostic pop

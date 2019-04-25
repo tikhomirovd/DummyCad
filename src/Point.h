@@ -64,6 +64,11 @@ public:
         return {a.x() + b.x(), a.y() + b.y(), a.z() + b.z()};
     }
 
+    friend const Point operator-(const Point &a, const Point &b) {
+
+        return {a.x() - b.x(), a.y() - b.y(), a.z() - b.z()};
+    }
+
     /**
      * Перегрузка оператора "*". Умножение вектора на число
      * @param a Точка \f$ A \f$

@@ -21,15 +21,15 @@ Point::Point(double x, double y, double z) {
     setCoord(x, y, z);
 }
 
-double Point::x() {
+double Point::x() const {
     return _x;
 }
 
-double Point::y() {
+double Point::y() const {
     return _y;
 }
 
-double Point::z() {
+double Point::z() const {
     return _z;
 }
 

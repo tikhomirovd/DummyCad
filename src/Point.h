@@ -39,19 +39,18 @@ public:
      * Возвращает координату \f$ x \f$ у точки
      * @return \f$ M_x \f$
      */
-    double x();
-
+    double x() const;
     /**
      * Возвращает координату \f$ y \f$ у точки
      * @return \f$ M_y \f$
      */
-    double y();
+    double y() const;
 
     /**
      * Возвращает координату \f$ x \f$ у точки
      * @return \f$ M_z \f$
      */
-    double z();
+    double z() const;
 
     /**
      * Выводит на экран координаты точки

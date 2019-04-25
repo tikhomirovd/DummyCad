@@ -5,7 +5,7 @@
 #include "Line.h"
 
 
-Line::Line(Point ccenter, Point ddirect) {
+Line::Line(const Point &ccenter, const Point &ddirect) {
     center = ccenter;
     direct = ddirect;
 }

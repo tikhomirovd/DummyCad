@@ -27,7 +27,7 @@ public:
     * @param a Произвольная точка M1
     * @param b Направляющий вектор
     */
-    Line(Point, Point);
+    Line(const Point&, const Point&);
 
     /**
    *\brief Вычисляет координаты точки на прямой по заданному парметру

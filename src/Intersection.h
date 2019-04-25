@@ -28,16 +28,16 @@ public:
 
     /**
      * \brief Начальная инициализация класса по двум кривым.
-     * @param curve1 - Первая кривая
-     * @param curve2 - Вторая кривая
+     * \param curve1 - Первая кривая
+     * \param curve2 - Вторая кривая
      */
     Intersection(const shared_ptr<Curve> &, const shared_ptr<Curve> &);
 
 
     /**
     * \brief Проверяет, являются ли прямые параллельными
-    * @param line1 Первая линия
-    * @param line2 Вторая линия
+    * \param line1 Первая линия
+    * \param line2 Вторая линия
      *
     */
     bool isParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
@@ -45,8 +45,8 @@ public:
 
     /**
     * \brief Проверяет, совпадают ли прямые
-    * @param line1 Первая линия
-    * @param line2 Вторая линия
+    * \param line1 Первая линия
+    * \param line2 Вторая линия
      *
     */
     bool isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
@@ -78,7 +78,7 @@ public:
     /**
  * \brief Вычисляет точки пересечения окружности с прямой
  * Параметры \f$ a, b, c \f$ из общего уравнения прямой \f$ A x + B y + C = 0 \f$
- * @param r Радиус окружности
+ * \param r Радиус окружности
  */
     void InterCircle(double r, double a, double b, double c);
 
@@ -87,29 +87,29 @@ protected:
 
     /**
  * \brief Вычисляет определитель матрицы 2х2
- * @return Определитель
+ * \return Определитель
  */
     double det(double, double, double, double);
 
 
 /**
  * \brief Находит точки пересечения у двух линий
- * @param line1 Первая линия
- * @param line2 Вторая линия
+ * \param line1 Первая линия
+ * \param line2 Вторая линия
  */
     void InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
 
 /**
 * \brief Находит точки пересечения у двух окружностей
-* @param circle1 Первая окружность
-* @param circle2 Вторая окружность
+* \param circle1 Первая окружность
+* \param circle2 Вторая окружность
 */
     void InterPoints(const shared_ptr<Circle> &circle1, const shared_ptr<Circle> &circle2);
 
 /**
 * \brief Находит точки пересечения у линии и окружности
-* @param line1 Линия
-* @param circle1 Окружность
+* \param line1 Линия
+* \param circle1 Окружность
 */
     void InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Circle> &circle1);
 };

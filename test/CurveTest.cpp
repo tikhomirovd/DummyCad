@@ -14,6 +14,7 @@
 
 static const double tol = 1.e-7;
 
+
 TEST(PointTest, Constructor) {
     double x = 1.0, y = 2.0, z = 3.0;
     Point p(x, y, z);
@@ -170,7 +171,7 @@ TEST(CircleTest, CircleTangent) {
 
 }
 
-TEST(IntersectionTest, LineLine) {
+TEST(IntersectionTest, LineLineIntersectPoint) {
     Point O = Point(3, 4, 5);
     Point D = Point(1, 5, 8);
     Point O1 = Point(4, 5, 6);
@@ -185,17 +186,39 @@ TEST(IntersectionTest, LineLine) {
 
     double x_true2 = 2, y_true2 = -1;
 
-//
-//    ASSERT_EQ(test_line1.First_Point().x(), x_true1);
-//    ASSERT_EQ(test_line1.First_Point().y(), y_true1);
-
     ASSERT_EQ(test_line2.First_Point().x(), x_true2);
     ASSERT_EQ(test_line2.First_Point().y(), y_true2);
+}
 
+TEST(IntersectionTest, LineLineEquivalent) {
+    Point O = Point(3, 4, 5);
+    Point D = Point(1, 5, 8);
+
+    shared_ptr<Line> line(new Line(O, D));
+
+    Intersection test_line = Intersection(line, line);
+
+
+    ASSERT_EQ(test_line.current_status(), Intersection::EQUAL);
 
 }
 
-TEST(IntersectionTest, LineCircle) {
+TEST(IntersectionTest, LineLineParallel) {
+    Point O = Point(3, 4, 5);
+    Point D = Point(1, 5, 8);
+    Point O1 = Point(4, 5, 6);
+
+
+    shared_ptr<Line> line(new Line(O, D));
+    shared_ptr<Line> line2(new Line(O1, D));
+
+    Intersection test_line = Intersection(line, line2);
+
+    ASSERT_EQ(test_line.current_status(), Intersection::NOT_INTERSECTED);
+
+}
+
+TEST(IntersectionTest, LineCirclePoints) {
     Point O = Point(0, 0, 0);
     Point D = Point(1, 0, 0);
     Point center = Point(0, 0, 0);
@@ -208,12 +231,6 @@ TEST(IntersectionTest, LineCircle) {
     shared_ptr<Circle> circle2(new Circle(center2, radius1));
     shared_ptr<Circle> circle3(new Circle(center3, radius1));
 
-
-    Point O1 = Point(4, 5, 6);
-    Point D1 = Point(2, 6, 9);
-
-
-    shared_ptr<Line> line2(new Line(O1, D1));
 
     Intersection test_line1 = Intersection(line1, circle1);
     Intersection test_line2 = Intersection(line1, circle2);
@@ -231,13 +248,28 @@ TEST(IntersectionTest, LineCircle) {
     ASSERT_NEAR(test_line1.Second_Point().x(), x_true3, tol);
     ASSERT_NEAR(test_line1.Second_Point().y(), y_true3, tol);
 
-    ASSERT_NEAR(abs(test_line2.First_Point().x()), x_true4, tol);
-    ASSERT_NEAR(abs(test_line2.First_Point().y()), y_true4, tol);
+    ASSERT_NEAR(fabs(test_line2.First_Point().x()), x_true4, tol);
+    ASSERT_NEAR(fabs(test_line2.First_Point().y()), y_true4, tol);
 
 
 }
 
-TEST(IntersectionTest, CircleCircle) {
+TEST(IntersectionTest, LineCircleNotInter) {
+    Point O = Point(3, 4, 5);
+    Point D = Point(1, 5, 8);
+    Point O1 = Point(100, 200, -100);
+    double radius = 5;
+
+    shared_ptr<Line> line(new Line(O, D));
+    shared_ptr<Circle> circle(new Circle(O1, radius));
+
+    Intersection test_line = Intersection(line, circle);
+
+    ASSERT_EQ(test_line.current_status(), Intersection::NOT_INTERSECTED);
+
+}
+
+TEST(IntersectionTest, CircleCirclePoints) {
     Point center = Point(0, 0, 0);
     Point center2 = Point(0, 10, 0);
     Point center3 = Point(1, 7, 1);
@@ -264,6 +296,36 @@ TEST(IntersectionTest, CircleCircle) {
     ASSERT_NEAR(test_line3.First_Point().y(), y_true3, tol);
     ASSERT_NEAR(test_line3.Second_Point().x(), x_true4, tol);
     ASSERT_NEAR(test_line3.Second_Point().y(), y_true4, tol);
+}
+
+TEST(IntersectionTest, CircleCircleEqual) {
+    Point O = Point(3, 4, 5);
+    double radius = 5.0;
+
+
+    shared_ptr<Circle> circle(new Circle(O, radius));
+
+    Intersection test_line = Intersection(circle, circle);
+
+    ASSERT_EQ(test_line.current_status(), Intersection::EQUAL);
+
+}
+
+TEST(IntersectionTest, CircleCircleNotInter) {
+    Point O = Point(3, 4, 5);
+    Point O1 = Point(20, 30, 40);
+    double radius = 5.0;
+    double radius1 = 1.0;
+
+
+    shared_ptr<Circle> circle(new Circle(O, radius));
+    shared_ptr<Circle> circle1(new Circle(O1, radius1));
+
+    Intersection test_line = Intersection(circle, circle1);
+
+
+    ASSERT_EQ(test_line.current_status(), Intersection::NOT_INTERSECTED);
+
 }
 
 

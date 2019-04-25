@@ -15,13 +15,8 @@ static const double EPS = 1e-9;
 
 //enumerate
 
-enum InterStatus {
-    DONE,
-    NOT_INTERSECTED,
-    EQUAL
-};
 
-InterStatus status;
+
 
 Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Curve> &curve2) {
     auto line1 = dynamic_pointer_cast<Line>(curve1);
@@ -71,7 +66,8 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
     double d = sqrt(pow(circle1->Center().x() - circle2->Center().x(), 2)
                     + pow(circle1->Center().y() - circle2->Center().y(), 2));
 
-    if (d == 0 && r1 == r2) {
+
+    if (d < EPS && fabs(r1 - r2) < EPS) {
         status = EQUAL;
     } else if (d > r1 + r2 or d < fabs(r1 - r2)) {
         status = NOT_INTERSECTED;
@@ -110,7 +106,6 @@ void Intersection::InterCircleLine(double r, double a, double b, double c) {
         bx = x0 - b * mult;
         ay = y0 - a * mult;
         by = y0 + a * mult;
-        puts("2 points");
         inter.emplace_back(ax, ay, 0);
         inter.emplace_back(bx, by, 0);
         status = DONE;
@@ -121,7 +116,7 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 
 
     double zn = det(line1->coef_equation().x(), line1->coef_equation().y(),
-                                  line2->coef_equation().x(), line2->coef_equation().y());
+                    line2->coef_equation().x(), line2->coef_equation().y());
 
     if (Intersection::isEquivalent(line1, line2)) {
         status = EQUAL;
@@ -130,9 +125,9 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
     } else {
         double resx, resy;
         resx = -det(line1->coef_equation().z(), line1->coef_equation().y(),
-                                  line2->coef_equation().z(), line2->coef_equation().y()) / zn;
+                    line2->coef_equation().z(), line2->coef_equation().y()) / zn;
         resy = -det(line1->coef_equation().x(), line1->coef_equation().z(),
-                                  line2->coef_equation().x(), line2->coef_equation().z()) / zn;
+                    line2->coef_equation().x(), line2->coef_equation().z()) / zn;
 
 
         inter.emplace_back(resx, resy, 0);
@@ -175,7 +170,7 @@ const Point &Intersection::Second_Point() {
 
 }
 
-bool Intersection::current_status() {
+Intersection::InterStatus Intersection::current_status() {
     return status;
 }
 

@@ -27,8 +27,16 @@ double det(double, double, double, double);
  * \brief   Класс, который вычисляет точки, в которых кривые пересекаются
  */
 class Curve_EXPORT Intersection {
+public:
+    enum InterStatus {
+        DONE,
+        NOT_INTERSECTED,
+        EQUAL
+    };
+
 private:
     vector<Point> inter = {};
+    InterStatus status;
 
 
 public:
@@ -87,7 +95,7 @@ public:
     *
     *
     */
-    bool current_status();
+    InterStatus current_status();
 
     /**
  * \brief Вычисляет точки пересечения окружности с прямой

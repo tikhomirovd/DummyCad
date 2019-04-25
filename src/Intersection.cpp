@@ -79,7 +79,7 @@ void Intersection::InterCircle(double r, double a, double b, double c) {
     double x0 = -a * c / (a * a + b * b), y0 = -b * c / (a * a + b * b);
     if (c * c > r * r * (a * a + b * b) + EPS) {
         status = false;
-    } else if (abs(c * c - r * r * (a * a + b * b)) < EPS) {
+    } else if (fabs(c * c - r * r * (a * a + b * b)) < EPS) {
         puts("1 point");
         status = true;
         inter.emplace_back(x0, y0, 0);
@@ -125,16 +125,16 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 
 bool Intersection::isParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2) {
 
-    return abs(det(line1->coef_equation().x(), line1->coef_equation().y(),
+    return fabs(det(line1->coef_equation().x(), line1->coef_equation().y(),
                    line2->coef_equation().x(), line2->coef_equation().y())) < EPS;
 }
 
 bool Intersection::isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2) {
-    return abs(det(line1->coef_equation().x(), line1->coef_equation().y(),
+    return fabs(det(line1->coef_equation().x(), line1->coef_equation().y(),
                    line2->coef_equation().x(), line2->coef_equation().y())) < EPS
-           && abs(det(line1->coef_equation().x(), line2->coef_equation().z(),
+           && fabs(det(line1->coef_equation().x(), line2->coef_equation().z(),
                       line2->coef_equation().x(), line2->coef_equation().z())) < EPS
-           && abs(det(line1->coef_equation().y(), line1->coef_equation().z(),
+           && fabs(det(line1->coef_equation().y(), line1->coef_equation().z(),
                       line2->coef_equation().y(), line2->coef_equation().z())) < EPS;
 }
 

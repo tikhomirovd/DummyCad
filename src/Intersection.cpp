@@ -64,10 +64,8 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
     if (circle1->Center().x() == circle2->Center().x() &&
         circle1->Center().y() == circle2->Center().y()) {
         if (r1 == r2) {
-            cout << "It is one circle";
             status = false;
         } else {
-            cout << "0 point";
             status = false;
         }
     } else {
@@ -79,15 +77,11 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
 
 void Intersection::InterCircle(double r, double a, double b, double c) {
     double x0 = -a * c / (a * a + b * b), y0 = -b * c / (a * a + b * b);
-    cout << "\nkek\n";
-    cout << r << " " << a << " " << b << " " << c << endl;
     if (c * c > r * r * (a * a + b * b) + EPS) {
-        cout << "0 point";
         status = false;
     } else if (abs(c * c - r * r * (a * a + b * b)) < EPS) {
         puts("1 point");
         status = true;
-        cout << x0 << ' ' << y0 << '\n';
         inter.emplace_back(x0, y0, 0);
         status = true;
     } else {
@@ -99,7 +93,6 @@ void Intersection::InterCircle(double r, double a, double b, double c) {
         ay = y0 - a * mult;
         by = y0 + a * mult;
         puts("2 points");
-        cout << ax << ", " << ay << ";\n" << bx << ", " << by << ";\n";
         inter.emplace_back(ax, ay, 0);
         inter.emplace_back(bx, by, 0);
         status = true;
@@ -134,7 +127,6 @@ bool Intersection::isParallel(const shared_ptr<Line> &line1, const shared_ptr<Li
 
     if (abs(det(line1->coef_equation().x(), line1->coef_equation().y(),
                 line2->coef_equation().x(), line2->coef_equation().y())) < EPS) {
-        cout << "Lines are Parallel\n";
         return true;
     }
     return false;
@@ -147,7 +139,6 @@ bool Intersection::isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<
                    line2->coef_equation().x(), line2->coef_equation().z())) < EPS
         && abs(det(line1->coef_equation().y(), line1->coef_equation().z(),
                    line2->coef_equation().y(), line2->coef_equation().z())) < EPS) {
-        cout << "Lines are equivalent\n";
         return true;
     }
     return false;
@@ -165,8 +156,10 @@ const Point &Intersection::First_Point() {
 }
 
 const Point &Intersection::Second_Point() {
-
-    return inter[1];
+    if (inter.size() >= 2) {
+        return inter[1];
+    }
+    return {NAN, NAN, NAN};
 
 }
 

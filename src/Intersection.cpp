@@ -158,13 +158,13 @@ double Intersection::det(double a, double b, double c, double d) {
     return a * d - b * c;
 }
 
-Point Intersection::First_Point() {
+const Point &Intersection::First_Point() {
     if (!inter.empty())
         return inter[0];
     return {NAN, NAN, NAN};
 }
 
-Point Intersection::Second_Point() {
+const Point &Intersection::Second_Point() {
 
     return inter[1];
 

@@ -57,7 +57,7 @@ public:
     *
     *
     */
-    Point First_Point();
+    const Point &First_Point();
 
 
     /**
@@ -65,7 +65,7 @@ public:
     *
     *
     */
-    Point Second_Point();
+    const Point &Second_Point();
 
 
     /**

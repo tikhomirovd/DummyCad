@@ -89,6 +89,7 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
         if (ans_x1 != ans_x2 && ans_y1 != ans_y2) {
             inter.emplace_back(ans_x2, ans_y2, 0);
         }
+        status = DONE;
     }
 
 
@@ -125,9 +126,9 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
                                   line2->coef_equation().x(), line2->coef_equation().y());
 
     if (Intersection::isEquivalent(line1, line2)) {
-       // status = false;
+        status = EQUAL;
     } else if (Intersection::isParallel(line1, line2)) {
-      //  status = false;
+        status = NOT_INTERSECTED;
     } else {
         double resx, resy;
         resx = -Intersection::det(line1->coef_equation().z(), line1->coef_equation().y(),
@@ -137,7 +138,7 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 
 
         inter.emplace_back(resx, resy, 0);
-       // status = true;
+        status = DONE;
     }
 }
 

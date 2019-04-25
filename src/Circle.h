@@ -30,7 +30,7 @@ public:
      * \param ccenter  Центр окружности
      * \param r Радиус окружности
      */
-    Circle(Point ccenter, double r);
+    Circle(const Point &ccenter, double r);
 
     /**
      *\brief Вычисляет координаты точки на окружности по заданному парметру

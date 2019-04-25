@@ -6,7 +6,7 @@
 
 
 
-Circle::Circle(Point ccenter, double r) {
+Circle::Circle(const Point &ccenter, double r) {
     center = ccenter;
     radius = r;
 }

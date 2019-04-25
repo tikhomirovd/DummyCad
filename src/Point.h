@@ -64,6 +64,12 @@ public:
         return {a.x() + b.x(), a.y() + b.y(), a.z() + b.z()};
     }
 
+    /**
+    * Перегрузка оператора "-". Вычитает точки покоординатно
+    * \param a Точка \f$ A \f$
+    * \param b Точка \f$ B \f$
+    * \return  Точка \f$ \{A_x - B_x, A_y - B_y, A_z - B_z \} \f$
+    */
     friend const Point operator-(const Point &a, const Point &b) {
 
         return {a.x() - b.x(), a.y() - b.y(), a.z() - b.z()};

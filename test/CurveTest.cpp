@@ -21,6 +21,47 @@ TEST(PointTest, Constructor) {
     ASSERT_NEAR(p.z(), z, tol);
 }
 
+TEST(PointTest, OperatorPlusVector) {
+    double x1 = 1.0, y1 = 2.0, z1 = 3.0;
+    double x2 = -1.0, y2 = -5.0, z2 = 10.0;
+    Point P1 = Point(x1, y1, z1);
+    Point P2 = Point(x2, y2, z2);
+
+    ASSERT_NEAR((P1 + P2).x(), x1 + x2, tol);
+    ASSERT_NEAR((P1 + P2).y(), y1 + y2, tol);
+    ASSERT_NEAR((P1 + P2).z(), z1 + z2, tol);
+
+    ASSERT_NEAR((P2 + P1).x(), x2 + x1, tol);
+    ASSERT_NEAR((P2 + P1).y(), y2 + y1, tol);
+    ASSERT_NEAR((P2 + P1).z(), z2 + z1, tol);
+
+
+}
+
+TEST(PointTest, OperatorMul) {
+    double x1 = 1.0, y1 = 2.0, z1 = 3.0;
+    double t = 5;
+    Point P1 = Point(x1, y1, z1);
+
+    ASSERT_NEAR((P1 * t).x(), x1 * t, tol);
+    ASSERT_NEAR((P1 * t).y(), y1 * t, tol);
+    ASSERT_NEAR((P1 * t).z(), z1 * t, tol);
+
+
+}
+
+TEST(PointTest, OperatorSumScaler) {
+    double x1 = 1.0, y1 = 2.0, z1 = 3.0;
+    double t = 5;
+    Point P1 = Point(x1, y1, z1);
+
+    ASSERT_NEAR((P1 + t).x(), x1 + t, tol);
+    ASSERT_NEAR((P1 + t).y(), y1 + t, tol);
+    ASSERT_NEAR((P1 + t).z(), z1 + t, tol);
+
+
+}
+
 TEST(LineTest, LineValueTest) {
     double x1 = 1.0, y1 = 2.0, z1 = 3.0;
     double x2 = 2.0, y2 = 3.0, z2 = 3.0;
@@ -77,8 +118,8 @@ TEST(CircleTest, CircleValueTest) {
     double radius = 5.0;
     double t = 2.0;
 
-    double x_true = x + radius * sin(t);
-    double y_true = y + radius * cos(t);
+    double x_true = x + radius * cos(t);
+    double y_true = y + radius * sin(t);
     double z_true = z;
     Point p(x, y, z);
 
@@ -114,12 +155,11 @@ TEST(CircleTest, CircleTangent) {
     double t = 2.0;
 
 
-
     Point p(x, y, z);
     Circle c(p, radius);
 
-    double x_true = radius * cos(t);
-    double y_true = -radius * sin(t);
+    double x_true = -radius * sin(t);
+    double y_true = radius * cos(t);
     double z_true = 0;
 
     ASSERT_NEAR(c.tangent(t).x(), x_true, tol);
@@ -141,10 +181,6 @@ TEST(IntersectionTest, LineLine) {
     Intersection test_line1 = Intersection(line, line);
     Intersection test_line2 = Intersection(line, line2);
 
-    Point first_point = test_line1.First_Point();
-
-
-    double x_true1 = NAN, y_true1 = NAN;
     double x_true2 = 2, y_true2 = -1;
 
 //
@@ -182,7 +218,6 @@ TEST(IntersectionTest, LineCircle) {
     Intersection test_line3 = Intersection(line1, circle3);
 
 
-    double x_true1 = NAN, y_true1 = NAN;
     double x_true2 = -5, y_true2 = 0;
     double x_true3 = 5, y_true3 = 0;
 
@@ -196,10 +231,6 @@ TEST(IntersectionTest, LineCircle) {
 
     ASSERT_NEAR(abs(test_line2.First_Point().x()), x_true4, tol);
     ASSERT_NEAR(abs(test_line2.First_Point().y()), y_true4, tol);
-
-//
-//    ASSERT_EQ(test_line3.First_Point().x(), x_true1);
-//    ASSERT_EQ(test_line3.First_Point().y(), y_true1);
 
 
 }
@@ -219,11 +250,9 @@ TEST(IntersectionTest, CircleCircle) {
     Intersection test_line2 = Intersection(circle1, circle2);
     Intersection test_line3 = Intersection(circle1, circle3);
 
-
-    double x_true1 = NAN, y_true1 = NAN;
     double x_true2 = 0, y_true2 = 5;
-    double x_true3 = -3, y_true3 = 4;
-    double x_true4 = 4, y_true4 = 3;
+    double x_true3 = 4, y_true3 = 3;
+    double x_true4 = -3, y_true4 = 4;
 
 
     ASSERT_NEAR(test_line2.First_Point().x(), x_true2, tol);

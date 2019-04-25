@@ -24,38 +24,38 @@ public:
     /**
     * \brief Начальная инициализация класса
     *
-    * @param a Произвольная точка M1
-    * @param b Направляющий вектор
+    * \param a Произвольная точка M1
+    * \param b Направляющий вектор
     */
     Line(const Point&, const Point&);
 
     /**
    *\brief Вычисляет координаты точки на прямой по заданному парметру
    *
-   * @param t Параметр, по которому надо вычислить координаты
-   * @return \f$ \overline{M} = \overline{M_0} + \overline{d} * t \f$
+   * \param t Параметр, по которому надо вычислить координаты
+   * \return \f$ \overline{M} = \overline{M_0} + \overline{d} * t \f$
    */
-    Point Value(double);
+    Point Value(double) override;
 
     /** \brief Проверяет, является ли кривая замкнутой?
      *
      *
      */
-    bool isClosed();
+    bool isClosed() override;
 
     /** \brief Вычисляет касательный вектор к линии по заданному параметру
     * d - Направляющий вектор
-    * @param t Параметр, по которому надо вычислить касательную к линии
-    * @return \f$ \overline{d} \f$
+    * \param t Параметр, по которому надо вычислить касательную к линии
+    * \return \f$ \overline{d} \f$
     */
-    Point tangent(double t);
+    Point tangent(double t) override;
 
     /**
      * \brief По параметрическому уравнению выдаёт коэффициенты из общего уравнения
      * В нашем случае прямая задаётся параметрически. \\
      * Функция переделывает уравнение прямой в общее - \f$ A x + B y + C = 0 \f$ и возвращает вектор
      * \f$ \{A, B, C \} \f$
-     * @return Вектор \f$ \{A, B, C \} \f$
+     * \return Вектор \f$ \{A, B, C \} \f$
      */
     Point coef_equation();
 };

@@ -19,13 +19,13 @@ class Curve_EXPORT Curve {
 public:
     Curve() = default;
 
-    virtual ~Curve() = default;
+    //virtual ~Curve() = default;
 
-    virtual Point Value(double t) const = 0;
+    virtual Point Value(double t)  = 0;
 
-    virtual bool isClosed() const = 0;
+    virtual bool isClosed() = 0;
 
-    virtual Point tangent(double t) const = 0;
+    virtual Point tangent(double t)  = 0;
 
 
 };

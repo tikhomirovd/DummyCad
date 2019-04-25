@@ -15,6 +15,14 @@
 
 using namespace std;
 
+
+
+/**
+* \brief Вычисляет определитель матрицы 2х2
+* \return Определитель
+*/
+double det(double, double, double, double);
+
 /**
  * \brief   Класс, который вычисляет точки, в которых кривые пересекаются
  */
@@ -66,6 +74,11 @@ public:
     */
     const Point &Second_Point();
 
+
+    /**
+     * Возвращает число, равное количеству точек пересечений
+     * \return  количество точек пересечений
+     */
     int NumberInter();
 
 
@@ -86,11 +99,6 @@ public:
 protected:
 
 
-    /**
- * \brief Вычисляет определитель матрицы 2х2
- * \return Определитель
- */
-    double det(double, double, double, double);
 
 
 /**

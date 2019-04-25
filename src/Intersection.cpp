@@ -120,7 +120,7 @@ void Intersection::InterCircleLine(double r, double a, double b, double c) {
 void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2) {
 
 
-    double zn = Intersection::det(line1->coef_equation().x(), line1->coef_equation().y(),
+    double zn = det(line1->coef_equation().x(), line1->coef_equation().y(),
                                   line2->coef_equation().x(), line2->coef_equation().y());
 
     if (Intersection::isEquivalent(line1, line2)) {
@@ -129,9 +129,9 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
         status = NOT_INTERSECTED;
     } else {
         double resx, resy;
-        resx = -Intersection::det(line1->coef_equation().z(), line1->coef_equation().y(),
+        resx = -det(line1->coef_equation().z(), line1->coef_equation().y(),
                                   line2->coef_equation().z(), line2->coef_equation().y()) / zn;
-        resy = -Intersection::det(line1->coef_equation().x(), line1->coef_equation().z(),
+        resy = -det(line1->coef_equation().x(), line1->coef_equation().z(),
                                   line2->coef_equation().x(), line2->coef_equation().z()) / zn;
 
 
@@ -157,7 +157,7 @@ bool Intersection::isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<
 }
 
 
-double Intersection::det(double a, double b, double c, double d) {
+double det(double a, double b, double c, double d) {
     return a * d - b * c;
 }
 

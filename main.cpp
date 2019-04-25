@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cmath>
-#include "Circle.h"
-#include "Line.h"
-#include "Point.h"
+#include <Circle.h>
+#include <Line.h>
+#include <Point.h>
 #include <Intersection.h>
 #include <Intersection.cpp>
 

@@ -162,13 +162,13 @@ double Intersection::det(double a, double b, double c, double d) {
 }
 
 const Point &Intersection::First_Point() {
-    if (!inter.empty())
+    if (NumberInter())
         return inter[0];
     return {NAN, NAN, NAN};
 }
 
 const Point &Intersection::Second_Point() {
-    if (inter.size() >= 2) {
+    if (NumberInter() >= 2) {
         return inter[1];
     }
     return {NAN, NAN, NAN};

@@ -13,8 +13,15 @@ using namespace std;
 
 static const double EPS = 1e-9;
 
+//enumerate
 
-Point Second_Point();
+enum InterStatus {
+    DONE,
+    NOT_INTERSECTED,
+    EQUAL
+};
+
+InterStatus status;
 
 Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Curve> &curve2) {
     auto line1 = dynamic_pointer_cast<Line>(curve1);
@@ -57,19 +64,31 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<C
 }
 
 void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_ptr<Circle> &circle2) {
-    double r1 = circle1->Radius(), r2 = circle2->Radius(), a = -2 * circle2->Center().x(),
-            b = -2 * circle2->Center().y(), c = pow(circle2->Center().x(), 2) + pow(circle2->Center().y(), 2) +
-                                                pow(r1, 2) - pow(r2, 2);
 
-    if (circle1->Center().x() == circle2->Center().x() &&
-        circle1->Center().y() == circle2->Center().y()) {
-        if (r1 == r2) {
-            status = false;
-        } else {
-            status = false;
-        }
+
+    double r1 = circle1->Radius(), r2 = circle2->Radius();
+
+    double d = sqrt(pow(circle1->Center().x() - circle2->Center().x(), 2)
+                    + pow(circle1->Center().y() - circle2->Center().y(), 2));
+
+    if (d == 0 && r1 == r2) {
+        status = EQUAL;
+    } else if (d > r1 + r2 or d < fabs(r1 - r2)) {
+        status = NOT_INTERSECTED;
     } else {
-        Intersection::InterCircle(r1, a, b, c);
+        double a = (pow(r1, 2) - pow(r2, 2) + pow(d, 2) / (2 * d));
+        double h = sqrt(pow(r1, 2) - pow(a, 2));
+        double x1 = circle1->Center().x(), x2 = circle2->Center().x();
+        double y1 = circle1->Center().y(), y2 = circle2->Center().y();
+        Point P3 = circle1->Center() + (circle2->Center() - circle1->Center()) * (a / d);
+        double ans_x1 = P3.x() + h / d * (y2 - y1);
+        double ans_y1 = P3.y() - h / d * (x2 - x1);
+        double ans_x2 = P3.x() - h / d * (y2 - y1);
+        double ans_y2 = P3.y() + h / d * (x2 - x1);
+        inter.emplace_back(ans_x1, ans_y1, 0);
+        if (ans_x1 != ans_x2 && ans_y1 != ans_y2) {
+            inter.emplace_back(ans_x2, ans_y2, 0);
+        }
     }
 
 
@@ -78,12 +97,12 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
 void Intersection::InterCircle(double r, double a, double b, double c) {
     double x0 = -a * c / (a * a + b * b), y0 = -b * c / (a * a + b * b);
     if (c * c > r * r * (a * a + b * b) + EPS) {
-        status = false;
+       // status = false;
     } else if (fabs(c * c - r * r * (a * a + b * b)) < EPS) {
         puts("1 point");
-        status = true;
+       // status = true;
         inter.emplace_back(x0, y0, 0);
-        status = true;
+       // status = true;
     } else {
         double d = r * r - c * c / (a * a + b * b);
         double mult = sqrt(d / (a * a + b * b));
@@ -95,7 +114,7 @@ void Intersection::InterCircle(double r, double a, double b, double c) {
         puts("2 points");
         inter.emplace_back(ax, ay, 0);
         inter.emplace_back(bx, by, 0);
-        status = true;
+       // status = true;
     }
 }
 
@@ -106,10 +125,10 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
                                   line2->coef_equation().x(), line2->coef_equation().y());
 
     if (Intersection::isEquivalent(line1, line2)) {
-        status = false;
+       // status = false;
     } else if (Intersection::isParallel(line1, line2)) {
-        status = false;
-    } else  {
+      //  status = false;
+    } else {
         double resx, resy;
         resx = -Intersection::det(line1->coef_equation().z(), line1->coef_equation().y(),
                                   line2->coef_equation().z(), line2->coef_equation().y()) / zn;
@@ -118,7 +137,7 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 
 
         inter.emplace_back(resx, resy, 0);
-        status = true;
+       // status = true;
     }
 }
 
@@ -126,16 +145,16 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 bool Intersection::isParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2) {
 
     return fabs(det(line1->coef_equation().x(), line1->coef_equation().y(),
-                   line2->coef_equation().x(), line2->coef_equation().y())) < EPS;
+                    line2->coef_equation().x(), line2->coef_equation().y())) < EPS;
 }
 
 bool Intersection::isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2) {
     return fabs(det(line1->coef_equation().x(), line1->coef_equation().y(),
-                   line2->coef_equation().x(), line2->coef_equation().y())) < EPS
+                    line2->coef_equation().x(), line2->coef_equation().y())) < EPS
            && fabs(det(line1->coef_equation().x(), line2->coef_equation().z(),
-                      line2->coef_equation().x(), line2->coef_equation().z())) < EPS
+                       line2->coef_equation().x(), line2->coef_equation().z())) < EPS
            && fabs(det(line1->coef_equation().y(), line1->coef_equation().z(),
-                      line2->coef_equation().y(), line2->coef_equation().z())) < EPS;
+                       line2->coef_equation().y(), line2->coef_equation().z())) < EPS;
 }
 
 
@@ -160,3 +179,8 @@ const Point &Intersection::Second_Point() {
 bool Intersection::current_status() {
     return status;
 }
+
+int Intersection::NumberInter() {
+    return inter.size();
+}
+

@@ -21,7 +21,6 @@ using namespace std;
 class Curve_EXPORT Intersection {
 private:
     vector<Point> inter = {};
-    bool status = false;
 
 
 public:
@@ -66,6 +65,8 @@ public:
     *
     */
     const Point &Second_Point();
+
+    int NumberInter();
 
 
     /**

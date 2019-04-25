@@ -12,8 +12,8 @@ Circle::Circle(Point ccenter, double r) {
 }
 
 Point Circle::Value(double t) {
-    double cordX = center.x() + radius * sin(t);
-    double cordY = center.y() + radius * cos(t);
+    double cordX = center.x() + radius * cos(t);
+    double cordY = center.y() + radius * sin(t);
     return {cordX, cordY, center.z()};
 }
 
@@ -22,7 +22,7 @@ bool Circle::isClosed() {
 }
 
 Point Circle::tangent(double t) {
-    return {radius * cos(t), -radius * sin(t), 0};
+    return {-radius * sin(t), radius * cos(t), 0};
 }
 
 double Circle::Radius() {

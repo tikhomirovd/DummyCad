@@ -105,11 +105,11 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
     double zn = Intersection::det(line1->coef_equation().x(), line1->coef_equation().y(),
                                   line2->coef_equation().x(), line2->coef_equation().y());
 
-    if (Intersection::isParallel(line1, line2) && !Intersection::isEquivalent(line1, line2)) {
+    if (Intersection::isEquivalent(line1, line2)) {
         status = false;
-    } else if (Intersection::isEquivalent(line1, line2)) {
+    } else if (Intersection::isParallel(line1, line2)) {
         status = false;
-    } else if (abs(zn) >= EPS) {
+    } else  {
         double resx, resy;
         resx = -Intersection::det(line1->coef_equation().z(), line1->coef_equation().y(),
                                   line2->coef_equation().z(), line2->coef_equation().y()) / zn;

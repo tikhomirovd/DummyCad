@@ -35,20 +35,20 @@ public:
    * @param t Параметр, по которому надо вычислить координаты
    * @return \f$ \overline{M} = \overline{M_0} + \overline{d} * t \f$
    */
-    Point Value(double) override;
+    Point Value(double);
 
     /** \brief Проверяет, является ли кривая замкнутой?
      *
      *
      */
-    bool isClosed() override;
+    bool isClosed();
 
     /** \brief Вычисляет касательный вектор к линии по заданному параметру
     * d - Направляющий вектор
     * @param t Параметр, по которому надо вычислить касательную к линии
     * @return \f$ \overline{d} \f$
     */
-    Point tangent(double t) override;
+    Point tangent(double t);
 
     /**
      * \brief По параметрическому уравнению выдаёт коэффициенты из общего уравнения

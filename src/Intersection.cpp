@@ -120,22 +120,22 @@ vector<Point> Intersections::SolveCircleCircle(shared_ptr<Circle> ptr1, shared_p
   // получение координат второй окружности 
   double secondX = secondCenterPoint->getX();
   double secondY = secondCenterPoint->getY();
+
   //получение радиусов
   double firstRadius = ptr1->getRadius();
   double secondRadius = ptr2->getRadius();
+  double summRadius = firstRadius + secondRadius;
+  double differenceRadius = firstRadius - secondRadius;
+
   //расстояние между центрами окружностей
   double distance = sqrt(pow((firstX - secondX), 2) + pow((firstY - secondY), 2));
-  // вектор с направлением координат первой окружности 
-  Vector vector2 = Vector(firstX, firstY);
-  Vector z = vector2.Normalize();
-  // новый вектор 
-  //Vector vector = Vector(firstcirclePtX - firstLinePtX, firstcirclePtY - firstLinePtY);
+
   // исключение концентрических окружностей (окружности с одинаковой начальной точкой)
-  if (secondX == firstX && firstY == secondY && firstRadius == secondRadius)
+if (secondX == firstX && firstY == secondY && firstRadius == secondRadius)
   {
     cout << "совпадают окружности";
   }
-  else
+else
   {
     if (secondX == firstX && firstY == secondY && firstRadius != secondRadius)
     {
@@ -143,43 +143,48 @@ vector<Point> Intersections::SolveCircleCircle(shared_ptr<Circle> ptr1, shared_p
     }
     else
     {
-      if (distance <= firstRadius + secondRadius)
-      {     // найти прямую, которая пересекает эти окружности в точках пересечения 
-          double midLine = distance / 2;
-          if (firstX== secondX|| firstY == secondY)
-           {
-              if (firstY == secondY)
-                {
-                    if (firstX<secondX) 
-                      {
-                        // новая прямая с начальной найденной точкой и нормализированным направлением
-                        Straight* str = new Straight(firstX+ midLine, secondY, z.getX(), z.getY());
-                        Point* s = str->PointCalcul(midLine);
-                        // отправить в метод данную прямую и окружность - посчитать точки пересечения
-                      }
-                    else      
-                      { 
-                        Straight* str = new Straight(firstX - midLine, secondY, z.getX(), z.getY());
-                      }
-                }
-                    if (secondX<secondY)    
-                      {
-                         Straight* str = new Straight(firstX, secondY + midLine, z.getX(), z.getY());
-                      }
-                    else
-                      {
-                         Straight* str = new Straight(firstX, secondY - midLine, z.getX(), z.getY());
-                      }
-           }    
-          else
-            {
-               
-            }
+      if (distance>summRadius + EPS || distance<differenceRadius - EPS)
+      {
+        cout << "no solution";
+      }
+      else
+        double si = abs(distance - firstRadius + secondRadius);
+        if (abs(distance - summRadius) < EPS || abs(distance - differenceRadius)<EPS)
+        {
+          // 1 решение
+          // получение точки решения
+          double middlepoint1 = (firstX + secondX) / 2;
+          double middlepoint2 = (firstY + secondY) / 2;
+          Point* d = new Point(middlepoint1, middlepoint2);
+          points.push_back(Point(d->getX(), d->getY()));
         }
+        else
+        {
+          // 2 решения
+          // получение серединной точки на прямой
+          double middlepoint1 = (firstX + secondX) / 2;
+          double middlepoint2 = (firstY + secondY) / 2;
+          Point* d = new Point(middlepoint1, middlepoint2);
+          // получение разности координат
+          double coordinate1 = firstX - secondX;
+          double coordinate2 = firstY - secondY;
+          // координаты направляющего вектора на первой прямой
+          Point* vector1 = new Point(-coordinate1, -coordinate2);
+          // координаты направлябщего вектора прямой, через которую будут искаться решения
+          Point* vector2 = new Point(-coordinate2, coordinate1);
+          // прямая, проходящая через найденную точку и через которую будут искаться решения
+          Straight* straight = new Straight(middlepoint1, middlepoint2, vector2->getX(), vector2->getY());
+          shared_ptr<Curve> strai = shared_ptr<Straight>(new Straight(middlepoint1, middlepoint2, vector2->getX(), vector2->getY()));
+          std::vector<Point> points1 = Intersection(strai, ptr1);
+          std::vector<Point> points2 = Intersection(strai, ptr2);
+          points.push_back(Point(points1[0].getX(), points1[0].getY()));
+          points.push_back(Point(points1[1].getX(), points1[1].getY()));
+        }
+
       }
     }
     return points;
-  }
+}
 
 vector<Point> Intersections::SolveCircleLine(shared_ptr<Circle> ptr1, shared_ptr<Straight> ptr2)
 {

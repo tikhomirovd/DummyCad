@@ -75,6 +75,7 @@ TEST(LineCircleTest, TwoSolution_00001)
   ASSERT_NEAR(points[1].getX(), 2.0, THE_TOLERANCE);
   ASSERT_NEAR(points[1].getY(), 4.0, THE_TOLERANCE); 
 } 
+
 //одна точка пересечения прямой и окуржности
 TEST(LineCircleTest, OneSolution_00002)
 { 
@@ -87,7 +88,7 @@ TEST(LineCircleTest, OneSolution_00002)
   ASSERT_EQ(points.size(), 1);
   ASSERT_NEAR(points[0].getX(), 2.0, THE_TOLERANCE); 
   ASSERT_NEAR(points[0].getY(), 3.0, THE_TOLERANCE); 
-}      
+}
 
 //нет точек пересечения прямой и окружности
 TEST(LineCircleTest, ZeroSolution_00003)
@@ -100,7 +101,7 @@ TEST(LineCircleTest, ZeroSolution_00003)
   std::vector<Point> points = intersection.Intersection(straid1,circle1);
 
   ASSERT_EQ(points.size(), 0);
-}   
+}
 
 //две точки пересечения окружностей
 TEST(CircleCircleTest, TwoSolutions_1)
@@ -117,7 +118,7 @@ TEST(CircleCircleTest, TwoSolutions_1)
   ASSERT_NEAR(points[0].getY(), 6.5028530728448137, THE_TOLERANCE);  
   ASSERT_NEAR(points[1].getX(), 7.7521398046336101, THE_TOLERANCE); 
   ASSERT_NEAR(points[1].getY(), 4.4971469271551863, THE_TOLERANCE); 
-} 
+}
 
 //одна точка пересечения окружностей
 TEST(CircleCircleTest, OneSolutions_2)
@@ -136,7 +137,7 @@ TEST(CircleCircleTest, OneSolutions_2)
 }
 
 //нет точек пересечения у двух окружностей
-/*TEST(CircleCircleTest, ZeroSolutions_3)
+TEST(CircleCircleTest, ZeroSolutions_3)
 {
   double A = 3.0, B = 0.0, C = 3.0, D = 9.0, E = 2.0;
   
@@ -147,7 +148,7 @@ TEST(CircleCircleTest, OneSolutions_2)
   std::vector<Point> points = intersection.Intersection(circle1, circle2);
 
   ASSERT_EQ(points.size(), 0);
-}  */
+}
 
 //концентрич-е окружности разного радиуса
 TEST(CircleCircleTest, OneSolutions_001)
@@ -161,7 +162,7 @@ TEST(CircleCircleTest, OneSolutions_001)
   std::vector<Point> points = intersection.Intersection(circle1, circle2);
 
   ASSERT_EQ(points.size(), 0); 
-} 
+}
 
 //концентрич-е окружности одинакового радиуса
 TEST(CircleCircleTest, OneSolutions_002)
@@ -173,12 +174,13 @@ TEST(CircleCircleTest, OneSolutions_002)
   
   Intersections intersection;
   std::vector<Point> points = intersection.Intersection(circle1, circle2);
- //?
-  ASSERT_EQ(points.size(), 0); 
-} 
+  ASSERT_EQ(points.size(), 1);
+  ASSERT_NEAR(points[0].getX(), 0.0, THE_TOLERANCE);
+  ASSERT_NEAR(points[0].getY(), 0.0, THE_TOLERANCE);
+}
 
 //окружность в окружности
-/*TEST(CircleCircleTest, OneSolutions_003)
+TEST(CircleCircleTest, OneSolutions_003)
 {
   double A = 4.0, B = 2.0, C = 0.0; 
   
@@ -187,11 +189,11 @@ TEST(CircleCircleTest, OneSolutions_002)
   
   Intersections intersection;
   std::vector<Point> points = intersection.Intersection(circle1, circle2);
- //?
+
   ASSERT_EQ(points.size(), 1);
   ASSERT_NEAR(points[0].getX(), 0.0, THE_TOLERANCE);
   ASSERT_NEAR(points[0].getY(), 0.0, THE_TOLERANCE);
-}  */
+}
 
 /* 
 TEST(EquationTest, ThrowWrongIndex)

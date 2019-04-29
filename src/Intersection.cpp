@@ -31,7 +31,7 @@ vector<Point> Intersections::Intersection(shared_ptr<Curve> ptr1, shared_ptr<Cur
     }
     else
     {
-      //приведение указателя2 к типу "круг"
+      //приведение указателя2 к типу "Круг"
       shared_ptr<Circle> Circle2 = std::dynamic_pointer_cast<Circle>(ptr2);
       if (Circle2)
       {
@@ -46,9 +46,11 @@ vector<Point> Intersections::Intersection(shared_ptr<Curve> ptr1, shared_ptr<Cur
   }
   else
   {
+    // приведение указателя1 к типу "Круг"
     shared_ptr<Circle> Circle1 = std::dynamic_pointer_cast<Circle>(ptr1);
     if (Circle1)
     {
+      // приведение указателя2 к типу "Прямая"
       shared_ptr<Straight> straightPtr2 = std::dynamic_pointer_cast<Straight>(ptr2);
       if (straightPtr2)
       {
@@ -56,6 +58,7 @@ vector<Point> Intersections::Intersection(shared_ptr<Curve> ptr1, shared_ptr<Cur
       }
       else
       {
+        //приведение указателя2 к типу "Круг"
         shared_ptr<Circle> Circle2 = std::dynamic_pointer_cast<Circle>(ptr2);
         if (Circle2)
         {
@@ -92,7 +95,7 @@ vector<Point> Intersections::SolveLineLine(shared_ptr<Straight> ptr1, shared_ptr
   // получение направляющего вектора второй прямой
   double secondDot1 = ptr2->getDot1();
   double secondDot2 = ptr2->getDot2();
-
+  // ищем детерминанты
   double determinant1 = secondDot1 - firstDot1;
   // решаем систему y-p2*t=y0 ; y-p21*t=y01; determinant1 = 1*(-p21)-(-p2)*1
   double determinant2 = secondDot2 - firstDot2;
@@ -124,18 +127,20 @@ vector<Point> Intersections::SolveCircleCircle(shared_ptr<Circle> ptr1, shared_p
   //получение радиусов
   double firstRadius = ptr1->getRadius();
   double secondRadius = ptr2->getRadius();
+  //создаем переменные для суммы и разности радиусов
   double summRadius = firstRadius + secondRadius;
-  double differenceRadius = firstRadius - secondRadius;
+  double differenceRadius = abs(firstRadius - secondRadius);
 
   //расстояние между центрами окружностей
   double distance = sqrt(pow((firstX - secondX), 2) + pow((firstY - secondY), 2));
 
   // исключение концентрических окружностей (окружности с одинаковой начальной точкой)
-if (secondX == firstX && firstY == secondY && firstRadius == secondRadius)
+  if (secondX == firstX && firstY == secondY && firstRadius == secondRadius)
   {
     cout << "совпадают окружности";
+    points.push_back(Point(0, 0));
   }
-else
+  else
   {
     if (secondX == firstX && firstY == secondY && firstRadius != secondRadius)
     {
@@ -143,20 +148,41 @@ else
     }
     else
     {
-      if (distance>summRadius + EPS || distance<differenceRadius - EPS)
+      if (distance > summRadius + EPS || distance < differenceRadius - EPS)
       {
         cout << "no solution";
       }
       else
+      {
         double si = abs(distance - firstRadius + secondRadius);
-        if (abs(distance - summRadius) < EPS || abs(distance - differenceRadius)<EPS)
+        if (abs(distance - summRadius) < EPS || abs(distance - differenceRadius) < EPS)
         {
           // 1 решение
-          // получение точки решения
+          // получение среднего значения суммы координат
           double middlepoint1 = (firstX + secondX) / 2;
           double middlepoint2 = (firstY + secondY) / 2;
-          Point* d = new Point(middlepoint1, middlepoint2);
-          points.push_back(Point(d->getX(), d->getY()));
+          // получаем разность координат
+          double coordinate1 = firstX - secondX;
+          double coordinate2 = firstY - secondY;
+          // формирует точку - направление
+          Point* vector1 = new Point(-coordinate1, -coordinate2);
+          // новая прямая записанная через умный указатель
+          shared_ptr<Curve> strai = shared_ptr<Straight>(new Straight(middlepoint1, middlepoint2, vector1->getX(), vector1->getY()));
+          // вычисление точек на прямой, которая пересекает каждую из окружностей
+          std::vector<Point> points1 = Intersection(strai, ptr1);
+          std::vector<Point> points2 = Intersection(strai, ptr2);
+          // сравнение полученных координат - ищем общую и её записываем в ответ
+          if (((points1[0].getX()==points2[0].getX()) && points1[0].getY()==points2[0].getY()) || (points1[0].getX() == points2[1].getX()) && points1[0].getY() == points2[1].getY())
+          {
+            points.push_back(Point(points1[0].getX(), points1[0].getY()));
+          }
+          else 
+          {
+             if ((points1[1].getX() == points2[1].getX() && points1[1].getX()==points2[1].getY()) || (points1[1].getX() == points2[0].getX() && points1[1].getY() == points2[0].getY()))
+             {
+               points.push_back(Point(points1[1].getX(), points1[1].getY()));
+             }
+          }
         }
         else
         {
@@ -172,18 +198,19 @@ else
           Point* vector1 = new Point(-coordinate1, -coordinate2);
           // координаты направлябщего вектора прямой, через которую будут искаться решения
           Point* vector2 = new Point(-coordinate2, coordinate1);
-          // прямая, проходящая через найденную точку и через которую будут искаться решения
-          Straight* straight = new Straight(middlepoint1, middlepoint2, vector2->getX(), vector2->getY());
+          // создаем умный указатель на неё и передаем вычисленные значения
           shared_ptr<Curve> strai = shared_ptr<Straight>(new Straight(middlepoint1, middlepoint2, vector2->getX(), vector2->getY()));
+          // вычисляем точки пересечения прямой с этими окружностями
           std::vector<Point> points1 = Intersection(strai, ptr1);
           std::vector<Point> points2 = Intersection(strai, ptr2);
+          // добавляем из первой, т.к. точки одинаковы
           points.push_back(Point(points1[0].getX(), points1[0].getY()));
           points.push_back(Point(points1[1].getX(), points1[1].getY()));
         }
-
       }
     }
-    return points;
+  }
+  return points;
 }
 
 vector<Point> Intersections::SolveCircleLine(shared_ptr<Circle> ptr1, shared_ptr<Straight> ptr2)
@@ -216,52 +243,51 @@ vector<Point> Intersections::SolveCircleLine(shared_ptr<Circle> ptr1, shared_ptr
   //спроецированный радиус на прямую - точка на прямой
   Point A = Point(firstLinePtX + decartDot*z.getX(), firstLinePtY + decartDot*z.getY());
   // новая прямая с начальной найденной точкой и нормализированным направлением
-  Straight* str = new Straight (A.getX(),A.getY(),z.getX(),z.getY());
+  Straight* str = new Straight(A.getX(), A.getY(), z.getX(), z.getY());
   // длина от центра до новой точки на прямой
   double distance = sqrt(pow(A.getX() - firstcirclePtX, 2) + pow(A.getY() - firstcirclePtY, 2));
   // длина он начальной точки прямой до найденной
   double rastDot = sqrt(pow(radius, 2) - pow(distance, 2));
-  if (distance == 0 || distance==radius)
+  if (distance == 0 || distance == radius)
   {
     // прямая проходит через центр окружности - 2 точки
     if (distance == 0)
     {
-       Point* ty = str->PointCalcul(radius);
-       Point* ty2 = str->PointCalcul(-radius);
-       points.push_back(Point(ty->getX(), ty->getY()));
-       points.push_back(Point(ty2->getX(), ty2->getY()));
-    } 
+      Point* ty = str->PointCalcul(radius);
+      Point* ty2 = str->PointCalcul(-radius);
+      points.push_back(Point(ty->getX(), ty->getY()));
+      points.push_back(Point(ty2->getX(), ty2->getY()));
+    }
     // одна точка на прямой       
     if (distance == radius)
-       {
-          Straight* str1 = new Straight(firstLinePtX, firstLinePtY, z.getX(), z.getY());
-          Point* ty = str1->PointCalcul(-decartDot);
-          points.push_back(Point(ty->getX(), ty->getY()));
-       }
+    {
+      Straight* str1 = new Straight(firstLinePtX, firstLinePtY, z.getX(), z.getY());
+      Point* ty = str1->PointCalcul(-decartDot);
+      points.push_back(Point(ty->getX(), ty->getY()));
+    }
   }
 
   else
   {   // две точки пересечения
-      if (distance <= radius + EPS)
+    if (distance <= radius + EPS)
+    {
+      // находим координаты на нашей прямой в точке 1
+      Point* parameter = str->PointCalcul(1);
+      // расчитывает расстояние от найденной точки до центра заданной окружности
+      double distance = sqrt(pow(parameter->getX() - firstcirclePtX, 2) + pow(parameter->getY() - firstcirclePtY, 2));
+      // находим расстояние от начальной точки до точки на прямой
+      double rastDotParametr = sqrt(pow(radius, 2) - pow(distance, 2));
+      // вычисляем параметр через соотношение через который найдем точки пересечения 
+      double parametr2 = rastDot / rastDotParametr;
+      // ищем точку с найденным параметром
+      Point* point1 = str->PointCalcul(parametr2);
+      points.push_back(Point(point1->getX(), point1->getY()));
+      if (rastDot < radius + EPS)
       {
-        // находим координаты на нашей прямой в точке 1
-        Point* parameter = str->PointCalcul(1);
-        // расчитывает расстояние от найденной точки до центра заданной окружности
-        double distance = sqrt(pow(parameter->getX() - firstcirclePtX, 2) + pow(parameter->getY() - firstcirclePtY, 2));
-        // находим расстояние от начальной точки до точки на прямой
-        double rastDotParametr = sqrt(pow(radius, 2) - pow(distance, 2));
-        // вычисляем параметр через соотношение через который найдем точки пересечения 
-        double parametr2 = rastDot/ rastDotParametr;
-        // ищем точку с найденным параметром
-        Point* point1 = str->PointCalcul(parametr2);
-        points.push_back(Point(point1->getX(),point1->getY()));
-          if (rastDot < radius + EPS)
-          {
-            Point* point2 = str->PointCalcul(-parametr2);
-            points.push_back(Point(point2->getX(), point2->getY()));
-          }
-    
-      } 
-  }   
+        Point* point2 = str->PointCalcul(-parametr2);
+        points.push_back(Point(point2->getX(), point2->getY()));
+      }
+    }
+  }
   return points;
 }

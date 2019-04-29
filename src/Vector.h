@@ -1,5 +1,6 @@
-﻿#include <iostream>
-#pragma once
+﻿#pragma once
+
+#include <iostream>
 
 class Vector
 {

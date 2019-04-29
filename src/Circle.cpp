@@ -1,10 +1,11 @@
-﻿#include <iostream>
+﻿#pragma once
+
+#include <iostream>
 #include <math.h>
 
 #include "Curve.h"
 #include "Vector.h"
 #include "Point.h"
-#pragma once
 
 class Circle : public Curve
 {

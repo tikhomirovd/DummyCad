@@ -1,6 +1,6 @@
-﻿#include <iostream>
+﻿#pragma once
+
 #include "Point.h"
-#pragma once
 
 class Curve 
 {

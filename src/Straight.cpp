@@ -1,9 +1,10 @@
-﻿#include <iostream>
+﻿#pragma once
+
+#include <iostream>
 
 #include "Curve.h"
 #include "Vector.h"
 #include "Point.h"
-#pragma once
 
 using namespace std;
 

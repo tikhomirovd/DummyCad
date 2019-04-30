@@ -19,7 +19,7 @@ class Curve_EXPORT Curve {
 public:
     Curve() = default;
 
-    //virtual ~Curve() = default;
+    virtual ~Curve() = default;
 
     virtual Point Value(double t)  = 0;
 

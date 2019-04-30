@@ -16,7 +16,6 @@
 using namespace std;
 
 
-
 /**
 * \brief Вычисляет определитель матрицы 2х2
 * \return Определитель
@@ -105,8 +104,6 @@ public:
     void InterCircleLine(double r, double a, double b, double c);
 
 protected:
-
-
 
 
 /**

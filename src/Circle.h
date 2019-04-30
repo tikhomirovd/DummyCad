@@ -6,8 +6,8 @@
 #define CURVE_CIRCLE_H
 
 
-#include "Point.h"
-#include "Curve.h"
+#include <Point.h>
+#include <Curve.h>
 #include <cmath>
 
 /**

@@ -30,7 +30,9 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
 
         } else {
             auto circle1 = dynamic_pointer_cast<Circle>(curve2);
-            Intersection::InterPoints(line1, circle1);
+            if (circle1) {
+                Intersection::InterPoints(line1, circle1);
+            }
         }
 
     } else {
@@ -41,7 +43,9 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
                 Intersection::InterPoints(circle1, circle2);
             } else {
                 auto line2 = dynamic_pointer_cast<Circle>(curve2);
-                Intersection::InterPoints(line1, circle2);
+                if (line2) {
+                    Intersection::InterPoints(line1, circle2);
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
 // Created by dimas on 4/12/19.
 //
 
-#include "Line.h"
+#include <Line.h>
 
 
 Line::Line(const Point &ccenter, const Point &ddirect)

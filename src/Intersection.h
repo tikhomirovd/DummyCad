@@ -21,7 +21,7 @@ using namespace std;
 * \brief Вычисляет определитель матрицы 2х2
 * \return Определитель
 */
-double det(double, double, double, double);
+static double det(double, double, double, double);
 
 /**
  * \brief   Класс, который вычисляет точки, в которых кривые пересекаются

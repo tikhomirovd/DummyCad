@@ -152,7 +152,7 @@ bool Intersection::isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<
 }
 
 
-double det(double a, double b, double c, double d) {
+static double det(double a, double b, double c, double d) {
     return a * d - b * c;
 }
 

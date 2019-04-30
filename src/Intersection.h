@@ -20,7 +20,7 @@ using namespace std;
 * \brief Вычисляет определитель матрицы 2х2
 * \return Определитель
 */
-static double det(double, double, double, double);
+
 
 /**
  * \brief   Класс, который вычисляет точки, в которых кривые пересекаются
@@ -32,12 +32,13 @@ public:
     {
         DONE,
         NOT_INTERSECTED,
-        EQUAL
+        EQUAL,
+        NOT_SUPPORTED_CURVE
     };
 
 private:
-    vector<Point> inter = {};
-    InterStatus status;
+    vector<Point> theInter = {};
+    InterStatus theStatus = NOT_SUPPORTED_CURVE;
 
 
 public:

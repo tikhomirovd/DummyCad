@@ -98,6 +98,9 @@ public:
     *
     */
     InterStatus CurrentStatus();
+
+
+protected:
     
     /**
  * \brief Вычисляет точки пересечения окружности с прямой
@@ -105,9 +108,6 @@ public:
  * \param r Радиус окружности
  */
     void InterCircleLine(double r, double a, double b, double c);
-
-protected:
-
 
 /**
  * \brief Находит точки пересечения у двух линий

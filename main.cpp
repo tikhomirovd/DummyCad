@@ -21,7 +21,7 @@ int main() {
     double radius = 5;
     double t = 5;
     shared_ptr<Circle> circle(new Circle(O, radius));
-    //shared_ptr<Circle> circle2(new Circle(O1, radius));
+    //shared_ptr<Circle> circle2(new Circle(O1, myRadius));
 
 
     Point c_tangent = circle->Tangent(t);

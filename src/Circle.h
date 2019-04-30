@@ -18,8 +18,8 @@
 class Curve_EXPORT Circle : public Curve
 {
 private:
-    Point center;
-    double radius = 0;
+    Point myCenter;
+    double myRadius = 0;
 
 
 public:

@@ -15,8 +15,28 @@ static const auto EPS = 1e-9;
 
 //enumerate
 
+/**
+* \brief Вычисляет определитель матрицы 2х2
+* \return Определитель
+*/
 
 static double det(double, double, double, double);
+
+/**
+* \brief Проверяет, являются ли прямые параллельными
+* \param line1 Первая линия
+* \param line2 Вторая линия
+ *
+*/
+bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
+
+/**
+* \brief Проверяет, совпадают ли прямые
+* \param line1 Первая линия
+* \param line2 Вторая линия
+ *
+*/
+bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
 
 Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Curve> &curve2)
 {
@@ -57,12 +77,12 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
                     Intersection::InterPoints(aLine1, aCircle2);
                 } else
                 {
-                    theStatus = NOT_SUPPORTED_CURVE;
+                    myStatus = NOT_SUPPORTED_CURVE;
                 }
             }
         } else
         {
-            theStatus = NOT_SUPPORTED_CURVE;
+            myStatus = NOT_SUPPORTED_CURVE;
         }
     }
     
@@ -89,10 +109,10 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
     
     if ( aDistance < EPS && fabs(aRadius1 - aRadius2) < EPS )
     {
-        theStatus = EQUAL;
+        myStatus = EQUAL;
     } else if ( aDistance > aRadius1 + aRadius2 or aDistance < fabs(aRadius1 - aRadius2))
     {
-        theStatus = NOT_INTERSECTED;
+        myStatus = NOT_INTERSECTED;
     } else
     {
         double aCut = ((pow(aRadius1, 2) - pow(aRadius2, 2) + pow(aDistance, 2)) / (2 * aDistance));
@@ -104,39 +124,40 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
         double aAnsY1 = aP3.Y() - aHeight / aDistance * (aX2 - aX1);
         double aAnsX2 = aP3.X() - aHeight / aDistance * (aY2 - aY1);
         double aAnsY2 = aP3.Y() + aHeight / aDistance * (aX2 - aX1);
-        theInter.emplace_back(aAnsX1, aAnsY1, 0);
+        myInter.emplace_back(aAnsX1, aAnsY1, 0);
         if ( aAnsX1 != aAnsX2 && aAnsY1 != aAnsY2 )
         {
-            theInter.emplace_back(aAnsX2, aAnsY2, 0);
+            myInter.emplace_back(aAnsX2, aAnsY2, 0);
         }
-        theStatus = DONE;
+        myStatus = DONE;
     }
     
     
 }
 
-void Intersection::InterCircleLine(double r, double a, double b, double c)
+void Intersection::InterCircleLine(double theRadius, double theCoefA, double theCoefB, double theCoefC)
 {
-    double aX0 = -a * c / (a * a + b * b), aY0 = -b * c / (a * a + b * b);
-    if ( c * c > r * r * (a * a + b * b) + EPS )
+    double aX0 = -theCoefA * theCoefC / (theCoefA * theCoefA + theCoefB * theCoefB),
+            aY0 = -theCoefB * theCoefC / (theCoefA * theCoefA + theCoefB * theCoefB);
+    if ( theCoefC * theCoefC > theRadius * theRadius * (theCoefA * theCoefA + theCoefB * theCoefB) + EPS )
     {
-        theStatus = NOT_INTERSECTED;
-    } else if ( fabs(c * c - r * r * (a * a + b * b)) < EPS )
+        myStatus = NOT_INTERSECTED;
+    } else if ( fabs(theCoefC * theCoefC - theRadius * theRadius * (theCoefA * theCoefA + theCoefB * theCoefB)) < EPS )
     {
-        theStatus = DONE;
-        theInter.emplace_back(aX0, aY0, 0);
+        myStatus = DONE;
+        myInter.emplace_back(aX0, aY0, 0);
     } else
     {
-        double aDistance = r * r - c * c / (a * a + b * b);
-        double aMult = sqrt(aDistance / (a * a + b * b));
+        double aDistance = theRadius * theRadius - theCoefC * theCoefC / (theCoefA * theCoefA + theCoefB * theCoefB);
+        double aMult = sqrt(aDistance / (theCoefA * theCoefA + theCoefB * theCoefB));
         double ax, ay, bx, by;
-        ax = aX0 + b * aMult;
-        bx = aX0 - b * aMult;
-        ay = aY0 - a * aMult;
-        by = aY0 + a * aMult;
-        theInter.emplace_back(ax, ay, 0);
-        theInter.emplace_back(bx, by, 0);
-        theStatus = DONE;
+        ax = aX0 + theCoefB * aMult;
+        bx = aX0 - theCoefB * aMult;
+        ay = aY0 - theCoefA * aMult;
+        by = aY0 + theCoefA * aMult;
+        myInter.emplace_back(ax, ay, 0);
+        myInter.emplace_back(bx, by, 0);
+        myStatus = DONE;
     }
 }
 
@@ -147,12 +168,12 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
     double aZn = det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
                      line2->CoefEquation().X(), line2->CoefEquation().Y());
     
-    if ( Intersection::IsEquivalent(line1, line2))
+    if ( IsEquivalent(line1, line2))
     {
-        theStatus = EQUAL;
-    } else if ( Intersection::IsParallel(line1, line2))
+        myStatus = EQUAL;
+    } else if ( IsParallel(line1, line2))
     {
-        theStatus = NOT_INTERSECTED;
+        myStatus = NOT_INTERSECTED;
     } else
     {
         double aResx, aResy;
@@ -162,20 +183,20 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
                      line2->CoefEquation().X(), line2->CoefEquation().Z()) / aZn;
         
         
-        theInter.emplace_back(aResx, aResy, 0);
-        theStatus = DONE;
+        myInter.emplace_back(aResx, aResy, 0);
+        myStatus = DONE;
     }
 }
 
 
-bool Intersection::IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
+bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
 {
     
     return fabs(det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
                     line2->CoefEquation().X(), line2->CoefEquation().Y())) < EPS;
 }
 
-bool Intersection::IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
+bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
 {
     return fabs(det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
                     line2->CoefEquation().X(), line2->CoefEquation().Y())) < EPS
@@ -194,7 +215,7 @@ static double det(double a, double b, double c, double d)
 const Point &Intersection::FirstPoint()
 {
     if ( NumberInter())
-        return theInter[0];
+        return myInter[0];
     return {NAN, NAN, NAN};
 }
 
@@ -202,7 +223,7 @@ const Point &Intersection::SecondPoint()
 {
     if ( NumberInter() >= 2 )
     {
-        return theInter[1];
+        return myInter[1];
     }
     return {NAN, NAN, NAN};
     
@@ -210,11 +231,11 @@ const Point &Intersection::SecondPoint()
 
 Intersection::InterStatus Intersection::CurrentStatus()
 {
-    return theStatus;
+    return myStatus;
 }
 
 int Intersection::NumberInter()
 {
-    return theInter.size();
+    return myInter.size();
 }
 

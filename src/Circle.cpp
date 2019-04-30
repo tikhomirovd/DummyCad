@@ -7,15 +7,15 @@
 
 Circle::Circle(const Point &theCenter, double theRadius)
 {
-    center = theCenter;
-    radius = theRadius;
+    myCenter = theCenter;
+    myRadius = theRadius;
 }
 
 Point Circle::Value(double t)
 {
-    double aCoordX = center.X() + radius * cos(t);
-    double aCoordY = center.Y() + radius * sin(t);
-    return {aCoordX, aCoordY, center.Z()};
+    double aCoordX = myCenter.X() + myRadius * cos(t);
+    double aCoordY = myCenter.Y() + myRadius * sin(t);
+    return {aCoordX, aCoordY, myCenter.Z()};
 }
 
 bool Circle::IsClosed()
@@ -25,16 +25,16 @@ bool Circle::IsClosed()
 
 Point Circle::Tangent(double t)
 {
-    return {-radius * sin(t), radius * cos(t), 0};
+    return {-myRadius * sin(t), myRadius * cos(t), 0};
 }
 
 double Circle::Radius()
 {
-    return radius;
+    return myRadius;
 }
 
 
 const Point &Circle::Center() const
 {
-    return center;
+    return myCenter;
 }

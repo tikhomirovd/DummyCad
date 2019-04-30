@@ -7,14 +7,14 @@
 
 Line::Line(const Point &ccenter, const Point &ddirect)
 {
-    center = ccenter;
-    direct = ddirect;
+    myCenter = ccenter;
+    myDirect = ddirect;
 }
 
 Point Line::Value(double t)
 {
-    Point aNewDirect = direct * t;
-    return aNewDirect + center;
+    Point aNewDirect = myDirect * t;
+    return aNewDirect + myCenter;
 }
 
 bool Line::IsClosed()
@@ -24,12 +24,12 @@ bool Line::IsClosed()
 
 Point Line::Tangent(double)
 {
-    return direct;
+    return myDirect;
 }
 
 Point Line::CoefEquation()
 {
-    return {direct.Y(), -direct.X(), direct.X() * center.Y() - direct.Y() * center.X()};
+    return {myDirect.Y(), -myDirect.X(), myDirect.X() * myCenter.Y() - myDirect.Y() * myCenter.X()};
 }
 
 

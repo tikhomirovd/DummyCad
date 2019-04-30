@@ -1623,7 +1623,7 @@ COMPACT_LATEX          = NO
 
 # The PAPER_TYPE tag can be used to set the paper type that is used by the
 # printer.
-# Possible values are: a4 (210 theCoordX 297 mm), letter (8.5 theCoordX 11 inches), legal (8.5 theCoordX
+# Possible values are: a4 (210 myCoordX 297 mm), letter (8.5 myCoordX 11 inches), legal (8.5 myCoordX
 # 14 inches) and executive (7.25 X 10.5 inches).
 # The default value is: a4.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
@@ -2162,7 +2162,7 @@ DOT_FONTSIZE           = 10
 DOT_FONTPATH           =
 
 # If the CLASS_GRAPH tag is set to YES then doxygen will generate a graph for
-# each documented class showing the direct and indirect inheritance relations.
+# each documented class showing the myDirect and indirect inheritance relations.
 # Setting this tag to YES will force the CLASS_DIAGRAMS tag to NO.
 # The default value is: YES.
 # This tag requires that the tag HAVE_DOT is set to YES.
@@ -2170,7 +2170,7 @@ DOT_FONTPATH           =
 CLASS_GRAPH            = YES
 
 # If the COLLABORATION_GRAPH tag is set to YES then doxygen will generate a
-# graph for each documented class showing the direct and indirect implementation
+# graph for each documented class showing the myDirect and indirect implementation
 # dependencies (inheritance, containment, and class references variables) of the
 # class with other documented classes.
 # The default value is: YES.
@@ -2179,7 +2179,7 @@ CLASS_GRAPH            = YES
 COLLABORATION_GRAPH    = YES
 
 # If the GROUP_GRAPHS tag is set to YES then doxygen will generate a graph for
-# groups, showing the direct groups dependencies.
+# groups, showing the myDirect groups dependencies.
 # The default value is: YES.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
@@ -2216,7 +2216,7 @@ TEMPLATE_RELATIONS     = NO
 
 # If the INCLUDE_GRAPH, ENABLE_PREPROCESSING and SEARCH_INCLUDES tags are set to
 # YES then doxygen will generate a graph for each documented file showing the
-# direct and indirect include dependencies of the file with other documented
+# myDirect and indirect include dependencies of the file with other documented
 # files.
 # The default value is: YES.
 # This tag requires that the tag HAVE_DOT is set to YES.
@@ -2225,7 +2225,7 @@ INCLUDE_GRAPH          = YES
 
 # If the INCLUDED_BY_GRAPH, ENABLE_PREPROCESSING and SEARCH_INCLUDES tags are
 # set to YES then doxygen will generate a graph for each documented file showing
-# the direct and indirect include dependencies of the file with other documented
+# the myDirect and indirect include dependencies of the file with other documented
 # files.
 # The default value is: YES.
 # This tag requires that the tag HAVE_DOT is set to YES.
@@ -2340,7 +2340,7 @@ PLANTUML_INCLUDE_PATH  =
 # The DOT_GRAPH_MAX_NODES tag can be used to set the maximum number of nodes
 # that will be shown in the graph. If the number of nodes in a graph becomes
 # larger than this value, doxygen will truncate the graph, which is visualized
-# by representing a node as a red box. Note that doxygen if the number of direct
+# by representing a node as a red box. Note that doxygen if the number of myDirect
 # children of the root node in a graph is already larger than
 # DOT_GRAPH_MAX_NODES then the graph will not be shown at all. Also note that
 # the size of a graph can be further restricted by MAX_DOT_GRAPH_DEPTH.

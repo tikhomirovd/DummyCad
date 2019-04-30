@@ -16,7 +16,7 @@
 class Curve_EXPORT Line : public Curve
 {
 private:
-    Point center, direct;
+    Point myCenter, myDirect;
 
 
 public:

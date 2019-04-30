@@ -17,12 +17,6 @@ using namespace std;
 
 
 /**
-* \brief Вычисляет определитель матрицы 2х2
-* \return Определитель
-*/
-
-
-/**
  * \brief   Класс, который вычисляет точки, в которых кривые пересекаются
  */
 class Curve_EXPORT Intersection
@@ -37,8 +31,8 @@ public:
     };
 
 private:
-    vector<Point> theInter = {};
-    InterStatus theStatus = NOT_SUPPORTED_CURVE;
+    vector<Point> myInter = {};
+    InterStatus myStatus = NOT_SUPPORTED_CURVE;
 
 
 public:
@@ -49,24 +43,6 @@ public:
      * \param curve2 - Вторая кривая
      */
     Intersection(const shared_ptr<Curve> &, const shared_ptr<Curve> &);
-    
-    
-    /**
-    * \brief Проверяет, являются ли прямые параллельными
-    * \param line1 Первая линия
-    * \param line2 Вторая линия
-     *
-    */
-    static bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
-    
-    
-    /**
-    * \brief Проверяет, совпадают ли прямые
-    * \param line1 Первая линия
-    * \param line2 Вторая линия
-     *
-    */
-    static bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
     
     
     /**
@@ -105,9 +81,9 @@ protected:
     /**
  * \brief Вычисляет точки пересечения окружности с прямой
  * Параметры \f$ a, b, c \f$ из общего уравнения прямой \f$ A x + B y + C = 0 \f$
- * \param r Радиус окружности
+ * \param theRadius Радиус окружности
  */
-    void InterCircleLine(double r, double a, double b, double c);
+    void InterCircleLine(double theRadius, double theCoefA, double theCoefB, double theCoefC);
 
 /**
  * \brief Находит точки пересечения у двух линий

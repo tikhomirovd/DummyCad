@@ -56,7 +56,7 @@ public:
     * \param line2 Вторая линия
      *
     */
-    bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
+    static bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
     
     
     /**
@@ -65,7 +65,7 @@ public:
     * \param line2 Вторая линия
      *
     */
-    bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
+    static bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
     
     
     /**
@@ -73,7 +73,7 @@ public:
     *
     *
     */
-    const Point &First_Point();
+    const Point &FirstPoint();
     
     
     /**
@@ -81,7 +81,7 @@ public:
     *
     *
     */
-    const Point &Second_Point();
+    const Point &SecondPoint();
     
     
     /**
@@ -96,7 +96,7 @@ public:
     *
     *
     */
-    InterStatus Current_status();
+    InterStatus CurrentStatus();
     
     /**
  * \brief Вычисляет точки пересечения окружности с прямой

@@ -11,7 +11,7 @@
 
 using namespace std;
 
-static const double EPS = 1e-9;
+static const auto EPS = 1e-9;
 
 //enumerate
 
@@ -20,41 +20,41 @@ static const double EPS = 1e-9;
 
 Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Curve> &curve2)
 {
-    auto line1 = dynamic_pointer_cast<Line>(curve1);
-    if ( line1 )
+    auto aLine1 = dynamic_pointer_cast<Line>(curve1);
+    if ( aLine1 )
     {
-        auto line2 = dynamic_pointer_cast<Line>(curve2);
+        auto aLine2 = dynamic_pointer_cast<Line>(curve2);
         
         
-        if ( line2 )
+        if ( aLine2 )
         {
-            Intersection::InterPoints(line1, line2);
+            Intersection::InterPoints(aLine1, aLine2);
             
             
         } else
         {
-            auto circle1 = dynamic_pointer_cast<Circle>(curve2);
-            if ( circle1 )
+            auto aCircle1 = dynamic_pointer_cast<Circle>(curve2);
+            if ( aCircle1 )
             {
-                Intersection::InterPoints(line1, circle1);
+                Intersection::InterPoints(aLine1, aCircle1);
             }
         }
         
     } else
     {
-        auto circle1 = dynamic_pointer_cast<Circle>(curve1);
-        if ( circle1 )
+        auto aCircle1 = dynamic_pointer_cast<Circle>(curve1);
+        if ( aCircle1 )
         {
-            auto circle2 = dynamic_pointer_cast<Circle>(curve2);
-            if ( circle2 )
+            auto aCircle2 = dynamic_pointer_cast<Circle>(curve2);
+            if ( aCircle2 )
             {
-                Intersection::InterPoints(circle1, circle2);
+                Intersection::InterPoints(aCircle1, aCircle2);
             } else
             {
-                auto line2 = dynamic_pointer_cast<Circle>(curve2);
-                if ( line2 )
+                auto aLine2 = dynamic_pointer_cast<Circle>(curve2);
+                if ( aLine2 )
                 {
-                    Intersection::InterPoints(line1, circle2);
+                    Intersection::InterPoints(aLine1, aCircle2);
                 }
             }
         }
@@ -65,43 +65,43 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
 
 void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Circle> &circle1)
 {
-    double r = circle1->Radius(), a = line1->Coef_equation().X(),
-            b = line1->Coef_equation().Y(), c =
-            line1->Coef_equation().Z() + circle1->Center().X() + circle1->Center().Y();
-    Intersection::InterCircleLine(r, a, b, c);
+    double aRadius = circle1->Radius(), aCoefA = line1->CoefEquation().X(),
+            aCoefB = line1->CoefEquation().Y(),
+            aCoefC = line1->CoefEquation().Z() + circle1->Center().X() + circle1->Center().Y();
+    Intersection::InterCircleLine(aRadius, aCoefA, aCoefB, aCoefC);
     
     
 }
 
 void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_ptr<Circle> &circle2)
 {
-    double r1 = circle1->Radius(), r2 = circle2->Radius();
+    double aRadius1 = circle1->Radius(), aRadius2 = circle2->Radius();
     
-    double d = sqrt(pow(circle1->Center().X() - circle2->Center().X(), 2)
-                    + pow(circle1->Center().Y() - circle2->Center().Y(), 2));
+    double aDistance = sqrt(pow(circle1->Center().X() - circle2->Center().X(), 2) +
+                            pow(circle1->Center().Y() - circle2->Center().Y(), 2));
     
     
-    if ( d < EPS && fabs(r1 - r2) < EPS )
+    if ( aDistance < EPS && fabs(aRadius1 - aRadius2) < EPS )
     {
         status = EQUAL;
-    } else if ( d > r1 + r2 or d < fabs(r1 - r2))
+    } else if ( aDistance > aRadius1 + aRadius2 or aDistance < fabs(aRadius1 - aRadius2))
     {
         status = NOT_INTERSECTED;
     } else
     {
-        double a = (pow(r1, 2) - pow(r2, 2) + pow(d, 2) / (2 * d));
-        double h = sqrt(pow(r1, 2) - pow(a, 2));
-        double x1 = circle1->Center().X(), x2 = circle2->Center().X();
-        double y1 = circle1->Center().Y(), y2 = circle2->Center().Y();
-        Point P3 = circle1->Center() + (circle2->Center() - circle1->Center()) * (a / d);
-        double ans_x1 = P3.X() + h / d * (y2 - y1);
-        double ans_y1 = P3.Y() - h / d * (x2 - x1);
-        double ans_x2 = P3.X() - h / d * (y2 - y1);
-        double ans_y2 = P3.Y() + h / d * (x2 - x1);
-        inter.emplace_back(ans_x1, ans_y1, 0);
-        if ( ans_x1 != ans_x2 && ans_y1 != ans_y2 )
+        double aCut = ((pow(aRadius1, 2) - pow(aRadius2, 2) + pow(aDistance, 2)) / (2 * aDistance));
+        double aHeight = sqrt(pow(aRadius1, 2) - pow(aCut, 2));
+        double aX1 = circle1->Center().X(), aX2 = circle2->Center().X();
+        double aY1 = circle1->Center().Y(), aY2 = circle2->Center().Y();
+        Point aP3 = circle1->Center() + (circle2->Center() - circle1->Center()) * (aCut / aDistance);
+        double aAnsX1 = aP3.X() + aHeight / aDistance * (aY2 - aY1);
+        double aAnsY1 = aP3.Y() - aHeight / aDistance * (aX2 - aX1);
+        double aAnsX2 = aP3.X() - aHeight / aDistance * (aY2 - aY1);
+        double aAnsY2 = aP3.Y() + aHeight / aDistance * (aX2 - aX1);
+        inter.emplace_back(aAnsX1, aAnsY1, 0);
+        if ( aAnsX1 != aAnsX2 && aAnsY1 != aAnsY2 )
         {
-            inter.emplace_back(ans_x2, ans_y2, 0);
+            inter.emplace_back(aAnsX2, aAnsY2, 0);
         }
         status = DONE;
     }
@@ -111,23 +111,23 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
 
 void Intersection::InterCircleLine(double r, double a, double b, double c)
 {
-    double x0 = -a * c / (a * a + b * b), y0 = -b * c / (a * a + b * b);
+    double aX0 = -a * c / (a * a + b * b), aY0 = -b * c / (a * a + b * b);
     if ( c * c > r * r * (a * a + b * b) + EPS )
     {
         status = NOT_INTERSECTED;
     } else if ( fabs(c * c - r * r * (a * a + b * b)) < EPS )
     {
         status = DONE;
-        inter.emplace_back(x0, y0, 0);
+        inter.emplace_back(aX0, aY0, 0);
     } else
     {
-        double d = r * r - c * c / (a * a + b * b);
-        double mult = sqrt(d / (a * a + b * b));
+        double aDistance = r * r - c * c / (a * a + b * b);
+        double aMult = sqrt(aDistance / (a * a + b * b));
         double ax, ay, bx, by;
-        ax = x0 + b * mult;
-        bx = x0 - b * mult;
-        ay = y0 - a * mult;
-        by = y0 + a * mult;
+        ax = aX0 + b * aMult;
+        bx = aX0 - b * aMult;
+        ay = aY0 - a * aMult;
+        by = aY0 + a * aMult;
         inter.emplace_back(ax, ay, 0);
         inter.emplace_back(bx, by, 0);
         status = DONE;
@@ -138,8 +138,8 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 {
     
     
-    double zn = det(line1->Coef_equation().X(), line1->Coef_equation().Y(),
-                    line2->Coef_equation().X(), line2->Coef_equation().Y());
+    double aZn = det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
+                    line2->CoefEquation().X(), line2->CoefEquation().Y());
     
     if ( Intersection::IsEquivalent(line1, line2))
     {
@@ -149,14 +149,14 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
         status = NOT_INTERSECTED;
     } else
     {
-        double resx, resy;
-        resx = -det(line1->Coef_equation().Z(), line1->Coef_equation().Y(),
-                    line2->Coef_equation().Z(), line2->Coef_equation().Y()) / zn;
-        resy = -det(line1->Coef_equation().X(), line1->Coef_equation().Z(),
-                    line2->Coef_equation().X(), line2->Coef_equation().Z()) / zn;
+        double aResx, aResy;
+        aResx = -det(line1->CoefEquation().Z(), line1->CoefEquation().Y(),
+                    line2->CoefEquation().Z(), line2->CoefEquation().Y()) / aZn;
+        aResy = -det(line1->CoefEquation().X(), line1->CoefEquation().Z(),
+                    line2->CoefEquation().X(), line2->CoefEquation().Z()) / aZn;
         
         
-        inter.emplace_back(resx, resy, 0);
+        inter.emplace_back(aResx, aResy, 0);
         status = DONE;
     }
 }
@@ -165,18 +165,18 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
 bool Intersection::IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
 {
     
-    return fabs(det(line1->Coef_equation().X(), line1->Coef_equation().Y(),
-                    line2->Coef_equation().X(), line2->Coef_equation().Y())) < EPS;
+    return fabs(det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
+                    line2->CoefEquation().X(), line2->CoefEquation().Y())) < EPS;
 }
 
 bool Intersection::IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
 {
-    return fabs(det(line1->Coef_equation().X(), line1->Coef_equation().Y(),
-                    line2->Coef_equation().X(), line2->Coef_equation().Y())) < EPS
-           && fabs(det(line1->Coef_equation().X(), line2->Coef_equation().Z(),
-                       line2->Coef_equation().X(), line2->Coef_equation().Z())) < EPS
-           && fabs(det(line1->Coef_equation().Y(), line1->Coef_equation().Z(),
-                       line2->Coef_equation().Y(), line2->Coef_equation().Z())) < EPS;
+    return fabs(det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
+                    line2->CoefEquation().X(), line2->CoefEquation().Y())) < EPS
+           && fabs(det(line1->CoefEquation().X(), line2->CoefEquation().Z(),
+                       line2->CoefEquation().X(), line2->CoefEquation().Z())) < EPS
+           && fabs(det(line1->CoefEquation().Y(), line1->CoefEquation().Z(),
+                       line2->CoefEquation().Y(), line2->CoefEquation().Z())) < EPS;
 }
 
 
@@ -185,14 +185,14 @@ static double det(double a, double b, double c, double d)
     return a * d - b * c;
 }
 
-const Point &Intersection::First_Point()
+const Point &Intersection::FirstPoint()
 {
     if ( NumberInter())
         return inter[0];
     return {NAN, NAN, NAN};
 }
 
-const Point &Intersection::Second_Point()
+const Point &Intersection::SecondPoint()
 {
     if ( NumberInter() >= 2 )
     {
@@ -202,7 +202,7 @@ const Point &Intersection::Second_Point()
     
 }
 
-Intersection::InterStatus Intersection::Current_status()
+Intersection::InterStatus Intersection::CurrentStatus()
 {
     return status;
 }

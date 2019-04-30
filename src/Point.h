@@ -16,7 +16,7 @@ using namespace std;
 class Curve_EXPORT Point
 {
 private:
-    double coord_x = 0, coord_y = 0, coord_z = 0;
+    double theCoordX = 0, theCoordY = 0, theCoordZ = 0;
 
 
 public:

@@ -197,8 +197,8 @@ TEST(IntersectionTest, LineLineIntersectPoint)
     
     double xTrue2 = 2, yTrue2 = -1;
     
-    ASSERT_EQ(testLine2.First_Point().X(), xTrue2);
-    ASSERT_EQ(testLine2.First_Point().Y(), yTrue2);
+    ASSERT_EQ(testLine2.FirstPoint().X(), xTrue2);
+    ASSERT_EQ(testLine2.FirstPoint().Y(), yTrue2);
 }
 
 TEST(IntersectionTest, LineLineEquivalent)
@@ -211,7 +211,7 @@ TEST(IntersectionTest, LineLineEquivalent)
     Intersection testLine = Intersection(line, line);
     
     
-    ASSERT_EQ(testLine.Current_status(), Intersection::EQUAL);
+    ASSERT_EQ(testLine.CurrentStatus(), Intersection::EQUAL);
     
 }
 
@@ -227,7 +227,7 @@ TEST(IntersectionTest, LineLineParallel)
     
     Intersection testLine = Intersection(line, line2);
     
-    ASSERT_EQ(testLine.Current_status(), Intersection::NOT_INTERSECTED);
+    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
     
 }
 
@@ -257,13 +257,13 @@ TEST(IntersectionTest, LineCirclePoints)
     double xTrue4 = 0, yTrue4 = 5;
     
     
-    ASSERT_NEAR(testLine1.First_Point().X(), xTrue2, tol);
-    ASSERT_NEAR(testLine1.First_Point().Y(), yTrue2, tol);
-    ASSERT_NEAR(testLine1.Second_Point().X(), xTrue3, tol);
-    ASSERT_NEAR(testLine1.Second_Point().Y(), yTrue3, tol);
+    ASSERT_NEAR(testLine1.FirstPoint().X(), xTrue2, tol);
+    ASSERT_NEAR(testLine1.FirstPoint().Y(), yTrue2, tol);
+    ASSERT_NEAR(testLine1.SecondPoint().X(), xTrue3, tol);
+    ASSERT_NEAR(testLine1.SecondPoint().Y(), yTrue3, tol);
     
-    ASSERT_NEAR(fabs(testLine2.First_Point().X()), xTrue4, tol);
-    ASSERT_NEAR(fabs(testLine2.First_Point().Y()), yTrue4, tol);
+    ASSERT_NEAR(fabs(testLine2.FirstPoint().X()), xTrue4, tol);
+    ASSERT_NEAR(fabs(testLine2.FirstPoint().Y()), yTrue4, tol);
     
     
 }
@@ -280,7 +280,7 @@ TEST(IntersectionTest, LineCircleNotInter)
     
     Intersection testLine = Intersection(line, circle);
     
-    ASSERT_EQ(testLine.Current_status(), Intersection::NOT_INTERSECTED);
+    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
     
 }
 
@@ -305,13 +305,13 @@ TEST(IntersectionTest, CircleCirclePoints)
     double xTrue4 = -3, yTrue4 = 4;
     
     
-    ASSERT_NEAR(testLine2.First_Point().X(), xTrue2, tol);
-    ASSERT_NEAR(testLine2.First_Point().Y(), yTrue2, tol);
+    ASSERT_NEAR(testLine2.FirstPoint().X(), xTrue2, tol);
+    ASSERT_NEAR(testLine2.FirstPoint().Y(), yTrue2, tol);
     
-    ASSERT_NEAR(testLine3.First_Point().X(), xTrue3, tol);
-    ASSERT_NEAR(testLine3.First_Point().Y(), yTrue3, tol);
-    ASSERT_NEAR(testLine3.Second_Point().X(), xTrue4, tol);
-    ASSERT_NEAR(testLine3.Second_Point().Y(), yTrue4, tol);
+    ASSERT_NEAR(testLine3.FirstPoint().X(), xTrue3, tol);
+    ASSERT_NEAR(testLine3.FirstPoint().Y(), yTrue3, tol);
+    ASSERT_NEAR(testLine3.SecondPoint().X(), xTrue4, tol);
+    ASSERT_NEAR(testLine3.SecondPoint().Y(), yTrue4, tol);
 }
 
 TEST(IntersectionTest, CircleCircleEqual)
@@ -324,7 +324,7 @@ TEST(IntersectionTest, CircleCircleEqual)
     
     Intersection testLine = Intersection(circle, circle);
     
-    ASSERT_EQ(testLine.Current_status(), Intersection::EQUAL);
+    ASSERT_EQ(testLine.CurrentStatus(), Intersection::EQUAL);
     
 }
 
@@ -342,7 +342,7 @@ TEST(IntersectionTest, CircleCircleNotInter)
     Intersection testLine = Intersection(circle, circle1);
     
     
-    ASSERT_EQ(testLine.Current_status(), Intersection::NOT_INTERSECTED);
+    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
     
 }
 

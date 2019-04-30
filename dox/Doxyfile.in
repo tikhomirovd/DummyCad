@@ -1623,7 +1623,7 @@ COMPACT_LATEX          = NO
 
 # The PAPER_TYPE tag can be used to set the paper type that is used by the
 # printer.
-# Possible values are: a4 (210 coord_x 297 mm), letter (8.5 coord_x 11 inches), legal (8.5 coord_x
+# Possible values are: a4 (210 theCoordX 297 mm), letter (8.5 theCoordX 11 inches), legal (8.5 theCoordX
 # 14 inches) and executive (7.25 X 10.5 inches).
 # The default value is: a4.
 # This tag requires that the tag GENERATE_LATEX is set to YES.

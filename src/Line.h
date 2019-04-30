@@ -59,7 +59,7 @@ public:
      * \f$ \{A, B, C \} \f$
      * \return Вектор \f$ \{A, B, C \} \f$
      */
-    Point Coef_equation();
+    Point CoefEquation();
 };
 
 

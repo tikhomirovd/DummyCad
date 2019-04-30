@@ -2,7 +2,7 @@
 // Created by dimas on 4/18/19.
 //
 #include <vector>
-#include "Intersection.h"
+#include <Intersection.h>
 #include <iostream>
 #include <Curve.h>
 #include <Line.h>
@@ -236,5 +236,5 @@ Intersection::InterStatus Intersection::CurrentStatus()
 int Intersection::NumberInter()
 {
     return myInter.size();
-}
+    }
 

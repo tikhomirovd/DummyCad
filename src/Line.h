@@ -6,8 +6,8 @@
 #define CURVE_LINE_H
 
 
-#include "Curve.h"
-#include "Point.h"
+#include <Curve.h>
+#include <Point.h>
 
 
 /**

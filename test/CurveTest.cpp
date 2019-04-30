@@ -12,7 +12,7 @@
 #include <Circle.h>
 #include <Intersection.h>
 
-static const double tol = 1.e-7;
+static const double TOL = 1.e-7;
 
 
 TEST(PointTest, Constructor)
@@ -20,9 +20,9 @@ TEST(PointTest, Constructor)
     double x = 1.0, y = 2.0, z = 3.0;
     Point point(x, y, z);
     
-    ASSERT_NEAR(point.X(), x, tol);
-    ASSERT_NEAR(point.Y(), y, tol);
-    ASSERT_NEAR(point.Z(), z, tol);
+    ASSERT_NEAR(point.X(), x, TOL);
+    ASSERT_NEAR(point.Y(), y, TOL);
+    ASSERT_NEAR(point.Z(), z, TOL);
 }
 
 TEST(PointTest, OperatorPlusVector)
@@ -32,13 +32,13 @@ TEST(PointTest, OperatorPlusVector)
     Point point1 = Point(x1, y1, z1);
     Point point2 = Point(x2, y2, z2);
     
-    ASSERT_NEAR((point1 + point2).X(), x1 + x2, tol);
-    ASSERT_NEAR((point1 + point2).Y(), y1 + y2, tol);
-    ASSERT_NEAR((point1 + point2).Z(), z1 + z2, tol);
+    ASSERT_NEAR((point1 + point2).X(), x1 + x2, TOL);
+    ASSERT_NEAR((point1 + point2).Y(), y1 + y2, TOL);
+    ASSERT_NEAR((point1 + point2).Z(), z1 + z2, TOL);
     
-    ASSERT_NEAR((point2 + point1).X(), x2 + x1, tol);
-    ASSERT_NEAR((point2 + point1).Y(), y2 + y1, tol);
-    ASSERT_NEAR((point2 + point1).Z(), z2 + z1, tol);
+    ASSERT_NEAR((point2 + point1).X(), x2 + x1, TOL);
+    ASSERT_NEAR((point2 + point1).Y(), y2 + y1, TOL);
+    ASSERT_NEAR((point2 + point1).Z(), z2 + z1, TOL);
     
     
 }
@@ -49,9 +49,9 @@ TEST(PointTest, OperatorMul)
     double t = 5;
     Point point = Point(x, y, z);
     
-    ASSERT_NEAR((point * t).X(), x * t, tol);
-    ASSERT_NEAR((point * t).Y(), y * t, tol);
-    ASSERT_NEAR((point * t).Z(), z * t, tol);
+    ASSERT_NEAR((point * t).X(), x * t, TOL);
+    ASSERT_NEAR((point * t).Y(), y * t, TOL);
+    ASSERT_NEAR((point * t).Z(), z * t, TOL);
     
     
 }
@@ -62,9 +62,9 @@ TEST(PointTest, OperatorSumScaler)
     double t = 5;
     Point point = Point(x, y, z);
     
-    ASSERT_NEAR((point + t).X(), x + t, tol);
-    ASSERT_NEAR((point + t).Y(), y + t, tol);
-    ASSERT_NEAR((point + t).Z(), z + t, tol);
+    ASSERT_NEAR((point + t).X(), x + t, TOL);
+    ASSERT_NEAR((point + t).Y(), y + t, TOL);
+    ASSERT_NEAR((point + t).Z(), z + t, TOL);
     
     
 }
@@ -84,9 +84,9 @@ TEST(LineTest, LineValueTest)
     
     Line line(point, direct);
     
-    ASSERT_NEAR(line.Value(t).X(), xTrue, tol);
-    ASSERT_NEAR(line.Value(t).Y(), yTrue, tol);
-    ASSERT_NEAR(line.Value(t).Z(), zTrue, tol);
+    ASSERT_NEAR(line.Value(t).X(), xTrue, TOL);
+    ASSERT_NEAR(line.Value(t).Y(), yTrue, TOL);
+    ASSERT_NEAR(line.Value(t).Z(), zTrue, TOL);
     
 }
 
@@ -98,10 +98,10 @@ TEST(LineTest, LineIsClosedTest)
     Point point(x1, y1, z1);
     Point direct(x2, y2, z2);
     
-    Line l(point, direct);
+    Line line(point, direct);
     
     bool answer = false;
-    ASSERT_EQ(l.IsClosed(), answer);
+    ASSERT_EQ(line.IsClosed(), answer);
     
 }
 
@@ -115,11 +115,11 @@ TEST(LineTest, LineTangent)
     Point point(x1, y1, z1);
     Point direct(x2, y2, z2);
     
-    Line l(point, direct);
+    Line line(point, direct);
     
-    ASSERT_NEAR(l.Tangent(t).X(), x2, tol);
-    ASSERT_NEAR(l.Tangent(t).Y(), y2, tol);
-    ASSERT_NEAR(l.Tangent(t).Z(), z2, tol);
+    ASSERT_NEAR(line.Tangent(t).X(), x2, TOL);
+    ASSERT_NEAR(line.Tangent(t).Y(), y2, TOL);
+    ASSERT_NEAR(line.Tangent(t).Z(), z2, TOL);
     
 }
 
@@ -136,9 +136,9 @@ TEST(CircleTest, CircleValueTest)
     
     Circle circle(point, radius);
     
-    ASSERT_NEAR(circle.Value(t).X(), xTrue, tol);
-    ASSERT_NEAR(circle.Value(t).Y(), yTrue, tol);
-    ASSERT_NEAR(circle.Value(t).Z(), zTrue, tol);
+    ASSERT_NEAR(circle.Value(t).X(), xTrue, TOL);
+    ASSERT_NEAR(circle.Value(t).Y(), yTrue, TOL);
+    ASSERT_NEAR(circle.Value(t).Z(), zTrue, TOL);
     
 }
 
@@ -175,9 +175,9 @@ TEST(CircleTest, CircleTangent)
     double yTrue = radius * cos(t);
     double zTrue = 0;
     
-    ASSERT_NEAR(circle.Tangent(t).X(), xTrue, tol);
-    ASSERT_NEAR(circle.Tangent(t).Y(), yTrue, tol);
-    ASSERT_NEAR(circle.Tangent(t).Z(), zTrue, tol);
+    ASSERT_NEAR(circle.Tangent(t).X(), xTrue, TOL);
+    ASSERT_NEAR(circle.Tangent(t).Y(), yTrue, TOL);
+    ASSERT_NEAR(circle.Tangent(t).Z(), zTrue, TOL);
     
 }
 
@@ -257,13 +257,13 @@ TEST(IntersectionTest, LineCirclePoints)
     double xTrue4 = 0, yTrue4 = 5;
     
     
-    ASSERT_NEAR(testLine1.FirstPoint().X(), xTrue2, tol);
-    ASSERT_NEAR(testLine1.FirstPoint().Y(), yTrue2, tol);
-    ASSERT_NEAR(testLine1.SecondPoint().X(), xTrue3, tol);
-    ASSERT_NEAR(testLine1.SecondPoint().Y(), yTrue3, tol);
+    ASSERT_NEAR(testLine1.FirstPoint().X(), xTrue2, TOL);
+    ASSERT_NEAR(testLine1.FirstPoint().Y(), yTrue2, TOL);
+    ASSERT_NEAR(testLine1.SecondPoint().X(), xTrue3, TOL);
+    ASSERT_NEAR(testLine1.SecondPoint().Y(), yTrue3, TOL);
     
-    ASSERT_NEAR(fabs(testLine2.FirstPoint().X()), xTrue4, tol);
-    ASSERT_NEAR(fabs(testLine2.FirstPoint().Y()), yTrue4, tol);
+    ASSERT_NEAR(fabs(testLine2.FirstPoint().X()), xTrue4, TOL);
+    ASSERT_NEAR(fabs(testLine2.FirstPoint().Y()), yTrue4, TOL);
     
     
 }
@@ -305,13 +305,13 @@ TEST(IntersectionTest, CircleCirclePoints)
     double xTrue4 = -3, yTrue4 = 4;
     
     
-    ASSERT_NEAR(testLine2.FirstPoint().X(), xTrue2, tol);
-    ASSERT_NEAR(testLine2.FirstPoint().Y(), yTrue2, tol);
+    ASSERT_NEAR(testLine2.FirstPoint().X(), xTrue2, TOL);
+    ASSERT_NEAR(testLine2.FirstPoint().Y(), yTrue2, TOL);
     
-    ASSERT_NEAR(testLine3.FirstPoint().X(), xTrue3, tol);
-    ASSERT_NEAR(testLine3.FirstPoint().Y(), yTrue3, tol);
-    ASSERT_NEAR(testLine3.SecondPoint().X(), xTrue4, tol);
-    ASSERT_NEAR(testLine3.SecondPoint().Y(), yTrue4, tol);
+    ASSERT_NEAR(testLine3.FirstPoint().X(), xTrue3, TOL);
+    ASSERT_NEAR(testLine3.FirstPoint().Y(), yTrue3, TOL);
+    ASSERT_NEAR(testLine3.SecondPoint().X(), xTrue4, TOL);
+    ASSERT_NEAR(testLine3.SecondPoint().Y(), yTrue4, TOL);
 }
 
 TEST(IntersectionTest, CircleCircleEqual)

@@ -91,10 +91,10 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
 
 void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Circle> &circle1)
 {
-    double aRadius = circle1->Radius(), aCoefA = line1->CoefEquation().X(),
-            aCoefB = line1->CoefEquation().Y(),
-            aCoefC = line1->CoefEquation().Z() + circle1->Center().X() + circle1->Center().Y();
-    Intersection::InterCircleLine(aRadius, aCoefA, aCoefB, aCoefC);
+    double aRadius = circle1->Radius(), A = line1->CoefEquation().X(),
+            B = line1->CoefEquation().Y(),
+            C = line1->CoefEquation().Z() + circle1->Center().X() + circle1->Center().Y();
+    Intersection::InterCircleLine(aRadius, A, B, C);
     
     
 }
@@ -135,26 +135,25 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
     
 }
 
-void Intersection::InterCircleLine(double theRadius, double theCoefA, double theCoefB, double theCoefC)
+void Intersection::InterCircleLine(double theRadius, double A, double B, double C)
 {
-    double aX0 = -theCoefA * theCoefC / (theCoefA * theCoefA + theCoefB * theCoefB),
-            aY0 = -theCoefB * theCoefC / (theCoefA * theCoefA + theCoefB * theCoefB);
-    if ( theCoefC * theCoefC > theRadius * theRadius * (theCoefA * theCoefA + theCoefB * theCoefB) + EPS )
+    double aX0 = -A * C / (A * A + B * B), aY0 = -B * C / (A * A + B * B);
+    if ( C * C > theRadius * theRadius * (A * A + B * B) + EPS )
     {
         myStatus = NOT_INTERSECTED;
-    } else if ( fabs(theCoefC * theCoefC - theRadius * theRadius * (theCoefA * theCoefA + theCoefB * theCoefB)) < EPS )
+    } else if ( fabs(C * C - theRadius * theRadius * (A * A + B * B)) < EPS )
     {
         myStatus = DONE;
         myInter.emplace_back(aX0, aY0, 0);
     } else
     {
-        double aDistance = theRadius * theRadius - theCoefC * theCoefC / (theCoefA * theCoefA + theCoefB * theCoefB);
-        double aMult = sqrt(aDistance / (theCoefA * theCoefA + theCoefB * theCoefB));
+        double aDistance = theRadius * theRadius - C * C / (A * A + B * B);
+        double aMult = sqrt(aDistance / (A * A + B * B));
         double ax, ay, bx, by;
-        ax = aX0 + theCoefB * aMult;
-        bx = aX0 - theCoefB * aMult;
-        ay = aY0 - theCoefA * aMult;
-        by = aY0 + theCoefA * aMult;
+        ax = aX0 + B * aMult;
+        bx = aX0 - B * aMult;
+        ay = aY0 - A * aMult;
+        by = aY0 + A * aMult;
         myInter.emplace_back(ax, ay, 0);
         myInter.emplace_back(bx, by, 0);
         myStatus = DONE;

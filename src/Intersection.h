@@ -83,7 +83,7 @@ protected:
  * Параметры \f$ a, b, c \f$ из общего уравнения прямой \f$ A x + B y + C = 0 \f$
  * \param theRadius Радиус окружности
  */
-    void InterCircleLine(double theRadius, double theCoefA, double theCoefB, double theCoefC);
+    void InterCircleLine(double theRadius, double A, double B, double C);
 
 /**
  * \brief Находит точки пересечения у двух линий

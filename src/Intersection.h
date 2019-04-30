@@ -25,9 +25,11 @@ static double det(double, double, double, double);
 /**
  * \brief   Класс, который вычисляет точки, в которых кривые пересекаются
  */
-class Curve_EXPORT Intersection {
+class Curve_EXPORT Intersection
+{
 public:
-    enum InterStatus {
+    enum InterStatus
+    {
         DONE,
         NOT_INTERSECTED,
         EQUAL
@@ -39,63 +41,63 @@ private:
 
 
 public:
-
+    
     /**
      * \brief Начальная инициализация класса по двум кривым. Кривые могут быть или кругом, или прямой.
      * \param curve1 - Первая кривая
      * \param curve2 - Вторая кривая
      */
     Intersection(const shared_ptr<Curve> &, const shared_ptr<Curve> &);
-
-
+    
+    
     /**
     * \brief Проверяет, являются ли прямые параллельными
     * \param line1 Первая линия
     * \param line2 Вторая линия
      *
     */
-    bool isParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
-
-
+    bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
+    
+    
     /**
     * \brief Проверяет, совпадают ли прямые
     * \param line1 Первая линия
     * \param line2 Вторая линия
      *
     */
-    bool isEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
-
-
+    bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
+    
+    
     /**
     * \brief Возвращает первую точку пересечения, если это возможно
     *
     *
     */
     const Point &First_Point();
-
-
+    
+    
     /**
     * \brief Возвращает вторую точку пересечения, если это возможно
     *
     *
     */
     const Point &Second_Point();
-
-
+    
+    
     /**
      * Возвращает число, равное количеству точек пересечений
      * \return  количество точек пересечений
      */
     int NumberInter();
-
-
+    
+    
     /**
     * \brief Показывает, пересекаются ли кривые или нет
     *
     *
     */
-    InterStatus current_status();
-
+    InterStatus Current_status();
+    
     /**
  * \brief Вычисляет точки пересечения окружности с прямой
  * Параметры \f$ a, b, c \f$ из общего уравнения прямой \f$ A x + B y + C = 0 \f$

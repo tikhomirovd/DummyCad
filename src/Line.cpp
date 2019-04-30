@@ -5,26 +5,31 @@
 #include "Line.h"
 
 
-Line::Line(const Point &ccenter, const Point &ddirect) {
+Line::Line(const Point &ccenter, const Point &ddirect)
+{
     center = ccenter;
     direct = ddirect;
 }
 
-Point Line::Value(double t) {
+Point Line::Value(double t)
+{
     Point new_direct = direct * t;
-    return new_direct + center ;
+    return new_direct + center;
 }
 
-bool Line::isClosed() {
+bool Line::IsClosed()
+{
     return false;
 }
 
-Point Line::tangent(double t)  {
+Point Line::Tangent(double t)
+{
     return direct;
 }
 
-Point Line::coef_equation() {
-    return {direct.y(), -direct.x(), direct.x() * center.y() - direct.y() * center.x()};
+Point Line::Coef_equation()
+{
+    return {direct.Y(), -direct.X(), direct.X() * center.Y() - direct.Y() * center.X()};
 }
 
 

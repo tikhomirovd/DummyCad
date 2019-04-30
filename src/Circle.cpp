@@ -5,30 +5,36 @@
 #include "Circle.h"
 
 
-Circle::Circle(const Point &ccenter, double r) {
-    center = ccenter;
-    radius = r;
+Circle::Circle(const Point &theCenter, double theRadius)
+{
+    center = theCenter;
+    radius = theRadius;
 }
 
-Point Circle::Value(double t) {
-    double cordX = center.x() + radius * cos(t);
-    double cordY = center.y() + radius * sin(t);
-    return {cordX, cordY, center.z()};
+Point Circle::Value(double t)
+{
+    double coordX = center.X() + radius * cos(t);
+    double coordY = center.Y() + radius * sin(t);
+    return {coordX, coordY, center.Z()};
 }
 
-bool Circle::isClosed() {
+bool Circle::IsClosed()
+{
     return true;
 }
 
-Point Circle::tangent(double t) {
+Point Circle::Tangent(double t)
+{
     return {-radius * sin(t), radius * cos(t), 0};
 }
 
-double Circle::Radius() {
+double Circle::Radius()
+{
     return radius;
 };
 
 
-const Point &Circle::Center() const {
+const Point &Circle::Center() const
+{
     return center;
 }

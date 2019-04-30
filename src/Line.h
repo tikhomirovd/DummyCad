@@ -13,22 +13,24 @@
 /**
  * \brief Класс, который задаёт линию.
  */
-class Curve_EXPORT Line : public Curve {
+class Curve_EXPORT Line : public Curve
+{
 private:
     Point center, direct;
 
 
 public:
-    Line() : Curve() {}
-
+    Line() : Curve()
+    {}
+    
     /**
     * \brief Начальная инициализация класса
     *
     * \param a Произвольная точка M1
     * \param b Направляющий вектор
     */
-    Line(const Point&, const Point&);
-
+    Line(const Point &, const Point &);
+    
     /**
    *\brief Вычисляет координаты точки на прямой по заданному парметру
    *
@@ -36,20 +38,20 @@ public:
    * \return \f$ \overline{M} = \overline{M_0} + \overline{d} * t \f$
    */
     Point Value(double) override;
-
+    
     /** \brief Проверяет, является ли кривая замкнутой?
      *
      *
      */
-    bool isClosed() override;
-
+    bool IsClosed() override;
+    
     /** \brief Вычисляет касательный вектор к линии по заданному параметру
     * d - Направляющий вектор
     * \param t Параметр, по которому надо вычислить касательную к линии
     * \return \f$ \overline{d} \f$
     */
-    Point tangent(double t) override;
-
+    Point Tangent(double t) override;
+    
     /**
      * \brief По параметрическому уравнению выдаёт коэффициенты из общего уравнения
      * В нашем случае прямая задаётся параметрически. \\
@@ -57,7 +59,7 @@ public:
      * \f$ \{A, B, C \} \f$
      * \return Вектор \f$ \{A, B, C \} \f$
      */
-    Point coef_equation();
+    Point Coef_equation();
 };
 
 

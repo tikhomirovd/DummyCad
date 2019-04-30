@@ -15,23 +15,25 @@
  *
  * Данный класс задаёт окружность.
  */
-class Curve_EXPORT Circle : public Curve {
+class Curve_EXPORT Circle : public Curve
+{
 private:
     Point center;
     double radius = 0;
 
 
 public:
-    Circle() : Curve() {}
-
+    Circle() : Curve()
+    {}
+    
     /**
      * \brief Начальная инициализация класса
      *
-     * \param ccenter  Центр окружности
-     * \param r Радиус окружности
+     * \param theCenter  Центр окружности
+     * \param theRadius Радиус окружности
      */
-    Circle(const Point &ccenter, double r);
-
+    Circle(const Point &theCenter, double theRadius);
+    
     /**
      *\brief Вычисляет координаты точки на окружности по заданному парметру
      *
@@ -39,34 +41,34 @@ public:
      * \return \f$ \{x + r  \cos t, y + r  \sin t, z \} \f$
      */
     Point Value(double t) override;
-
+    
     /** \brief Проверяет, является ли кривая замкнутой?
      *
      *
      */
-    bool isClosed() override ;
-
+    bool IsClosed() override;
+    
     /** \brief Возвращает радиус окружности
      *
      * \return Радиус
      */
     double Radius();
-
+    
     /** \brief Вычисляет касательный вектор к окружности по заданному параметру
      *
      * \param t Параметр, по которому надо вычислить касательную к окружности
      * \return \f$ \{-r \sin t, r \cos t, 0 \} \f$
      */
-    Point tangent(double t) override;
-
-
+    Point Tangent(double t) override;
+    
+    
     /** \brief Возвращает координаты центра окружности
   *
   * \return Центр окружности
   */
-    const Point& Center() const;
-
-
+    const Point &Center() const;
+    
+    
 };
 
 

@@ -24,16 +24,16 @@ int main() {
     //shared_ptr<Circle> circle2(new Circle(O1, radius));
 
 
-    Point c_tangent = circle->tangent(t);
+    Point c_tangent = circle->Tangent(t);
     Point c_value = circle->Value(t);
-    bool c_close = circle->isClosed();
+    bool c_close = circle->IsClosed();
 
     shared_ptr<Line> line(new Line(O, D));
     shared_ptr<Line> line2(new Line(O1, D1));
 
-    Point l_tangent = line->tangent(t);
+    Point l_tangent = line->Tangent(t);
     Point l_value = line->Value(t);
-    bool l_close = line->isClosed();
+    bool l_close = line->IsClosed();
 
 
 

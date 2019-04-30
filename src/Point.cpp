@@ -4,40 +4,48 @@
 
 #include "Point.h"
 
-Point::Point() {
-    setCoord(0, 0, 0);
+Point::Point()
+{
+    SetCoord(0, 0, 0);
 }
 
 
-Point::Point(double x) {
-    setCoord(x, 0, 0);
+Point::Point(double x)
+{
+    SetCoord(x, 0, 0);
 }
 
-Point::Point(double x, double y) {
-    setCoord(x, y, 0);
+Point::Point(double x, double y)
+{
+    SetCoord(x, y, 0);
 }
 
-Point::Point(double x, double y, double z) {
-    setCoord(x, y, z);
+Point::Point(double x, double y, double z)
+{
+    SetCoord(x, y, z);
 }
 
-double Point::x() const {
-    return _x;
+double Point::X() const
+{
+    return coord_x;
 }
 
-double Point::y() const {
-    return _y;
+double Point::Y() const
+{
+    return coord_y;
 }
 
-double Point::z() const {
-    return _z;
+double Point::Z() const
+{
+    return coord_z;
 }
 
-void Point::setCoord(double x, double y, double z) {
-    _x = x;
-    _y = y;
-    _z = z;
-
+void Point::SetCoord(double x, double y, double z)
+{
+    x = x;
+    y = y;
+    z = z;
+    
 }
 
 

@@ -13,21 +13,22 @@
 /**
  * \brief Абстрактный класс кривая, от которой наследуются конкретные кривые
  */
-class Curve_EXPORT Curve {
+class Curve_EXPORT Curve
+{
 
 
 public:
     Curve() = default;
-
+    
     virtual ~Curve() = default;
-
-    virtual Point Value(double t)  = 0;
-
-    virtual bool isClosed() = 0;
-
-    virtual Point tangent(double t)  = 0;
-
-
+    
+    virtual Point Value(double t) = 0;
+    
+    virtual bool IsClosed() = 0;
+    
+    virtual Point Tangent(double t) = 0;
+    
+    
 };
 
 

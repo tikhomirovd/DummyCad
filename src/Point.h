@@ -13,91 +13,96 @@ using namespace std;
 /**
  * \brief Класс, который задаёт точку \f$ M \f$.
  */
-class Curve_EXPORT Point {
+class Curve_EXPORT Point
+{
 private:
-    double _x = 0, _y = 0, _z = 0;
+    double coord_x = 0, coord_y = 0, coord_z = 0;
 
 
 public:
     Point();
-
+    
     explicit Point(double);
-
+    
     Point(double, double);
-
+    
     Point(double, double, double);
-
+    
     /**
      * \brief Присваивает точке заданные координаты
      * \param x  координата \f$ M_x \f$
      * \param y  координата \f$ M_y \f$
      * \param z  координата \f$ M_z \f$
      */
-    void setCoord(double x, double y, double z);
-
+    void SetCoord(double, double, double);
+    
     /**
      * Возвращает координату \f$ x \f$ у точки
      * \return \f$ M_x \f$
      */
-    double x() const;
-
+    double X() const;
+    
     /**
      * Возвращает координату \f$ y \f$ у точки
      * \return \f$ M_y \f$
      */
-    double y() const;
-
+    double Y() const;
+    
     /**
-     * Возвращает координату \f$ x \f$ у точки
+     * Возвращает координату \f$ z \f$ у точки
      * \return \f$ M_z \f$
      */
-    double z() const;
-
+    double Z() const;
+    
     /**
      * Перегрузка оператора "+". Складывает точки покоординатно
      * \param a Точка \f$ A \f$
      * \param b Точка \f$ B \f$
      * \return  Точка \f$ \{A_x + B_x, A_y + B_y, A_z + B_z \} \f$
      */
-    friend const Point operator+(const Point &a, const Point &b) {
-
-        return {a.x() + b.x(), a.y() + b.y(), a.z() + b.z()};
+    friend const Point operator+(const Point &a, const Point &b)
+    {
+        
+        return {a.X() + b.X(), a.Y() + b.Y(), a.Z() + b.Z()};
     }
-
+    
     /**
     * Перегрузка оператора "-". Вычитает точки покоординатно
     * \param a Точка \f$ A \f$
     * \param b Точка \f$ B \f$
     * \return  Точка \f$ \{A_x - B_x, A_y - B_y, A_z - B_z \} \f$
     */
-    friend const Point operator-(const Point &a, const Point &b) {
-
-        return {a.x() - b.x(), a.y() - b.y(), a.z() - b.z()};
+    friend const Point operator-(const Point &a, const Point &b)
+    {
+        
+        return {a.X() - b.X(), a.Y() - b.Y(), a.Z() - b.Z()};
     }
-
+    
     /**
      * Перегрузка оператора "*". Умножение вектора на число
      * \param a Точка \f$ A \f$
      * \param i Скаляр \f$ i \f$
      * \return  Точка \f$ \{A_x * i, A_y * i, A_z * i \} \f$
      */
-    friend const Point operator*(const Point &a, const double &i) {
-
-        return {a.x() * i, a.y() * i, a.z() * i};
+    friend const Point operator*(const Point &a, const double &i)
+    {
+        
+        return {a.X() * i, a.Y() * i, a.Z() * i};
     }
-
+    
     /**
      * Перегрузка оператора "+". Прибавление к вектору число покоординатно
      * \param a Точка \f$ A \f$
      * \param i Скаляр  \f$ i \f$
      * \return  Точка \f$ \{A_x + i, A_y + i, A_z + i\} \f$
      */
-    friend const Point operator+(const Point &a, const double &i) {
-
-        return {a.x() + i, a.y() + i, a.z() + i};
+    friend const Point operator+(const Point &a, const double &i)
+    {
+        
+        return {a.X() + i, a.Y() + i, a.Z() + i};
     }
-
-
+    
+    
 };
 
 

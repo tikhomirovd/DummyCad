@@ -5,12 +5,11 @@
 #ifndef CURVE_INTERSECTION_H
 #define CURVE_INTERSECTION_H
 
-#include <Curve.h>
+
 #include <Line.h>
 #include <iostream>
 #include <Circle.h>
 #include <memory>
-#include <Point.h>
 #include <vector>
 
 using namespace std;

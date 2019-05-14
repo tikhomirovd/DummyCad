@@ -22,6 +22,11 @@ private:
 public:
     
     
+    
+    Point Center();
+    
+    Point Direct();
+    
     /**
     * \brief Начальная инициализация класса
     *

@@ -32,4 +32,14 @@ Point Line::CoefEquation()
     return {myDirect.Y(), -myDirect.X(), myDirect.X() * myCenter.Y() - myDirect.Y() * myCenter.X()};
 }
 
+Point Line::Center()
+{
+    return myCenter;
+}
+
+Point Line::Direct()
+{
+    return myDirect;
+}
+
 

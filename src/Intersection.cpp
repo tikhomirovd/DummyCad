@@ -91,11 +91,48 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
 
 void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Circle> &circle1)
 {
-    double aRadius = circle1->Radius(), A = line1->CoefEquation().X(),
-            B = line1->CoefEquation().Y(),
-            C = line1->CoefEquation().Z() + circle1->Center().X() + circle1->Center().Y();
-    Intersection::InterCircleLine(aRadius, A, B, C);
+ 
     
+    double k = -line1->CoefEquation().X() / line1->CoefEquation().Y();
+    double d = -line1->CoefEquation().Z() / line1->CoefEquation().Y();
+    
+    double aDelta =
+            pow(circle1->Radius(), 2) * (1 + pow(k, 2)) - pow(circle1->Center().Y() - k * circle1->Center().X() - d, 2);
+    
+    
+    if ( aDelta < -EPS )
+    {
+        myStatus = NOT_INTERSECTED;
+    }
+    else
+    {
+        
+        myStatus = DONE;
+        double A = circle1->Center().X();
+        double B = circle1->Center().Y();
+        
+        double aSqrK = 1 + pow(k, 2);
+        
+        if (aDelta > EPS)
+        {
+    
+            double aX0 = (A + B * k - d * k + sqrt(aDelta)) / aSqrK;
+            double aX1 = (A + B * k - d * k - sqrt(aDelta)) / aSqrK;
+            double aY0 = (d + A * k + B * pow(k, 2) + k * sqrt(aDelta)) / aSqrK;
+            double aY1 = (d + A * k + B * pow(k, 2) - k * sqrt(aDelta)) / aSqrK;
+    
+            myInter.emplace_back(aX0, aY0, 0);
+            myInter.emplace_back(aX1, aY1, 0);
+    
+        } else {
+            double aX0 = (A + B * k - d * k) / aSqrK;
+            double aY0 = (d + A * k + B * pow(k, 2)) / aSqrK;
+            myInter.emplace_back(aX0, aY0, 0);
+            
+        }
+        
+      
+    }
     
 }
 
@@ -136,30 +173,6 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
     
 }
 
-void Intersection::InterCircleLine(double theRadius, double A, double B, double C)
-{
-    double aX0 = -A * C / (A * A + B * B), aY0 = -B * C / (A * A + B * B);
-    if ( C * C > theRadius * theRadius * (A * A + B * B) + EPS )
-    {
-        myStatus = NOT_INTERSECTED;
-    } else if ( fabs(C * C - theRadius * theRadius * (A * A + B * B)) < EPS )
-    {
-        myStatus = DONE;
-        myInter.emplace_back(aX0, aY0, 0);
-    } else
-    {
-        double aDistance = theRadius * theRadius - C * C / (A * A + B * B);
-        double aMult = sqrt(aDistance / (A * A + B * B));
-        double ax, ay, bx, by;
-        ax = aX0 + B * aMult;
-        bx = aX0 - B * aMult;
-        ay = aY0 - A * aMult;
-        by = aY0 + A * aMult;
-        myInter.emplace_back(ax, ay, 0);
-        myInter.emplace_back(bx, by, 0);
-        myStatus = DONE;
-    }
-}
 
 void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
 {

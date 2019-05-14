@@ -244,8 +244,8 @@ TEST(IntersectionTest, LineCirclePoints1)
     
     Intersection testLine1 = Intersection(line1, circle1);
     
-    double xTrue2 = -5, yTrue2 = 0;
-    double xTrue3 = 5, yTrue3 = 0;
+    double xTrue3 = -5, yTrue3 = 0;
+    double xTrue2 = 5, yTrue2 = 0;
     
     
     ASSERT_NEAR(testLine1.FirstPoint().X(), xTrue2, TOL);
@@ -268,7 +268,7 @@ TEST(IntersectionTest, LineCirclePoints2)
     
     Intersection testLine = Intersection(line1, circle2);
     
-    double xTrue = 0, yTrue = 5;
+    double xTrue = 0, yTrue = 0;
     
     
     ASSERT_NEAR(fabs(testLine.FirstPoint().X()), xTrue, TOL);
@@ -276,6 +276,32 @@ TEST(IntersectionTest, LineCirclePoints2)
     
     
 }
+
+TEST(IntersectionTest, LineCirclePoints)
+{
+    Point O = Point(2, 0, 0);
+    Point D = Point(5, -3, 0);
+    Point center = Point(1, 1, 0);
+
+    double radius = 1;
+
+    shared_ptr<Line> line1(new Line(O, D));
+    shared_ptr<Circle> circle1(new Circle(center, radius));
+
+    Intersection testLine1 = Intersection(line1, circle1);
+
+    double xTrue2 = 1.6290037, yTrue2 = 0.22259774;
+    double xTrue3 = 0.01805506, yTrue3 = 1.18916696;
+
+
+    ASSERT_NEAR(testLine1.FirstPoint().X(), xTrue2, TOL);
+    ASSERT_NEAR(testLine1.FirstPoint().Y(), yTrue2, TOL);
+    ASSERT_NEAR(testLine1.SecondPoint().X(), xTrue3, TOL);
+    ASSERT_NEAR(testLine1.SecondPoint().Y(), yTrue3, TOL);
+
+
+}
+
 
 TEST(IntersectionTest, LineCircleNotInter)
 {

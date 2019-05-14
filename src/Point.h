@@ -4,7 +4,7 @@
 
 class Point
 {
-public:
+protected:
 
   double x;
   double y;
@@ -20,13 +20,13 @@ public:
   }
 
   // возврат координаты "x" у точки
-  double getX()
+  double getX() const
   {
     return x;
   }
 
   // возврат координаты "y" у точки
-  double getY()
+  double getY() const
   {
     return y;
   }

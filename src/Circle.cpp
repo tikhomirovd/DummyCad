@@ -3,43 +3,61 @@
 #include <iostream>
 #include <math.h>
 
-#include "Curve.h"
-#include "Vector.h"
-#include "Point.h"
+#include <Curve.h>
+#include <Vector.h>
+#include <Point.h>
 
 class Circle : public Curve
 {
-	double Radius;
 public:
-	Circle(int x, int y, double radius) : Curve(x,y)
-	{
-		Radius = radius;
-	}
+  Circle(double x,
+    double y,
+    double radius) 
+    : Curve(x, y)
+  {
+    Radius = radius;
+  };
 
-	double getRadius()
-	{
-		return Radius;
-	}
+  double getRadius()
+  {
+    return Radius;
+  };
 
-	Point* getCurvePoint()
-	{
-		return point;
-	}
+  Vector getCurvePoint()
+  {
+    return Vector(point.getX(), point.getY());
+  };
 
-	bool ClosedCurve() override
-	{
-		return true;
-	};
+  bool ClosedCurve() override
+  {
+    return true;
+  };
 
-	Point* TangentCalcul(double t)
-	{
-		double x = Radius * (-sin(t));
-		double y = Radius * cos(t);
-		return new Point(x, y);
-	};
+  Vector Gradient(double t)
+  {
+    double x = Radius * (-sin(t));
+    double y = Radius * cos(t);
+    return Vector(x, y);
+  };
 
-	Point* PointCalcul(double t) 
-	{
-		return new Point(Radius*cos(t), Radius*sin(t));
-	};
+// расчет точки в зависимости от параметра
+  Point PointCalcul(double t)
+  {
+    return Point(Radius * cos(t), Radius * sin(t));
+  };
+
+// для совпадающих окружностей
+  Vector Coincidence()
+  {
+    return Vector(point.getX(),point.getY());
+  };
+
+// для непересекающихся окружностей
+  Vector NoIntersection()
+  {
+    return Vector(point.getX(), point.getY());
+  };
+
+protected:
+  double Radius;
 };

@@ -20,8 +20,7 @@ private:
 
 
 public:
-    Line() : Curve()
-    {}
+
     
     /**
     * \brief Начальная инициализация класса

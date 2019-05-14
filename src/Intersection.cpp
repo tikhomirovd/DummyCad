@@ -91,7 +91,7 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
 
 void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Circle> &circle1)
 {
- 
+    
     
     double k = -line1->CoefEquation().X() / line1->CoefEquation().Y();
     double d = -line1->CoefEquation().Z() / line1->CoefEquation().Y();
@@ -103,8 +103,7 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<C
     if ( aDelta < -EPS )
     {
         myStatus = NOT_INTERSECTED;
-    }
-    else
+    } else
     {
         
         myStatus = DONE;
@@ -113,25 +112,26 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<C
         
         double aSqrK = 1 + pow(k, 2);
         
-        if (aDelta > EPS)
+        if ( aDelta > EPS )
         {
-    
+            
             double aX0 = (A + B * k - d * k + sqrt(aDelta)) / aSqrK;
             double aX1 = (A + B * k - d * k - sqrt(aDelta)) / aSqrK;
             double aY0 = (d + A * k + B * pow(k, 2) + k * sqrt(aDelta)) / aSqrK;
             double aY1 = (d + A * k + B * pow(k, 2) - k * sqrt(aDelta)) / aSqrK;
-    
+            
             myInter.emplace_back(aX0, aY0, 0);
             myInter.emplace_back(aX1, aY1, 0);
-    
-        } else {
+            
+        } else
+        {
             double aX0 = (A + B * k - d * k) / aSqrK;
             double aY0 = (d + A * k + B * pow(k, 2)) / aSqrK;
             myInter.emplace_back(aX0, aY0, 0);
             
         }
         
-      
+        
     }
     
 }

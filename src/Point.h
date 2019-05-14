@@ -6,7 +6,7 @@
 #define CURVE_POINT_H
 
 #include <Curve_def.h>
-#include <iostream>
+
 
 using namespace std;
 

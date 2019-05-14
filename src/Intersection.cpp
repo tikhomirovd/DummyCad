@@ -110,7 +110,7 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
     if ( aDistance < EPS && fabs(aRadius1 - aRadius2) < EPS )
     {
         myStatus = EQUAL;
-    } else if ( aDistance > aRadius1 + aRadius2 or aDistance < fabs(aRadius1 - aRadius2))
+    } else if ( aDistance > aRadius1 + aRadius2 || aDistance < fabs(aRadius1 - aRadius2))
     {
         myStatus = NOT_INTERSECTED;
     } else

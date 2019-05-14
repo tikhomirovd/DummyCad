@@ -164,9 +164,7 @@ void Intersection::InterCircleLine(double theRadius, double A, double B, double 
 void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2)
 {
     
-    
-    double aZn = det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
-                     line2->CoefEquation().X(), line2->CoefEquation().Y());
+
     
     if ( IsEquivalent(line1, line2))
     {
@@ -177,6 +175,9 @@ void Intersection::InterPoints(const shared_ptr<Line> &line1, const shared_ptr<L
     } else
     {
         double aResx, aResy;
+    
+        double aZn = det(line1->CoefEquation().X(), line1->CoefEquation().Y(),
+                         line2->CoefEquation().X(), line2->CoefEquation().Y());
         aResx = -det(line1->CoefEquation().Z(), line1->CoefEquation().Y(),
                      line2->CoefEquation().Z(), line2->CoefEquation().Y()) / aZn;
         aResy = -det(line1->CoefEquation().X(), line1->CoefEquation().Z(),

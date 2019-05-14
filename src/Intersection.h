@@ -93,17 +93,17 @@ protected:
     void InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
 
 /**
-* \brief Находит точки пересечения у двух окружностей
-* \param circle1 Первая окружность
-* \param circle2 Вторая окружность
-*/
+ * \brief Находит точки пересечения у двух окружностей
+ * \param circle1 Первая окружность
+ * \param circle2 Вторая окружность
+ */
     void InterPoints(const shared_ptr<Circle> &circle1, const shared_ptr<Circle> &circle2);
 
 /**
-* \brief Находит точки пересечения у линии и окружности
-* \param line1 Линия
-* \param circle1 Окружность
-*/
+ * \brief Находит точки пересечения у линии и окружности
+ * \param line1 Линия
+ * \param circle1 Окружность
+ */
     void InterPoints(const shared_ptr<Line> &line1, const shared_ptr<Circle> &circle1);
 };
 

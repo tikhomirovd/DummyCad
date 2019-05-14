@@ -37,14 +37,14 @@ double Point::Y() const
 
 double Point::Z() const
 {
-    return theCoordZ;
+    return myCoordZ;
 }
 
 void Point::SetCoord(double x, double y, double z)
 {
     myCoordX = x;
     myCoordY = y;
-    theCoordZ = z;
+    myCoordZ = z;
     
 }
 

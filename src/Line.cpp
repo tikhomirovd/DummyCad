@@ -5,10 +5,10 @@
 #include <Line.h>
 
 
-Line::Line(const Point &ccenter, const Point &ddirect)
+Line::Line(const Point &theCenter, const Point &theDirect)
 {
-    myCenter = ccenter;
-    myDirect = ddirect;
+    myCenter = theCenter;
+    myDirect = theDirect;
 }
 
 Point Line::Value(double t)

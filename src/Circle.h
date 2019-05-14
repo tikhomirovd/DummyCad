@@ -23,8 +23,7 @@ private:
 
 
 public:
-    Circle() : Curve()
-    {}
+    
     
     /**
      * \brief Начальная инициализация класса

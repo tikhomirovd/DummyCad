@@ -36,7 +36,7 @@ static bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &li
 * \param line2 Вторая линия
  *
 */
-bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
+static bool IsEquivalent(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
 
 Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Curve> &curve2)
 {

@@ -71,7 +71,7 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
                 Intersection::InterPoints(aCircle1, aCircle2);
             } else
             {
-                auto aLine2 = dynamic_pointer_cast<Circle>(curve2);
+                auto aLine2 = dynamic_pointer_cast<Line>(curve2);
                 if ( aLine2 )
                 {
                     Intersection::InterPoints(aLine2, aCircle2);

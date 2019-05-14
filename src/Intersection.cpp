@@ -28,7 +28,7 @@ static double det(double, double, double, double);
 * \param line2 Вторая линия
  *
 */
-bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
+static bool IsParallel(const shared_ptr<Line> &line1, const shared_ptr<Line> &line2);
 
 /**
 * \brief Проверяет, совпадают ли прямые

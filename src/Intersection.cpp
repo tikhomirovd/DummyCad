@@ -238,4 +238,3 @@ int Intersection::NumberInter()
 {
     return myInter.size();
 }
-

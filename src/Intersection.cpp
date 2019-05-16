@@ -57,6 +57,8 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
             if ( aCircle1 )
             {
                 Intersection::InterPoints(aLine1, aCircle1);
+            } else {
+                myStatus = NOT_SUPPORTED_CURVE;
             }
         }
         

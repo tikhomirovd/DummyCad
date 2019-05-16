@@ -76,7 +76,7 @@ Intersection::Intersection(const shared_ptr<Curve> &curve1, const shared_ptr<Cur
                 auto aLine2 = dynamic_pointer_cast<Line>(curve2);
                 if ( aLine2 )
                 {
-                    Intersection::InterPoints(aLine2, aCircle2);
+                    Intersection::InterPoints(aLine2, aCircle1);
                 } else
                 {
                     myStatus = NOT_SUPPORTED_CURVE;

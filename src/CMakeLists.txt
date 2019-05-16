@@ -15,7 +15,7 @@ set(LIBRARY_HEADERS
 set(LIBRARY_SOURCES
     Circle.cpp
     Intersection.cpp
-    Straight.cpp
+    Line.cpp
 )
 
 add_library(${LIBRARY_NAME} SHARED ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})

@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <cmath>
 
 class Vector
 {
@@ -22,13 +23,13 @@ public:
   };
 
   // Get vector's squared norm.
-  double getSquaredNorm() const
+  double getSquaredNorm() 
   {
     return x * x + y * y;
   };
 
   // Get vector's  norm.
-  double getNorm() const
+  double getNorm() 
   {
     return sqrt(getSquaredNorm());
   };

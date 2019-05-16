@@ -19,6 +19,11 @@ public:
     y = _y;
   }
 
+  bool operator == (Point p)
+  {
+    return x==p.getX() && y==p.getY();
+  }
+
   // возврат координаты "x" у точки
   double getX() const
   {

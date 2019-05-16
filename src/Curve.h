@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include <Vector.h>
 #include <Point.h>
 
 // класс кривой - получение точки на ней и реализация методов
@@ -10,16 +10,12 @@ protected:
   Point point;
 
 public:
-  Curve(double x,
-   double y)
-  {
-    point = Point(x, y);
-  }  ;
+  Curve(double x, double y): point(x,y) {
+  }
 
-  Vector getCurvePoint()
-  {
+  Vector getCurvePoint()  {
     return Vector(point.getX(),point.getY());
-  } ;  
+  }
 
   // координата в зависимости от параметра
   virtual Point PointCalcul(double t) = 0;

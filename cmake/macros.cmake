@@ -86,3 +86,42 @@ function(set_test_environment TEST_NAME)
 #  endif()
 
 endfunction(set_test_environment)
+
+# Replace absolute paths to OCCT dependencies (FreeType, FreeImage, Tcl/Tk
+function(fix_occt_3rdparties OCCT_3RDPARTIES)
+
+  foreach(_target ${OpenCASCADE_LIBRARIES})
+    get_target_property(_linked ${_target} INTERFACE_LINK_LIBRARIES)
+    set(_new_dep "")
+    foreach(_dep ${_linked})
+      foreach(_thirdparty ${OCCT_3RDPARTIES})
+        replace_occt_3rdparty_path(_dep "${_dep}" "${_thirdparty}")
+      endforeach()
+      set(_new_dep ${_new_dep} ${_dep})
+    endforeach()
+    set_target_properties(${_target} PROPERTIES INTERFACE_LINK_LIBRARIES "${_new_dep}")
+  endforeach()
+
+endfunction(fix_occt_3rdparties)
+
+function(replace_occt_3rdparty_path DEST_PATH SOURCE_PATH 3RDPARTY_NAME)
+
+  set(_dest "${SOURCE_PATH}")
+
+  if(IS_ABSOLUTE "${SOURCE_PATH}")
+    string(TOLOWER "${SOURCE_PATH}" lc_SOURCE_PATH)
+    string(TOLOWER "${3RDPARTY_NAME}" lc_3RDPARTY_NAME)
+    string(TOUPPER "${3RDPARTY_NAME}" uc_3RDPARTY_NAME)
+
+    string(FIND "${lc_SOURCE_PATH}" "${lc_3RDPARTY_NAME}" _pos)
+    if(${_pos} GREATER -1)
+      get_filename_component(_path "${SOURCE_PATH}" DIRECTORY)
+      get_filename_component(_path "${_path}" DIRECTORY)
+
+      string(REPLACE "${_path}" "${3RDPARTY_${uc_3RDPARTY_NAME}_DIR}" _dest "${SOURCE_PATH}")
+    endif()
+  endif()
+
+  set(${DEST_PATH} "${_dest}" PARENT_SCOPE)
+  
+endfunction(replace_occt_3rdparty_path)

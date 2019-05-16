@@ -154,7 +154,6 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
         myStatus = NOT_INTERSECTED;
     } else
     {
-        static const double TOL = 1.e-7;
         double aCut = ((pow(aRadius1, 2) - pow(aRadius2, 2) + pow(aDistance, 2)) / (2 * aDistance));
         double aHeight = sqrt(pow(aRadius1, 2) - pow(aCut, 2));
         double aX1 = circle1->Center().X(), aX2 = circle2->Center().X();
@@ -165,7 +164,7 @@ void Intersection::InterPoints(const shared_ptr<Circle> &circle1, const shared_p
         double aAnsX2 = aP3.X() - aHeight / aDistance * (aY2 - aY1);
         double aAnsY2 = aP3.Y() + aHeight / aDistance * (aX2 - aX1);
         myInter.emplace_back(aAnsX1, aAnsY1, 0);
-        if ( abs(aAnsX1 - aAnsX2) >= TOL && abs(aAnsY1 - aAnsY2) >= TOL )
+        if ( abs(aAnsX1 - aAnsX2) >= EPS && abs(aAnsY1 - aAnsY2) >= EPS )
         {
             myInter.emplace_back(aAnsX2, aAnsY2, 0);
         }

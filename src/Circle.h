@@ -39,13 +39,13 @@ public:
      * \param t Параметр, по которому надо вычислить координаты
      * \return \f$ \{x + r  \cos t, y + r  \sin t, z \} \f$
      */
-    Point Value(double t) override;
+    Point Value(double t) const override;
     
     /** \brief Проверяет, является ли кривая замкнутой?
      *
      *
      */
-    bool IsClosed() override;
+    bool IsClosed() const override;
     
     /** \brief Возвращает радиус окружности
      *
@@ -58,7 +58,7 @@ public:
      *  \param t Параметр, по которому надо вычислить касательную к окружности
      *  \return \f$ \{-r \sin t, r \cos t, 0 \} \f$
      */
-    Point Tangent(double t) override;
+    Point Tangent(double t) const override;
     
     
     /** \brief Возвращает координаты центра окружности

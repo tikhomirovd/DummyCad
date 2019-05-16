@@ -41,20 +41,20 @@ public:
    * \param t Параметр, по которому надо вычислить координаты
    * \return \f$ \overline{M} = \overline{M_0} + \overline{d} * t \f$
    */
-    Point Value(double) override;
+    Point Value(double) const override;
     
     /** \brief Проверяет, является ли кривая замкнутой?
      *
      *
      */
-    bool IsClosed() override;
+    bool IsClosed() const override;
     
     /** \brief Вычисляет касательный вектор к линии по заданному параметру
     * d - Направляющий вектор
     * \param t Параметр, по которому надо вычислить касательную к линии
     * \return \f$ \overline{d} \f$
     */
-    Point Tangent(double t) override;
+    Point Tangent(double t) const override;
     
     /**
      * \brief По параметрическому уравнению выдаёт коэффициенты из общего уравнения

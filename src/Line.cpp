@@ -11,18 +11,18 @@ Line::Line(const Point &theCenter, const Point &theDirect)
     myDirect = theDirect;
 }
 
-Point Line::Value(double t)
+Point Line::Value(double t) const
 {
     Point aNewDirect = myDirect * t;
     return aNewDirect + myCenter;
 }
 
-bool Line::IsClosed()
+bool Line::IsClosed() const
 {
     return false;
 }
 
-Point Line::Tangent(double)
+Point Line::Tangent(double) const
 {
     return myDirect;
 }

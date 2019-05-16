@@ -22,11 +22,11 @@ public:
     
     virtual ~Curve() = default;
     
-    virtual Point Value(double t) = 0;
+    virtual Point Value(double t) const = 0;
     
-    virtual bool IsClosed() = 0;
+    virtual bool IsClosed() const = 0;
     
-    virtual Point Tangent(double t) = 0;
+    virtual Point Tangent(double t) const = 0;
     
     
 };

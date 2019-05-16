@@ -319,6 +319,23 @@ TEST(IntersectionTest, LineCircleNotInter)
     
 }
 
+TEST(IntersectionTest, CircleLineIntersect)
+{
+    Point O = Point(3, 4, 5);
+    Point D = Point(1, 5, 8);
+    Point O1 = Point(100, 200, -100);
+    double radius = 5;
+    
+    shared_ptr<Line> line(new Line(O, D));
+    shared_ptr<Circle> circle(new Circle(O1, radius));
+    
+    Intersection testLine = Intersection(circle, line);
+    
+    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
+    
+}
+
+
 TEST(IntersectionTest, CircleCirclePoints1)
 {
     Point center = Point(0, 0, 0);

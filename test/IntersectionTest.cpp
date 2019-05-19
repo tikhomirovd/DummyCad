@@ -12,15 +12,17 @@
 #include <Line.cpp>
 #include <Circle.cpp>
 #include <Point.h>
+#include <Line.h>
+#include <Circle.h>
 
-#define M_PI 3.141592653589793
-#define EPS 1e-10
+static const double M_PI = 3.141592653589793;
+static const double EPS = 1.e-10;
 
 
 static const double THE_TOLERANCE = 1.e-7;
 
 // одна точка пересечения двух прямых 
-/*TEST(LineLineTest, OneSolution_01)
+TEST(LineLineTest, OneSolution_01)
 {
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, 1.0, 0.0));
   std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, 0.0, 1.0));
@@ -41,7 +43,7 @@ TEST(LineLineTest, OneSolution_02)
   std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, -1.0, 2.0, 0.0));
 
   Intersections intersection;
-CalculationResult *result = intersection.Intersection(straid1, straid2);
+  CalculationResult *result = intersection.Intersection(straid1, straid2);
 
   ASSERT_EQ(result->solution.size(), 1);
   ASSERT_NEAR(result->solution[0].getX(), 2.0, THE_TOLERANCE);
@@ -49,15 +51,16 @@ CalculationResult *result = intersection.Intersection(straid1, straid2);
 }
 
 //нет точек пересечения прямых
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!! // перепроверить - не правильно считает
 TEST(LineLineTest, ZeroSolutions_03)
 {
   double A = 5.0, B = 0.0, C = 1.0, D = 0.0;
 
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(A, B, C, D));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(A, C, B, D));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, 1.0, 0.0));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 3.0, 1.0, 0.0));
 
   Intersections intersection;
-CalculationResult *result = intersection.Intersection(straid1, straid2);
+  CalculationResult *result = intersection.Intersection(straid1, straid2);
 
   ASSERT_EQ(result->solution.size(), 0);
 }
@@ -69,7 +72,7 @@ TEST(LineCircleTest, TwoSolution_04)
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
 
   Intersections intersection;
-CalculationResult *result = intersection.Intersection(straid1, circle1);
+  CalculationResult *result = intersection.Intersection(straid1, circle1);
 
   ASSERT_EQ(result->solution.size(), 2);
   ASSERT_NEAR(result->solution[0].getX(), 2.0, THE_TOLERANCE);
@@ -180,7 +183,7 @@ TEST(CircleCircleTest, OneSolutions_11)
   ASSERT_EQ(result->solution.size(), 1);
   ASSERT_NEAR(result->solution[0].getX(), 0.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
-}   */
+}
 
 //окружность в окружности
 TEST(CircleCircleTest, OneSolutions_12)
@@ -190,12 +193,12 @@ TEST(CircleCircleTest, OneSolutions_12)
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, C, A));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(B, C, B));
 
-/*  Intersections intersection;
+Intersections intersection;
 CalculationResult *result = intersection.Intersection(circle1, circle2);
 
   ASSERT_EQ(result->solution.size(), 1);
   ASSERT_NEAR(result->solution[0].getX(), 0.0, THE_TOLERANCE);
-  ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);*/
+  ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 
 /*
@@ -206,8 +209,8 @@ TEST(EquationTest, ThrowWrongIndex)
 
   ASSERT_EQ(anEq.NbSolutions(), 0);
   ASSERT_ANY_THROW(anEq.Solution(0));
-}   */
-
+}
+     */
 
 
 //=============================================================================

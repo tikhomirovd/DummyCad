@@ -9,7 +9,8 @@
 #include <Line.cpp>
 #include <Circle.cpp>
 #include <Intersection.h>
-
+#include <Line.h>
+#include <Circle.h>
 
 static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
@@ -79,14 +80,14 @@ CalculationResult* Intersections::SolveLineLine(std::shared_ptr<Line> ptr1, std:
   std::vector<Point> point;
   CalculationResult *t = new CalculationResult();
 
-  Vector firstLinePoint = ptr1->getCurvePoint();
+  Point firstLinePoint = ptr1->getCurvePoint();
   double firstLinePtX = firstLinePoint.getX();
   double firstLinePtY = firstLinePoint.getY();
   // получение направляющего вектора первой прямой
   double firstDot1 = ptr1->getDot1();
   double firstDot2 = ptr1->getDot2();
 
-  Vector secondLinePoint = ptr2->getCurvePoint();
+  Point secondLinePoint = ptr2->getCurvePoint();
   //получение координат второй прямой
   double secondLinePtX = secondLinePoint.getX();
   double secondLinePtY = secondLinePoint.getY();
@@ -100,11 +101,16 @@ CalculationResult* Intersections::SolveLineLine(std::shared_ptr<Line> ptr1, std:
 
   if (determinant1 != EPS && determinant2 != EPS)
   {
+    if (determinant1==0 || determinant2==0)
+    {
+      t->type = NO_INTERSECTION;
+      return t;
+    }
     point.push_back(Point((firstLinePtX * (secondDot1)-(firstDot1 * secondLinePtX)) / determinant1,
       (firstLinePtY*firstDot1 - firstDot2* secondLinePtY) / determinant2));
   }
   t->solution = point;
-  t->type = COINCIDENCE;
+  t->type = SOLUTION;
   return t;
 }
 
@@ -115,12 +121,12 @@ CalculationResult* Intersections::SolveCircleCircle(std::shared_ptr<Circle> ptr1
   std::vector<Point> points;
   CalculationResult *t = new CalculationResult();
 
-  Vector firstCenterPoint = ptr1->getCurvePoint();
+  Point firstCenterPoint = ptr1->getCurvePoint();
   // получение координат первой окружности 
   double firstX = firstCenterPoint.getX();
   double firstY = firstCenterPoint.getY();
 
-  Vector secondCenterPoint = ptr2->getCurvePoint();
+  Point secondCenterPoint = ptr2->getCurvePoint();
   // получение координат второй окружности 
   double secondX = secondCenterPoint.getX();
   double secondY = secondCenterPoint.getY();
@@ -179,6 +185,8 @@ CalculationResult* Intersections::SolveCircleCircle(std::shared_ptr<Circle> ptr1
           if ((points1->solution[0]==points2->solution[0]) || (points1->solution[0] == points2->solution[1]))
           {
             points.push_back(Point(points1->solution[0].getX(), points1->solution[0].getX()));
+            /*t->type = NO_INTERSECTION;
+            return t; */
           }
           else 
           {
@@ -208,8 +216,11 @@ CalculationResult* Intersections::SolveCircleCircle(std::shared_ptr<Circle> ptr1
           CalculationResult* points1 = Intersection(strai, ptr1);
           CalculationResult* points2 = Intersection(strai, ptr2);
           // добавляем из первой, т.к. точки одинаковы
-          points.push_back(Point(points1->solution[0].getX(), points1->solution[0].getX()));
-          points.push_back(Point(points1->solution[1].getX(), points1->solution[1].getX()));
+          points.push_back(Point(points1->solution[0].getX(), points1->solution[0].getY()));
+          points.push_back(Point(points1->solution[1].getX(), points1->solution[1].getY()));
+          t->solution = points;
+          t->type = COINCIDENCE;
+          return t;
         }
       }
     }
@@ -225,14 +236,14 @@ CalculationResult* Intersections::SolveCircleLine(std::shared_ptr<Circle> ptr1, 
   std::vector<Point> points;
   CalculationResult *t = new CalculationResult();
 
-  Vector circleCenterPoint = ptr1->getCurvePoint();
+  Point circleCenterPoint = ptr1->getCurvePoint();
   //получение координат центра окружности 
   double firstcirclePtX = circleCenterPoint.getX();
   double firstcirclePtY = circleCenterPoint.getY();
   //получение радиуса
   double radius = ptr1->getRadius();
   // получение точек прямой
-  Vector firstLinePoint = ptr2->getCurvePoint();
+  Point firstLinePoint = ptr2->getCurvePoint();
   //получение координат прямой
   double firstLinePtX = firstLinePoint.getX();
   double firstLinePtY = firstLinePoint.getY();

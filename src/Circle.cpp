@@ -1,46 +1,18 @@
-﻿#pragma once
+﻿#include <math.h>
 
-#include <iostream>
-#include <math.h>
-
+#include <Circle.h>
 #include <Curve.h>
 #include <Vector.h>
 #include <Point.h>
 
-class Circle : public Curve
-{
-public:
-  Circle(double x,
-    double y,
-    double radius) 
-    : Curve(x, y)
-  {
-    Radius = radius;
-  }
 
-  double getRadius()
-  {
-    return Radius;
-  }
-
-  bool ClosedCurve() override
-  {
-    return true;
-  }
-
-  Vector Gradient(double t)
+  Vector Circle::Gradient(double t)
   {
     double x = Radius * (-sin(t));
     double y = Radius * cos(t);
     return Vector(x, y);
-  }
+  } 
 
-// расчет точки в зависимости от параметра
-  Point PointCalcul(double t)
-  {
+  Point Circle::PointCalcul(double t) {
     return Point(Radius * cos(t), Radius * sin(t));
-  }
-
-protected:
-  double Radius;
-};
+}

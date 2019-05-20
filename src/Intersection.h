@@ -7,8 +7,9 @@
 #include <Point.h>
 #include <Curve.h>
 #include <Vector.h>
-#include <Line.cpp>
-#include <Circle.cpp>
+
+class Line;
+class Circle;
 
 enum CalculatoreType { NO_INTERSECTION, COINCIDENCE, NULL_POINTER, SOLUTION };
 struct CalculationResult {

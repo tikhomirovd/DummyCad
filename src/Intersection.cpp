@@ -6,8 +6,6 @@
 #include <Point.h>
 #include <Curve.h>
 #include <Vector.h>
-#include <Line.cpp>
-#include <Circle.cpp>
 #include <Intersection.h>
 #include <Line.h>
 #include <Circle.h>
@@ -99,7 +97,7 @@ CalculationResult* Intersections::SolveLineLine(std::shared_ptr<Line> ptr1, std:
   // решаем систему y-p2*t=y0 ; y-p21*t=y01; determinant1 = 1*(-p21)-(-p2)*1
   double determinant2 = secondDot2 - firstDot2;
 
-  if (determinant1 != EPS && determinant2 != EPS)
+  if (fabs(determinant1) != EPS && fabs(determinant2) != EPS)
   {
     if (determinant1==0 || determinant2==0)
     {
@@ -142,13 +140,13 @@ CalculationResult* Intersections::SolveCircleCircle(std::shared_ptr<Circle> ptr1
   double distance = sqrt(pow((firstX - secondX), 2) + pow((firstY - secondY), 2));
 
   // исключение концентрических окружностей (окружности с одинаковой начальной точкой)
-  if (secondX+EPS == firstX+EPS && firstY+EPS == secondY+EPS && firstRadius+EPS == secondRadius+EPS)
+  if (fabs(secondX - firstX) < EPS && fabs(firstY- secondY)<EPS && fabs(firstRadius-secondRadius)<EPS)
   {
     points.push_back(Point(0, 0));
   }
   else
   {
-    if (secondX + EPS == firstX + EPS && firstY + EPS == secondY + EPS && firstRadius + EPS != secondRadius + EPS)
+    if (fabs(secondX - firstX) < EPS && fabs(firstY - secondY)<EPS && fabs(firstRadius - secondRadius)!=EPS)
     {
       // совпадают окружности
       t->type = COINCIDENCE;

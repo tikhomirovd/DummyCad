@@ -10,8 +10,8 @@ set(LIBRARY_HEADERS
     Intersection.h
     Point.h
     Vector.h
-	Line.h
-	Circle.h
+    Line.h
+    Circle.h
 )
 
 set(LIBRARY_SOURCES

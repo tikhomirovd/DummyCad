@@ -1,7 +1,4 @@
 ﻿#include <Line.h>
-#include <Curve.h>
-#include <Vector.h>
-#include <Point.h>
 
 // класс линия - задается точкой и направлением
   Point Line::PointCalcul(double t)

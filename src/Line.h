@@ -1,6 +1,4 @@
 #pragma once
-#ifndef LINE_H
-#define LINE_H
 
 #include <Curve.h>
 #include <Vector.h>
@@ -15,9 +13,9 @@ public:
     dot2 = _dot2;
 };
 
-  Point PointCalcul(double t) override;
+  virtual Point PointCalcul(double t) override;
 
-  Vector Gradient(double t)  override;
+  virtual Vector Gradient(double t)  override;
 
   bool ClosedCurve() override
   {
@@ -37,4 +35,3 @@ public:
 protected:
   double dot1, dot2;
 };
- #endif

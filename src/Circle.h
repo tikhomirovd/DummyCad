@@ -1,5 +1,4 @@
-#ifndef CIRCLE_H
-#define CIRCLE_H
+#pragma once
 
 #include <iostream>
 #include <math.h>
@@ -18,9 +17,9 @@ public:
   }
 
   // расчет точки в зависимости от параметра
-  Point PointCalcul(double t) override;
+  virtual Point PointCalcul(double t) override;
 
-  Vector Gradient(double t) override;
+  virtual Vector Gradient(double t) override;
 
   double getRadius()
   {
@@ -35,4 +34,3 @@ public:
 protected:
   double Radius;
 };
-#endif

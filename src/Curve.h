@@ -9,6 +9,9 @@ protected:
 
   Point point;
 
+  Curve(double x, double y) : point(x, y) {
+  }
+
 public:
   Point getCurvePoint() const  {
     return point;
@@ -23,7 +26,4 @@ public:
   // является ли кривая замкнутой
   virtual bool ClosedCurve() = 0;
 
-protected:
-  Curve(double x, double y) : point(x, y) {
-  }
 };

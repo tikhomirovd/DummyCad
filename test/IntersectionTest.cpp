@@ -51,7 +51,6 @@ TEST(LineLineTest, OneSolution_02)
 }
 
 //нет точек пересечения прямых
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!! // перепроверить - не правильно считает
 TEST(LineLineTest, ZeroSolutions_03)
 {
   double A = 5.0, B = 0.0, C = 1.0, D = 0.0;
@@ -138,6 +137,22 @@ TEST(CircleCircleTest, OneSolutions_08)
 
   ASSERT_EQ(result->solution.size(), 1);
   ASSERT_NEAR(result->solution[0].getX(), 6.0, THE_TOLERANCE);
+  ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
+}
+
+//одна точка пересечения окружностей с нецелочисленными радиусами
+TEST(CircleCircleTest, OneSolutions_13)
+{
+  double A = 3.0, B = 0.0, C = 3.8, D = 9.0;
+
+  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 3.5));
+  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 2.5));
+
+  Intersections intersection;
+  CalculationResult *result = intersection.Intersection(circle1, circle2);
+
+  ASSERT_EQ(result->solution.size(), 1);
+  ASSERT_NEAR(result->solution[0].getX(), 6.5, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 

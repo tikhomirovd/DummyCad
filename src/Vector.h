@@ -5,50 +5,36 @@ class Vector
 {
 public:
   Vector(double a,
-  double b)
-  {
+  double b) {
     x = a;
     y = b;
   }
   // получение координаты x вектора
-  double getX() const
-  {
+  double getX() const {
     return x;
   }
-
   // получение координаты y вектора
-  double getY() const
-  {
+  double getY() const {
     return y;
   }
-
   // Get vector's squared norm.
-  double getSquaredNorm() 
-  {
+  double getSquaredNorm() {
     return x * x + y * y;
   }
-
   // Get vector's  norm.
-  double getNorm() 
-  {
+  double getNorm() {
     return sqrt(getSquaredNorm());
   }
-
   // Calculates dot product of me and other vector.
-  double getDot(const Vector& other)
-  {
+  double getDot(const Vector& other) {
     return x * other.getX() + y * other.getY();
   }
-
   // Multiply me by scalar.
-  Vector Multiply(const double scalar)
-  {
+  Vector Multiply(const double scalar) {
     return Vector(x * scalar, y * scalar);
   }
-
   // Normalizes vector.
-  Vector Normalize()
-  {
+  Vector Normalize() {
     const double length = getNorm();
     return Multiply(1.0 / length);
   }

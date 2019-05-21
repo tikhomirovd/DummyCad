@@ -9,8 +9,6 @@
 #include <Intersection.h>
 #include <Curve.h>
 #include <Vector.h>
-#include <Line.cpp>
-#include <Circle.cpp>
 #include <Point.h>
 #include <Line.h>
 #include <Circle.h>
@@ -22,8 +20,7 @@ static const double EPS = 1.e-10;
 static const double THE_TOLERANCE = 1.e-7;
 
 // одна точка пересечения двух прямых 
-TEST(LineLineTest, OneSolution_01)
-{
+TEST(LineLineTest, OneSolution_01) {
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, 1.0, 0.0));
   std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, 0.0, 1.0));
 
@@ -37,8 +34,7 @@ TEST(LineLineTest, OneSolution_01)
 }
 
 // одна точка пересечения двух прямых 
-TEST(LineLineTest, OneSolution_02)
-{
+TEST(LineLineTest, OneSolution_02) {
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, 0.0, 2.0));
   std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, -1.0, 2.0, 0.0));
 
@@ -51,8 +47,7 @@ TEST(LineLineTest, OneSolution_02)
 }
 
 //нет точек пересечения прямых
-TEST(LineLineTest, ZeroSolutions_03)
-{
+TEST(LineLineTest, ZeroSolutions_03) {
   double A = 5.0, B = 0.0, C = 1.0, D = 0.0;
 
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, 1.0, 0.0));
@@ -65,8 +60,7 @@ TEST(LineLineTest, ZeroSolutions_03)
 }
 
 //две точки пересечения прямой и окружности
-TEST(LineCircleTest, TwoSolution_04)
-{
+TEST(LineCircleTest, TwoSolution_04) {
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, 0.0, 2.0));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
 
@@ -81,8 +75,7 @@ TEST(LineCircleTest, TwoSolution_04)
 }
 
 //одна точка пересечения прямой и окуржности
-TEST(LineCircleTest, OneSolution_05)
-{
+TEST(LineCircleTest, OneSolution_05) {
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 3.0, 5.0, 0.0));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
 
@@ -95,8 +88,7 @@ TEST(LineCircleTest, OneSolution_05)
 }
 
 //нет точек пересечения прямой и окружности
-TEST(LineCircleTest, ZeroSolution_06)
-{
+TEST(LineCircleTest, ZeroSolution_06) {
   double A = 6.0, B = 0.0, C = 0.0, D = 3.0, E = 2.0;
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(A, B, C, D));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(E, C, D));
@@ -108,8 +100,7 @@ TEST(LineCircleTest, ZeroSolution_06)
 }
 
 //две точки пересечения окружностей
-TEST(CircleCircleTest, TwoSolutions_07)
-{
+TEST(CircleCircleTest, TwoSolutions_07) {
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(5, 4, 3));
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(9, 7, 3));
 
@@ -125,8 +116,7 @@ TEST(CircleCircleTest, TwoSolutions_07)
 }
 
 //одна точка пересечения окружностей
-TEST(CircleCircleTest, OneSolutions_08)
-{
+TEST(CircleCircleTest, OneSolutions_08) {
   double A = 3.0, B = 0.0, C = 3.0, D = 9.0;
 
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, B, C));
@@ -141,8 +131,7 @@ TEST(CircleCircleTest, OneSolutions_08)
 }
 
 //одна точка пересечения окружностей с нецелочисленными радиусами
-TEST(CircleCircleTest, OneSolutions_13)
-{
+TEST(CircleCircleTest, OneSolutions_13) {
   double A = 3.0, B = 0.0, C = 3.8, D = 9.0;
 
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 3.5));
@@ -157,8 +146,7 @@ TEST(CircleCircleTest, OneSolutions_13)
 }
 
 //нет точек пересечения у двух окружностей
-TEST(CircleCircleTest, ZeroSolutions_09)
-{
+TEST(CircleCircleTest, ZeroSolutions_09) {
   double A = 3.0, B = 0.0, C = 3.0, D = 9.0, E = 2.0;
 
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, B, E));
@@ -171,8 +159,7 @@ TEST(CircleCircleTest, ZeroSolutions_09)
 }
 
 //концентрич-е окружности разного радиуса
-TEST(CircleCircleTest, OneSolutions_10)
-{
+TEST(CircleCircleTest, OneSolutions_10) {
   double A = 4.0, B = 1.0, C = 0.0, D = 3.0;
 
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, C, B));
@@ -185,8 +172,7 @@ TEST(CircleCircleTest, OneSolutions_10)
 }
 
 //концентрич-е окружности одинакового радиуса
-TEST(CircleCircleTest, OneSolutions_11)
-{
+TEST(CircleCircleTest, OneSolutions_11) {
   double A = 4.0, B = 1.0, C = 0.0;
 
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, C, B));
@@ -201,8 +187,7 @@ TEST(CircleCircleTest, OneSolutions_11)
 }
 
 //окружность в окружности
-TEST(CircleCircleTest, OneSolutions_12)
-{
+TEST(CircleCircleTest, OneSolutions_12) {
   double A = 4.0, B = 2.0, C = 0.0;
 
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, C, A));

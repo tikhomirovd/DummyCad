@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include <Vector.h>
 #include <Point.h>
 
@@ -16,14 +17,11 @@ public:
   Point getCurvePoint() const  {
     return point;
   }
-
   // координата в зависимости от параметра
-  virtual Point PointCalcul(double t) = 0;
-
+  virtual Point PointCalcul(double t) const = 0;
   // касательная к кривой
-  virtual Vector Gradient(double t) = 0;
-
+  virtual Vector Gradient(double t) const = 0;
   // является ли кривая замкнутой
-  virtual bool ClosedCurve() = 0;
+  virtual bool ClosedCurve() const = 0;
 
 };

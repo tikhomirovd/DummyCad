@@ -1,9 +1,9 @@
 #pragma once
 
+#include <Export.h>
 #include <Curve.h>
 #include <Vector.h>
 #include <Point.h>
-
 // класс линия - задается точкой и направлением
 class Line : public Curve
 {
@@ -13,22 +13,19 @@ public:
     dot2 = _dot2;
 };
 
-  virtual Point PointCalcul(double t) override;
+  Intersection_EXPORT virtual Point PointCalcul(double t) const override;
 
-  virtual Vector Gradient(double t)  override;
+  Intersection_EXPORT virtual Vector Gradient(double t) const  override;
 
-  bool ClosedCurve() override
-  {
+  bool ClosedCurve() const override {
     return false;
   }
 
-  double getDot1() const
-  {
+  double getDot1() const {
     return dot1;
   }
 
-  double getDot2() const
-  {
+  double getDot2() const {
     return dot2;
   }
 

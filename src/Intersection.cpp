@@ -1,5 +1,4 @@
-﻿#include <iostream>
-#include <vector>
+﻿#include <vector>
 #include <memory>
 #include <math.h>
 
@@ -40,6 +39,8 @@ CalculationResult* Intersections::Intersection(std::shared_ptr<Curve> ptr1, std:
         delete t;
         return SolveCircleLine(Circle2, straightPtr1);
       }
+      t->type = UNSUPPORTED_CURVE;
+      return t;
     }
   }
   else
@@ -64,8 +65,12 @@ CalculationResult* Intersections::Intersection(std::shared_ptr<Curve> ptr1, std:
           delete t;
           return SolveCircleCircle(Circle1, Circle2);
         }
+        t->type = UNSUPPORTED_CURVE;
+        return t;
       }
     }
+    t->type = UNSUPPORTED_CURVE;
+    return t;
   }
   t->type = NO_INTERSECTION;
   return t;
@@ -96,20 +101,21 @@ CalculationResult* Intersections::SolveLineLine(std::shared_ptr<Line> ptr1, std:
   double determinant1 = secondDot1 - firstDot1;
   // решаем систему y-p2*t=y0 ; y-p21*t=y01; determinant1 = 1*(-p21)-(-p2)*1
   double determinant2 = secondDot2 - firstDot2;
-
-  if (fabs(determinant1) != EPS && fabs(determinant2) != EPS)
-  {
+  //определяем разность дискриминантов и сравниваем с допуском
+  if (fabs(determinant1- determinant2) < EPS || fabs(determinant1 - determinant2) > EPS)
+  { // если один из них равен 0, то точки пересечения нет
     if (determinant1==0 || determinant2==0)
     {
       t->type = NO_INTERSECTION;
       return t;
     }
+    // расчитываем координаты точки пересечения для двух линий через определители матрицы 
     point.push_back(Point((firstLinePtX * (secondDot1)-(firstDot1 * secondLinePtX)) / determinant1,
       (firstLinePtY*firstDot1 - firstDot2* secondLinePtY) / determinant2));
+    t->solution = point;
+    t->type = SOLUTION;
+    return t;
   }
-  t->solution = point;
-  t->type = SOLUTION;
-  return t;
 }
 
 CalculationResult* Intersections::SolveCircleCircle(std::shared_ptr<Circle> ptr1, std::shared_ptr<Circle> ptr2)

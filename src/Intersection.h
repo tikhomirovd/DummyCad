@@ -16,10 +16,12 @@ NO_INTERSECTION,
 COINCIDENCE, 
 NULL_POINTER, 
 SOLUTION, 
-UNSUPPORTED_CURVE};
+UNSUPPORTED_CURVE,
+};
 
 struct CalculationResult {
-  CalculationResult() : type(NO_INTERSECTION){};
+  CalculationResult() : type(NO_INTERSECTION) {};
+  CalculationResult(CalculatoreType type) : type(type) {};
   std::vector<Point> solution;
   CalculatoreType type;
 };

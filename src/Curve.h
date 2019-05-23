@@ -14,7 +14,7 @@ protected:
   }
 
 public:
-  Point getCurvePoint() const  {
+  const Point& getCurvePoint() const {
     return point;
   }
   // координата в зависимости от параметра

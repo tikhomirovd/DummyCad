@@ -9,8 +9,7 @@ class Circle : public Curve
 {
 public:
   Circle(double x, double y, double radius)
-    : Curve(x, y) {
-    Radius = radius;
+    : Curve(x, y), Radius (radius){
   }
   // расчет точки в зависимости от параметра
   Intersection_EXPORT virtual Point PointCalcul(double t) const override;

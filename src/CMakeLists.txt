@@ -6,3 +6,4 @@ foreach(_mode ${CMAKE_CONFIGURATION_TYPES})
   add_test_environment("${_mode}" "${CMAKE_CURRENT_BINARY_DIR}/${_mode}")
 endforeach()
 
+include_directories("/home/dimas/OpenCascade7.3.0/include/opencascade")

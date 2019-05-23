@@ -275,8 +275,7 @@ TEST(IntersectionTest, LineLineEquivalent)
     Handle(Geom2d_Line) aLineCascade = new Geom2d_Line(aPoint1, aDirLine1);
     
     Geom2dAPI_InterCurveCurve anInter = Geom2dAPI_InterCurveCurve(aLineCascade, aLineCascade);
-    
-    cout << "================================\n";
+
     cout << anInter.NbSegments();
     
     
@@ -303,11 +302,8 @@ TEST(IntersectionTest, LineLineParallel)
     
     Geom2dAPI_InterCurveCurve anInter = Geom2dAPI_InterCurveCurve(aLineCascade, aLineCascade);
     
-    cout << "================================\n";
-    cout << anInter.NbSegments();
     
-    
-    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
+    ASSERT_EQ(testLine.NumberInter(), anInter.NbPoints());
     
 }
 
@@ -432,14 +428,31 @@ TEST(IntersectionTest, LineCircleNotInter)
     Point O = Point(3, 4, 5);
     Point D = Point(1, 5, 8);
     Point O1 = Point(100, 200, -100);
-    double radius = 5;
+    double aRadius = 5;
+    
+    D.Norm();
     
     shared_ptr<Line> line(new Line(O, D));
-    shared_ptr<Circle> circle(new Circle(O1, radius));
+    shared_ptr<Circle> circle(new Circle(O1, aRadius));
     
     Intersection testLine = Intersection(line, circle);
     
-    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
+    gp_Pnt2d aPoint1 = gp_Pnt2d(3.0, 4.0);
+    gp_Dir2d aDirLine1 = gp_Dir2d(1.0, 5.0);
+    
+    Handle(Geom2d_Line) aLineCascade = new Geom2d_Line(aPoint1, aDirLine1);
+    
+    gp_Pnt2d aPointCascade = gp_Pnt2d(100.0, 200.0);
+    gp_Dir2d aDir = gp_Dir2d(1.0, 0.0);
+    
+    gp_Ax2d XAxis = gp_Ax2d(aPointCascade, aDir);
+    
+    
+    Handle(Geom2d_Circle) aCircleCascade = new Geom2d_Circle(XAxis, aRadius);
+    
+    Geom2dAPI_InterCurveCurve anInter = Geom2dAPI_InterCurveCurve(aLineCascade, aCircleCascade);
+    
+    ASSERT_EQ(testLine.NumberInter(), anInter.NbPoints());
     
 }
 
@@ -448,49 +461,30 @@ TEST(IntersectionTest, CircleLineIntersect)
     Point O = Point(3, 4, 5);
     Point D = Point(1, 5, 8);
     Point O1 = Point(100, 200, -100);
-    double radius = 5;
+    double aRadius = 5;
     
     shared_ptr<Line> line(new Line(O, D));
-    shared_ptr<Circle> circle(new Circle(O1, radius));
+    shared_ptr<Circle> circle(new Circle(O1, aRadius));
     
     Intersection testLine = Intersection(circle, line);
     
-    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
+    gp_Pnt2d aPoint1 = gp_Pnt2d(3.0, 4.0);
+    gp_Dir2d aDirLine1 = gp_Dir2d(1.0, 5.0);
     
-}
-
-
-TEST(IntersectionTest, CircleCirclePoints1)
-{
-    Point center = Point(0, 0, 0);
-    Point center2 = Point(0, 10, 0);
-    double aRadius = 5;
+    Handle(Geom2d_Line) aLineCascade = new Geom2d_Line(aPoint1, aDirLine1);
     
-    shared_ptr<Circle> circle1(new Circle(center, aRadius));
-    shared_ptr<Circle> circle2(new Circle(center2, aRadius));
-    
-    
-    Intersection testLine = Intersection(circle1, circle2);
-    
-    gp_Pnt2d aPointCascade1 = gp_Pnt2d(0.0, 0.0);
+    gp_Pnt2d aPointCascade = gp_Pnt2d(100.0, 200.0);
     gp_Dir2d aDir = gp_Dir2d(1.0, 0.0);
     
-    gp_Pnt2d aPointCascade2 = gp_Pnt2d(0.0, 10.0);
-    
-    gp_Ax2d XAxis1 = gp_Ax2d(aPointCascade1, aDir);
-    gp_Ax2d XAxis2 = gp_Ax2d(aPointCascade2, aDir);
+    gp_Ax2d XAxis = gp_Ax2d(aPointCascade, aDir);
     
     
-    Handle(Geom2d_Circle) aCircleCascade1 = new Geom2d_Circle(XAxis1, aRadius);
-    Handle(Geom2d_Circle) aCircleCascade2 = new Geom2d_Circle(XAxis2, aRadius);
+    Handle(Geom2d_Circle) aCircleCascade = new Geom2d_Circle(XAxis, aRadius);
     
-    Geom2dAPI_InterCurveCurve anInter = Geom2dAPI_InterCurveCurve(aCircleCascade1, aCircleCascade2);
+    Geom2dAPI_InterCurveCurve anInter = Geom2dAPI_InterCurveCurve(aCircleCascade, aLineCascade);
     
-    gp_Pnt2d ans1 = anInter.Point(1);
+    ASSERT_EQ(testLine.NumberInter(), anInter.NbPoints());
     
-    
-    ASSERT_NEAR(testLine.FirstPoint().X(), ans1.X(), TOL);
-    ASSERT_NEAR(testLine.FirstPoint().Y(), ans1.Y(), TOL);
 }
 
 
@@ -547,17 +541,31 @@ TEST(IntersectionTest, CircleCircleNotInter)
 {
     Point O = Point(3, 4, 5);
     Point O1 = Point(20, 30, 40);
-    double radius = 5.0;
-    double radius1 = 1.0;
+    double aRadius = 5.0;
+    double aRadius1 = 1.0;
     
     
-    shared_ptr<Circle> circle(new Circle(O, radius));
-    shared_ptr<Circle> circle1(new Circle(O1, radius1));
+    shared_ptr<Circle> circle(new Circle(O, aRadius));
+    shared_ptr<Circle> circle1(new Circle(O1, aRadius1));
     
     Intersection testLine = Intersection(circle, circle1);
     
+    gp_Pnt2d aPointCascade1 = gp_Pnt2d(3.0, 4.0);
+    gp_Dir2d aDir = gp_Dir2d(1.0, 0.0);
     
-    ASSERT_EQ(testLine.CurrentStatus(), Intersection::NOT_INTERSECTED);
+    gp_Pnt2d aPointCascade2 = gp_Pnt2d(5.0, 1.0);
+    
+    gp_Ax2d XAxis1 = gp_Ax2d(aPointCascade1, aDir);
+    gp_Ax2d XAxis2 = gp_Ax2d(aPointCascade2, aDir);
+    
+    
+    Handle(Geom2d_Circle) aCircleCascade1 = new Geom2d_Circle(XAxis1, aRadius);
+    Handle(Geom2d_Circle) aCircleCascade2 = new Geom2d_Circle(XAxis2, aRadius1);
+    
+    Geom2dAPI_InterCurveCurve anInter = Geom2dAPI_InterCurveCurve(aCircleCascade1, aCircleCascade2);
+    
+    
+    ASSERT_EQ(testLine.NumberInter(), anInter.NbPoints());
     
 }
 

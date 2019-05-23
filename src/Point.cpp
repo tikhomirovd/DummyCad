@@ -3,6 +3,7 @@
 //
 
 #include <Point.h>
+#include <cmath>
 
 Point::Point()
 {
@@ -45,6 +46,16 @@ void Point::SetCoord(double x, double y, double z)
     myCoordX = x;
     myCoordY = y;
     myCoordZ = z;
+    
+}
+
+void Point::Norm()
+{
+    
+    double aLen = sqrt(pow(myCoordX,2) + pow(myCoordY, 2) + pow(myCoordZ, 2));
+    myCoordX /= aLen;
+    myCoordY /= aLen;
+    myCoordZ /= aLen;
     
 }
 

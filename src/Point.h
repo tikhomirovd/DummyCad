@@ -60,6 +60,9 @@ public:
      * \param b Точка \f$ B \f$
      * \return  Точка \f$ \{A_x + B_x, A_y + B_y, A_z + B_z \} \f$
      */
+     
+    void Norm();
+    
     friend const Point operator+(const Point &a, const Point &b)
     {
         

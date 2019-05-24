@@ -17,15 +17,18 @@ public:
     y = _y;
   }
 
-  bool operator == (Point p) {
+  bool operator == (Point p) 
+  {
     return x==p.getX() && y==p.getY();
   }
-  // возврат координаты "x" у точки
-  double getX() const {
+  /// возврат координаты "x" у точки
+  double getX() const 
+  {
     return x;
   }
-  // возврат координаты "y" у точки
-  double getY() const {
+  /// возврат координаты "y" у точки
+  double getY() const 
+  {
     return y;
   }
 };

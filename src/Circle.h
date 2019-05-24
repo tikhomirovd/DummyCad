@@ -9,18 +9,21 @@ class Circle : public Curve
 {
 public:
   Circle(double x, double y, double radius)
-    : Curve(x, y), Radius (radius){
+    : Curve(x, y), Radius (radius)
+  {
   }
-  // расчет точки в зависимости от параметра
+  /// расчет точки в зависимости от параметра
   Intersection_EXPORT virtual Point PointCalcul(double t) const override;
 
   Intersection_EXPORT virtual Vector Gradient(double t) const override;
 
-  double getRadius() const {
+  double getRadius() const 
+  {
     return Radius;
   }
 
-  bool ClosedCurve() const override {
+  bool ClosedCurve() const override 
+  {
     return true;
   }
 

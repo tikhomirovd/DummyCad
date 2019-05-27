@@ -17,7 +17,7 @@ static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
 
 static const double THE_TOLERANCE = 1.e-7;
-/// одна точка пересечения двух прямых 
+/// одна точка пересечения двух прямых
 TEST(LineLineTest, OneSolution_01) 
 {
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector( 1.0, 0.0)));
@@ -216,7 +216,8 @@ TEST(EquationTest, ThrowWrongIndex)
 =============================================================================
 function : main
 purpose  :
-============================================================================= **/
+============================================================================= 
+*/
 int main(int argc, char** argv)
 {
   ::testing::InitGoogleTest(&argc, argv);

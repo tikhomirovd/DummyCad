@@ -74,7 +74,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveLineLine(std::shared_ptr<
     t->solution = point;
     return t;
   } /// если один из них равен 0, то точки пересечения нет
-  if (fabs(determinant1) < EPS && fabs(determinant2) < EPS)
+  if (fabs(determinant1) < EPS || fabs(determinant2) < EPS)
   {
     std::shared_ptr<CalculationResult> t(new CalculationResult);
     t->type = NO_INTERSECTION;

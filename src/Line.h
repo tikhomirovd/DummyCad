@@ -8,10 +8,9 @@
 class Line : public Curve
 {
 public:
-  Line(double x, double y, double _dot1, double _dot2) : Curve(x, y) 
+  Line(double x, double y, Vector direction) : Curve(x, y) 
   {
-    dot1 = _dot1;
-    dot2 = _dot2;
+    direction = Vector (dot1, dot2);
   };
 
   Intersection_EXPORT virtual Point PointCalcul(double t) const override;

@@ -22,8 +22,8 @@ static const double THE_TOLERANCE = 1.e-7;
 /// одна точка пересечения двух прямых 
 TEST(LineLineTest, OneSolution_01) 
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, 1.0, 0.0));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, 0.0, 1.0));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(0.0, 1.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -37,8 +37,8 @@ TEST(LineLineTest, OneSolution_01)
 /// одна точка пересечения двух прямых 
 TEST(LineLineTest, OneSolution_02) 
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, 0.0, 2.0));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, -1.0, 2.0, 0.0));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector(0.0, 2.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, -1.0, Vector( 2.0, 0.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -53,8 +53,8 @@ TEST(LineLineTest, ZeroSolutions_03)
 {
   double A = 5.0, B = 0.0, C = 1.0, D = 0.0;
 
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, 1.0, 0.0));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 3.0, 1.0, 0.0));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector( 1.0, 0.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -67,8 +67,8 @@ TEST(LineLineTest, ZeroSolutions_04)
 {
   double A = 5.0, B = 0.0, C = 1.0, D = 0.0;
 
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, 1.0, 0.0));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 5.0, 1.0, 0.0));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -79,7 +79,7 @@ TEST(LineLineTest, ZeroSolutions_04)
 ///две точки пересечения прямой и окружности
 TEST(LineCircleTest, TwoSolution_05) 
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, 0.0, 2.0));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector( 0.0, 2.0)));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
 
   Intersections intersection;
@@ -95,7 +95,7 @@ TEST(LineCircleTest, TwoSolution_05)
 ///одна точка пересечения прямой и окуржности
 TEST(LineCircleTest, OneSolution_06) 
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 3.0, 5.0, 0.0));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector( 5.0, 0.0)));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
 
   Intersections intersection;
@@ -110,7 +110,7 @@ TEST(LineCircleTest, OneSolution_06)
 TEST(LineCircleTest, ZeroSolution_07) 
 {
   double A = 6.0, B = 0.0, C = 0.0, D = 3.0, E = 2.0;
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(A, B, C, D));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(A, B, Vector( C, D)));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(E, C, D));
 
   Intersections intersection;

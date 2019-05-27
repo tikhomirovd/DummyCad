@@ -147,7 +147,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleCircle(std::shared_
     /// формирует точку - направление
     Vector vector1 = Vector(-coordinate1, -coordinate2);
     /// новая прямая записанная через умный указатель
-    std::shared_ptr<Curve> strai = std::shared_ptr<Line>(new Line(middlepoint1, middlepoint2, vector1.getX(), vector1.getY()));
+    std::shared_ptr<Curve> strai = std::shared_ptr<Line>(new Line(middlepoint1, middlepoint2,Vector( vector1.getX(), vector1.getY())));
     /// вычисление точек на прямой, которая пересекает каждую из окружностей
     std::shared_ptr<CalculationResult> points1 = Intersection(strai, ptr1);
     std::shared_ptr<CalculationResult> points2 = Intersection(strai, ptr2);
@@ -184,7 +184,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleCircle(std::shared_
     /// координаты направлябщего вектора прямой, через которую будут искаться решения
     Vector vector2 = Vector(-coordinate2, coordinate1);
     /// создаем умный указатель на неё и передаем вычисленные значения
-    std::shared_ptr<Curve> strai = std::shared_ptr<Line>(new Line(middlepoint1, middlepoint2, vector2.getX(), vector2.getY()));
+    std::shared_ptr<Curve> strai = std::shared_ptr<Line>(new Line(middlepoint1, middlepoint2,Vector( vector2.getX(), vector2.getY())));
     /// вычисляем точки пересечения прямой с этими окружностями
     std::shared_ptr<CalculationResult> points1 = Intersection(strai, ptr1);
     std::shared_ptr<CalculationResult> points2 = Intersection(strai, ptr2);
@@ -224,7 +224,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleLine(std::shared_pt
   ///спроецированный радиус на прямую - точка на прямой
   Point A = Point(firstLinePoint.getX() + decartDot*z.getX(), firstLinePoint.getY() + decartDot*z.getY());
   /// новая прямая с начальной найденной точкой и нормализированным направлением
-  Line* str =new Line(A.getX(), A.getY(), z.getX(), z.getY());
+  Line* str =new Line(A.getX(), A.getY(), Vector(z.getX(), z.getY()));
   /// длина от центра до новой точки на прямой
   double distance = sqrt(pow(A.getX() - circleCenterPoint.getX(), 2) + pow(A.getY() - circleCenterPoint.getY(), 2));
   /// длина он начальной точки прямой до найденной
@@ -244,7 +244,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleLine(std::shared_pt
   /// одна точка на прямой       
   if (fabs(distance - radius) < EPS)
   {
-    Line* str1 = new Line(firstLinePoint.getX(), firstLinePoint.getY(), z.getX(), z.getY());
+    Line* str1 = new Line(firstLinePoint.getX(), firstLinePoint.getY(),Vector( z.getX(), z.getY()));
     Point ty = str1->PointCalcul(-decartDot);
     points.push_back(Point(ty.getX(), ty.getY()));
     std::shared_ptr<CalculationResult> t(new CalculationResult);

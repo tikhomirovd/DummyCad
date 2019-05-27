@@ -16,14 +16,12 @@
 static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
 
-
 static const double THE_TOLERANCE = 1.e-7;
-
 /// одна точка пересечения двух прямых 
 TEST(LineLineTest, OneSolution_01) 
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(1.0, 0.0)));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(0.0, 1.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector( 1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector( 0.0, 1.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -33,11 +31,10 @@ TEST(LineLineTest, OneSolution_01)
   ASSERT_NEAR(result->solution[0].getX(), 0.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
-
 /// одна точка пересечения двух прямых 
 TEST(LineLineTest, OneSolution_02) 
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector(0.0, 2.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector( 0.0, 2.0)));
   std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, -1.0, Vector( 2.0, 0.0)));
 
   Intersections intersection;
@@ -47,12 +44,9 @@ TEST(LineLineTest, OneSolution_02)
   ASSERT_NEAR(result->solution[0].getX(), 2.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), -1.0, THE_TOLERANCE);
 }
-
 ///нет точек пересечения прямых
 TEST(LineLineTest, ZeroSolutions_03) 
 {
-  double A = 5.0, B = 0.0, C = 1.0, D = 0.0;
-
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
   std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector( 1.0, 0.0)));
 
@@ -61,21 +55,17 @@ TEST(LineLineTest, ZeroSolutions_03)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
-
 ///прямые совпадают
 TEST(LineLineTest, ZeroSolutions_04) 
 {
-  double A = 5.0, B = 0.0, C = 1.0, D = 0.0;
-
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
 
   ASSERT_EQ(result->solution.size(), 0);
 }
-
 ///две точки пересечения прямой и окружности
 TEST(LineCircleTest, TwoSolution_05) 
 {
@@ -91,7 +81,6 @@ TEST(LineCircleTest, TwoSolution_05)
   ASSERT_NEAR(result->solution[1].getX(), 2.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[1].getY(), 4.0, THE_TOLERANCE);
 }
-
 ///одна точка пересечения прямой и окуржности
 TEST(LineCircleTest, OneSolution_06) 
 {
@@ -105,11 +94,11 @@ TEST(LineCircleTest, OneSolution_06)
   ASSERT_NEAR(result->solution[0].getX(), 2.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 3.0, THE_TOLERANCE);
 }
-
 ///нет точек пересечения прямой и окружности
 TEST(LineCircleTest, ZeroSolution_07) 
 {
   double A = 6.0, B = 0.0, C = 0.0, D = 3.0, E = 2.0;
+
   std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(A, B, Vector( C, D)));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(E, C, D));
 
@@ -118,7 +107,6 @@ TEST(LineCircleTest, ZeroSolution_07)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
-
 ///две точки пересечения окружностей
 TEST(CircleCircleTest, TwoSolutions_08) 
 {
@@ -135,7 +123,6 @@ TEST(CircleCircleTest, TwoSolutions_08)
   ASSERT_NEAR(result->solution[1].getX(), 7.7521398046336101, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[1].getY(), 4.4971469271551863, THE_TOLERANCE);
 }
-
 ///одна точка пересечения окружностей
 TEST(CircleCircleTest, OneSolutions_09) 
 {
@@ -151,12 +138,9 @@ TEST(CircleCircleTest, OneSolutions_09)
   ASSERT_NEAR(result->solution[0].getX(), 6.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
-
 ///одна точка пересечения окружностей с нецелочисленными радиусами
 TEST(CircleCircleTest, OneSolutions_10) 
 {
-  double A = 3.0, B = 0.0, C = 3.8, D = 9.0;
-
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 3.5));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 2.5));
 
@@ -167,7 +151,6 @@ TEST(CircleCircleTest, OneSolutions_10)
   ASSERT_NEAR(result->solution[0].getX(), 6.5, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
-
 ///нет точек пересечения у двух окружностей
 TEST(CircleCircleTest, ZeroSolutions_11) 
 {
@@ -181,7 +164,6 @@ TEST(CircleCircleTest, ZeroSolutions_11)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
-
 ///концентрич-е окружности разного радиуса
 TEST(CircleCircleTest, OneSolutions_12) 
 {
@@ -195,7 +177,6 @@ TEST(CircleCircleTest, OneSolutions_12)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
-
 ///концентрич-е окружности одинакового радиуса
 TEST(CircleCircleTest, OneSolutions_13) 
 {
@@ -208,7 +189,6 @@ TEST(CircleCircleTest, OneSolutions_13)
   std::shared_ptr<CalculationResult> result = intersection.Intersection(circle1, circle2);
   ASSERT_EQ(result->solution.size(), 0);
 }
-
 ///окружность в окружности
 TEST(CircleCircleTest, OneSolutions_14) 
 {
@@ -224,7 +204,6 @@ TEST(CircleCircleTest, OneSolutions_14)
   ASSERT_NEAR(result->solution[0].getX(), 0.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
-
 /**
 TEST(EquationTest, ThrowWrongIndex)
 {
@@ -234,13 +213,10 @@ TEST(EquationTest, ThrowWrongIndex)
   ASSERT_EQ(anEq.NbSolutions(), 0);
   ASSERT_ANY_THROW(anEq.Solution(0));
 }
-     **/
-
-
-///=============================================================================
-///function : main
-///purpose  :
-///=============================================================================
+=============================================================================
+function : main
+purpose  :
+============================================================================= **/
 int main(int argc, char** argv)
 {
   ::testing::InitGoogleTest(&argc, argv);

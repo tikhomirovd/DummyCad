@@ -29,7 +29,6 @@ struct CalculationResult
 ///общий интерфейс для нахождения точек пересечения
 class Intersections
 {
-
 public:
   ///метод поиска точкек пересечения, принимающий указатели на тип кривой
   Intersection_EXPORT std::shared_ptr<CalculationResult> Intersection(std::shared_ptr<Curve> ptr1, std::shared_ptr<Curve> ptr2);

@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include <cmath>
 
 class Vector
@@ -50,5 +51,4 @@ public:
 private:
   double x;
   double y;
-
 };

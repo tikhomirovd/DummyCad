@@ -3,16 +3,15 @@
 class Point
 {
 protected:
-
   double x;
   double y;
 
 public:
-
   Point() {};
 
   Point(double _x,
-  double _y) {
+  double _y) 
+  {
     x = _x;
     y = _y;
   }

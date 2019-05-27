@@ -7,7 +7,6 @@
 class Curve
 {
 protected:
-
   Point point;
 
   Curve(double x, double y) : point(x, y) 

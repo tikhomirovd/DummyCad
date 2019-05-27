@@ -1,17 +1,18 @@
-#pragma once
+п»ї#pragma once
 
 #include <Export.h>
 #include <Curve.h>
 #include <Vector.h>
 #include <Point.h>
-/// класс линия - задается точкой и направлением
+/// РєР»Р°СЃСЃ Р»РёРЅРёСЏ - Р·Р°РґР°РµС‚СЃСЏ С‚РѕС‡РєРѕР№ Рё РЅР°РїСЂР°РІР»РµРЅРёРµРј
 class Line : public Curve
 {
 public:
-  Line(double x, double y, Vector direction) : Curve(x, y) 
+  Line(double x, double y, Vector direction)
+  : Curve(x, y),
+    myDirection(direction)
   {
-    direction = Vector (dot1, dot2);
-  };
+  }
 
   Intersection_EXPORT virtual Point PointCalcul(double t) const override;
 
@@ -24,9 +25,9 @@ public:
 
   const Vector& getDirection() const
   {
-    return Vector(dot1, dot2);
+    return myDirection;
   }
 
 protected:
-  double dot1, dot2;
+  Vector myDirection;
 };

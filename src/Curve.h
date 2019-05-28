@@ -3,25 +3,32 @@
 #include <Vector.h>
 #include <Point.h>
 
-/// класс кривой - получение точки на ней и реализация методов
+/// Класс кривой - получение точки на ней и реализация методов.
 class Curve
 {
-protected:
-  Point point;
-
-  Curve(double x, double y) : point(x, y) 
-  {
-  }
-
 public:
-  const Point& getCurvePoint() const 
+
+  /// Метод получает точку на заданной кривой.
+  const Point& getCurvePoint() const
   {
     return point;
   }
-  /// координата в зависимости от параметра
+
+  /// Координата в зависимости от параметра.
   virtual Point PointCalcul(double t) const = 0;
-  /// касательная к кривой
+
+  /// Касательная к кривой.
   virtual Vector Gradient(double t) const = 0;
-  /// является ли кривая замкнутой
+
+  /// Является ли кривая замкнутой.
   virtual bool ClosedCurve() const = 0;
+
+protected:
+
+  /// Создается точка.
+  Point point;
+  /// Защищенный конструктор - для того, чтобы только наследники могли создать экземпляр класса.
+  Curve(double x, double y) : point(x, y)
+  {
+  }
 };

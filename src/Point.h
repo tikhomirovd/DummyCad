@@ -1,33 +1,51 @@
 ﻿#pragma once
 
+/// Класс задает точку с координатами x и y.
 class Point
 {
-protected:
-  double x;
-  double y;
-
 public:
-  Point() {};
 
+  /**
+    Конструктор по умолчанию.
+  */
+  Point()
+  {
+    x = 0;
+    y = 0;
+  };
+
+  /// \param x Координата x точки.
+  /// \param y Координата y точки.
   Point(double _x,
-  double _y) 
+    double _y)
   {
     x = _x;
     y = _y;
   }
 
-  bool operator == (Point p) 
+  /// Переопределение сравнения точек - заданной и текущей.
+  bool operator == (Point p)
   {
-    return x==p.getX() && y==p.getY();
+    return x == p.getX() && y == p.getY();
   }
-  /// возврат координаты "x" у точки
-  double getX() const 
+
+  /// Возврат координаты "x" у точки.
+  double getX() const
   {
     return x;
   }
-  /// возврат координаты "y" у точки
-  double getY() const 
+
+  /// Возврат координаты "y" у точки.
+  double getY() const
   {
     return y;
   }
+
+protected:
+
+  /**
+    Задание координат точки.
+  */
+  double x;
+  double y;
 };

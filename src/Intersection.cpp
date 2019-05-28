@@ -9,37 +9,41 @@
 #include <Line.h>
 #include <Circle.h>
 
+///Задание констант.
+/// \param M_PI Задает математическое число пи.
+/// \param EPS  Задает некий допуск для сравнения условий в методах.
 static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
+
 /// метод нахождения точек пересечения
 std::shared_ptr<CalculationResult> Intersections::Intersection(std::shared_ptr<Curve> ptr1, std::shared_ptr<Curve> ptr2)
 {
   std::vector<Point> result;
   std::shared_ptr<CalculationResult> t;
-  /// приведение указателей к типу
-  std::shared_ptr<Line> straightPtr1 = std::dynamic_pointer_cast<Line>(ptr1);
-  std::shared_ptr<Line> straightPtr2 = std::dynamic_pointer_cast<Line>(ptr2);
-  std::shared_ptr<Circle> Circle1 = std::dynamic_pointer_cast<Circle>(ptr1);
-  std::shared_ptr<Circle> Circle2 = std::dynamic_pointer_cast<Circle>(ptr2);
+  /// приведение указателей к типу line/circle
+  std::shared_ptr<Line> linePtr1 = std::dynamic_pointer_cast<Line>(ptr1);
+  std::shared_ptr<Line> linePtr2 = std::dynamic_pointer_cast<Line>(ptr2);
+  std::shared_ptr<Circle> CirclePtr1 = std::dynamic_pointer_cast<Circle>(ptr1);
+  std::shared_ptr<Circle> CirclePtr2 = std::dynamic_pointer_cast<Circle>(ptr2);
 
-    if (straightPtr1 && straightPtr2) 
+  if (linePtr1 && linePtr2)
   {
-    return SolveLineLine(straightPtr1, straightPtr2);
+    return SolveLineLine(linePtr1, linePtr2);
   }
-    if (straightPtr1 && Circle2) 
+  if (linePtr1 && CirclePtr2)
   {
-    return SolveCircleLine(Circle2, straightPtr1);
+    return SolveCircleLine(CirclePtr2, linePtr1);
   }
-    if (Circle1 && straightPtr2) 
+  if (CirclePtr1 && linePtr2)
   {
-    return SolveCircleLine(Circle1, straightPtr2);
+    return SolveCircleLine(CirclePtr1, linePtr2);
   }
-    if (Circle1 && Circle2) 
+  if (CirclePtr1 && CirclePtr2)
   {
-    return SolveCircleCircle(Circle1, Circle2);
+    return SolveCircleCircle(CirclePtr1, CirclePtr2);
   }
-    t->type= UNSUPPORTED_CURVE;
-    return t;
+  t->type = UNSUPPORTED_CURVE;
+  return t;
 }
 
 std::shared_ptr<CalculationResult> Intersections::SolveLineLine(std::shared_ptr<Line> ptr1, std::shared_ptr<Line> ptr2)

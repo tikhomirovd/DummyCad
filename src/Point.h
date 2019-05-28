@@ -10,14 +10,14 @@ public:
   */
   Point()
   {
-    x = 0;
-    y = 0;
+    x = 0.0;
+    y = 0.0;
   };
 
   /// \param x Координата x точки.
   /// \param y Координата y точки.
   Point(double _x,
-    double _y)
+        double _y)
   {
     x = _x;
     y = _y;
@@ -39,6 +39,12 @@ public:
   double getY() const
   {
     return y;
+  }
+
+  double distance(const Point& p)
+  {
+    double distance = sqrt(pow(x - p.getX(), 2) + pow(y - p.getX(), 2));
+    return distance;
   }
 
 protected:

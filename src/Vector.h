@@ -51,7 +51,7 @@ public:
   {
     return Vector(x * scalar, y * scalar);
   }
-
+   //  + summ (Vector){тек + переданный};
   /// Нормализация вектора.
   /// \param length   Длина заданного вектора.
   /// \param Multiply Результат - нормализованный вектор.

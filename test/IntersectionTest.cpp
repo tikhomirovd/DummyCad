@@ -17,6 +17,7 @@ static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
 
 static const double THE_TOLERANCE = 1.e-7;
+
 /// одна точка пересечения двух прямых
 TEST(LineLineTest, OneSolution_01) 
 {
@@ -31,6 +32,7 @@ TEST(LineLineTest, OneSolution_01)
   ASSERT_NEAR(result->solution[0].getX(), 0.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
+
 /// одна точка пересечения двух прямых 
 TEST(LineLineTest, OneSolution_02) 
 {
@@ -44,6 +46,7 @@ TEST(LineLineTest, OneSolution_02)
   ASSERT_NEAR(result->solution[0].getX(), 2.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), -1.0, THE_TOLERANCE);
 }
+
 ///нет точек пересечения прямых
 TEST(LineLineTest, ZeroSolutions_03) 
 {
@@ -55,6 +58,7 @@ TEST(LineLineTest, ZeroSolutions_03)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
+
 ///прямые совпадают
 TEST(LineLineTest, ZeroSolutions_04) 
 {
@@ -66,6 +70,7 @@ TEST(LineLineTest, ZeroSolutions_04)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
+
 ///две точки пересечения прямой и окружности
 TEST(LineCircleTest, TwoSolution_05) 
 {
@@ -81,6 +86,7 @@ TEST(LineCircleTest, TwoSolution_05)
   ASSERT_NEAR(result->solution[1].getX(), 2.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[1].getY(), 4.0, THE_TOLERANCE);
 }
+
 ///одна точка пересечения прямой и окуржности
 TEST(LineCircleTest, OneSolution_06) 
 {
@@ -94,6 +100,7 @@ TEST(LineCircleTest, OneSolution_06)
   ASSERT_NEAR(result->solution[0].getX(), 2.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 3.0, THE_TOLERANCE);
 }
+
 ///нет точек пересечения прямой и окружности
 TEST(LineCircleTest, ZeroSolution_07) 
 {
@@ -107,6 +114,7 @@ TEST(LineCircleTest, ZeroSolution_07)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
+
 ///две точки пересечения окружностей
 TEST(CircleCircleTest, TwoSolutions_08) 
 {
@@ -123,6 +131,7 @@ TEST(CircleCircleTest, TwoSolutions_08)
   ASSERT_NEAR(result->solution[1].getX(), 7.7521398046336101, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[1].getY(), 4.4971469271551863, THE_TOLERANCE);
 }
+
 ///одна точка пересечения окружностей
 TEST(CircleCircleTest, OneSolutions_09) 
 {
@@ -138,6 +147,7 @@ TEST(CircleCircleTest, OneSolutions_09)
   ASSERT_NEAR(result->solution[0].getX(), 6.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
+
 ///одна точка пересечения окружностей с нецелочисленными радиусами
 TEST(CircleCircleTest, OneSolutions_10) 
 {
@@ -151,6 +161,7 @@ TEST(CircleCircleTest, OneSolutions_10)
   ASSERT_NEAR(result->solution[0].getX(), 6.5, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
+
 ///нет точек пересечения у двух окружностей
 TEST(CircleCircleTest, ZeroSolutions_11) 
 {
@@ -164,6 +175,7 @@ TEST(CircleCircleTest, ZeroSolutions_11)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
+
 ///концентрич-е окружности разного радиуса
 TEST(CircleCircleTest, OneSolutions_12) 
 {
@@ -177,6 +189,7 @@ TEST(CircleCircleTest, OneSolutions_12)
 
   ASSERT_EQ(result->solution.size(), 0);
 }
+
 ///концентрич-е окружности одинакового радиуса
 TEST(CircleCircleTest, OneSolutions_13) 
 {
@@ -189,6 +202,7 @@ TEST(CircleCircleTest, OneSolutions_13)
   std::shared_ptr<CalculationResult> result = intersection.Intersection(circle1, circle2);
   ASSERT_EQ(result->solution.size(), 0);
 }
+
 ///окружность в окружности
 TEST(CircleCircleTest, OneSolutions_14) 
 {
@@ -204,20 +218,7 @@ TEST(CircleCircleTest, OneSolutions_14)
   ASSERT_NEAR(result->solution[0].getX(), 0.0, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
-/**
-TEST(EquationTest, ThrowWrongIndex)
-{
-  double A = 1.0, B = 1.0, C = 2.0;
-  SquareEquation anEq(A, B, C);
 
-  ASSERT_EQ(anEq.NbSolutions(), 0);
-  ASSERT_ANY_THROW(anEq.Solution(0));
-}
-=============================================================================
-function : main
-purpose  :
-============================================================================= 
-*/
 int main(int argc, char** argv)
 {
   ::testing::InitGoogleTest(&argc, argv);

@@ -219,6 +219,31 @@ TEST(CircleCircleTest, OneSolutions_14)
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 
+///окружность в окружности
+TEST(CircleCircleTest, UnsupportedCurve_15)
+{
+  class DummyCurve : public Curve
+  {
+  public:
+    DummyCurve(double x, double y)
+      : Curve(x, y)
+    {
+    }
+
+    virtual Point PointCalcul(double t) const override { return Point(0, 0); };
+    virtual Vector Gradient(double t) const override { return Vector(0, 0); };
+    bool ClosedCurve() const override { return true; };
+
+  };
+  double A = 4.0, C = 0.0;
+
+  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, C, A));
+  std::shared_ptr<Curve> dummy = std::shared_ptr<DummyCurve>(new DummyCurve(A, C));
+
+  Intersections intersection;
+  ASSERT_NO_THROW(intersection.Intersection(dummy, circle2));
+}
+
 int main(int argc, char** argv)
 {
   ::testing::InitGoogleTest(&argc, argv);

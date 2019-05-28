@@ -21,50 +21,29 @@ std::shared_ptr<CalculationResult> Intersections::Intersection(std::shared_ptr<C
   std::shared_ptr<Circle> CirclePtr1 = std::dynamic_pointer_cast<Circle>(ptr1);
   std::shared_ptr<Circle> CirclePtr2 = std::dynamic_pointer_cast<Circle>(ptr2);
 
-  if (linePtr1)
+  if (linePtr1 && linePtr2)
   {
-    if (linePtr2)
-    {
-      return SolveLineLine(linePtr1, linePtr2);
-    }
-    else
-    {
-      if (CirclePtr2)
-      {
-        return SolveCircleLine(CirclePtr2, linePtr1);
-      }
-      else
-      {
-        std::shared_ptr<CalculationResult> t;
-        t->type = UNSUPPORTED_CURVE;
-        return t;
-      }
-    }
+    return SolveLineLine(linePtr1, linePtr2);
+  }
+  else if (linePtr1 && CirclePtr2)
+  {
+    return SolveCircleLine(CirclePtr2, linePtr1);
+  }
+  else if (CirclePtr1 && linePtr2)
+  {
+    return SolveCircleLine(CirclePtr1, linePtr2);
+  }
+  else if (CirclePtr1 && CirclePtr2)
+  {
+    return SolveCircleCircle(CirclePtr1, CirclePtr2);
   }
   else
   {
-    if (CirclePtr1)
-    {
-      if (linePtr2)
-      {
-        return SolveCircleLine(CirclePtr1, linePtr2);
-      }
-      else
-      {
-        if (CirclePtr2)
-        {
-          return SolveCircleCircle(CirclePtr1, CirclePtr2);
-        }
-        else
-        {
-          std::shared_ptr<CalculationResult> t;
-          t->type = UNSUPPORTED_CURVE;
-          return t;
-        }
-      }
-    }
+    std::shared_ptr<CalculationResult> t(new CalculationResult);
+    t->type = UNSUPPORTED_CURVE;
+    return t;
   }
-} 
+}
 
 std::shared_ptr<CalculationResult> Intersections::SolveLineLine(std::shared_ptr<Line> ptr1, std::shared_ptr<Line> ptr2)
 {
@@ -131,83 +110,77 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleCircle(std::shared_
     t->type = COINCIDENCE;
     return t;
   }
-  else
+  else if (
+    /// В одной точке с разным радиусом
+    (deltaX + deltaY < EPS && deltaR > EPS) ||
+    /// Круг вне круга или круг внутри круга
+    (distance > sumRadius + EPS || distance < deltaR - EPS)
+    )
   {
-    if (
-      /// В одной точке с разным радиусом
-      (deltaX + deltaY < EPS && deltaR > EPS) ||
-      /// Круг вне круга или круг внутри круга
-      (distance > sumRadius + EPS || distance < deltaR - EPS)
-      )
+    std::shared_ptr<CalculationResult> t(new CalculationResult);
+    t->type = NO_INTERSECTION;
+    return t;
+  }
+  else if (fabs(distance - sumRadius) < EPS || fabs(distance - deltaR) < EPS)
+  {
+    /// 1 решение
+    /// Получение среднего значения суммы координат
+    double middlePoint1 = (firstCenterPoint.getX() + secondCenterPoint.getX()) / 2.0;
+    double middlePoint2 = (firstCenterPoint.getY() + secondCenterPoint.getY()) / 2.0;
+    /// Получаем разность координат
+    double coordinate1 = firstCenterPoint.getX() - secondCenterPoint.getX();
+    double coordinate2 = firstCenterPoint.getY() - secondCenterPoint.getY();
+    /// Формирует точку - направление
+    Vector vector1(-coordinate1, -coordinate2);
+    /// Новая прямая записанная через умный указатель
+    std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(middlePoint1, middlePoint2, Vector(vector1.getX(), vector1.getY())));
+    /// Вычисление точек на прямой, которая пересекает каждую из окружностей
+    std::shared_ptr<CalculationResult> points1 = Intersection(line, ptr1);
+    std::shared_ptr<CalculationResult> points2 = Intersection(line, ptr2);
+    /// Сравнение полученных координат - ищем общую и её записываем в ответ
+    if ((points1->solution[0] == points2->solution[0]) || (points1->solution[0] == points2->solution[1]))
     {
+      points.push_back(Point(points1->solution[0].getX(), points1->solution[0].getX()));
       std::shared_ptr<CalculationResult> t(new CalculationResult);
-      t->type = NO_INTERSECTION;
+      t->type = COINCIDENCE;
+      t->solution = points;
       return t;
     }
-    else
+    if ((points1->solution[1] == points2->solution[1]) || (points1->solution[1] == points2->solution[0]))
     {
-      if (fabs(distance - sumRadius) < EPS || fabs(distance - deltaR) < EPS)
-      {
-        /// 1 решение
-        /// Получение среднего значения суммы координат
-        double middlePoint1 = (firstCenterPoint.getX() + secondCenterPoint.getX()) / 2.0;
-        double middlePoint2 = (firstCenterPoint.getY() + secondCenterPoint.getY()) / 2.0;
-        /// Получаем разность координат
-        double coordinate1 = firstCenterPoint.getX() - secondCenterPoint.getX();
-        double coordinate2 = firstCenterPoint.getY() - secondCenterPoint.getY();
-        /// Формирует точку - направление
-        Vector vector1(-coordinate1, -coordinate2);
-        /// Новая прямая записанная через умный указатель
-        std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(middlePoint1, middlePoint2, Vector(vector1.getX(), vector1.getY())));
-        /// Вычисление точек на прямой, которая пересекает каждую из окружностей
-        std::shared_ptr<CalculationResult> points1 = Intersection(line, ptr1);
-        std::shared_ptr<CalculationResult> points2 = Intersection(line, ptr2);
-        /// Сравнение полученных координат - ищем общую и её записываем в ответ
-        if ((points1->solution[0] == points2->solution[0]) || (points1->solution[0] == points2->solution[1]))
-        {
-          points.push_back(Point(points1->solution[0].getX(), points1->solution[0].getX()));
-          std::shared_ptr<CalculationResult> t(new CalculationResult);
-          t->type = COINCIDENCE;
-          t->solution = points;
-          return t;
-        }
-        if ((points1->solution[1] == points2->solution[1]) || (points1->solution[1] == points2->solution[0]))
-        {
-          points.push_back(Point(points1->solution[1].getX(), points1->solution[1].getY()));
-          std::shared_ptr<CalculationResult> t(new CalculationResult);
-          t->type = COINCIDENCE;
-          t->solution = points;
-          return t;
-        }
-      }
-      else
-      {
-        /// 2 решения
-        /// Получение серединной точки на прямой
-        double middlePoint1 = (firstCenterPoint.getX() + secondCenterPoint.getX()) / 2.0;
-        double middlePoint2 = (firstCenterPoint.getY() + secondCenterPoint.getY()) / 2.0;
-        Point d(middlePoint1, middlePoint2);
-        /// Получение разности координат
-        double coordinate1 = firstCenterPoint.getX() - secondCenterPoint.getX();
-        double coordinate2 = firstCenterPoint.getY() - secondCenterPoint.getY();
-        /// Координаты направляющего вектора на первой прямой
-        Vector vector1(-coordinate1, -coordinate2);
-        /// Координаты направлябщего вектора прямой, через которую будут искаться решения
-        Vector vector2(-coordinate2, coordinate1);
-        /// Создаем умный указатель на неё и передаем вычисленные значения
-        std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(middlePoint1, middlePoint2, Vector(vector2.getX(), vector2.getY())));
-        /// Вычисляем точки пересечения прямой с этими окружностями
-        std::shared_ptr<CalculationResult> points1 = Intersection(line, ptr1);
-        std::shared_ptr<CalculationResult> points2 = Intersection(line, ptr2);
-        /// Добавляем из первой, т.к. точки одинаковы
-        points.push_back(Point(points1->solution[0].getX(), points1->solution[0].getY()));
-        points.push_back(Point(points1->solution[1].getX(), points1->solution[1].getY()));
-        std::shared_ptr<CalculationResult> t(new CalculationResult);
-        t->type = COINCIDENCE;
-        t->solution = points;
-        return t;
-      }
+      points.push_back(Point(points1->solution[1].getX(), points1->solution[1].getY()));
+      std::shared_ptr<CalculationResult> t(new CalculationResult);
+      t->type = COINCIDENCE;
+      t->solution = points;
+      return t;
     }
+  }
+  else
+  {
+    /// 2 решения
+    /// Получение серединной точки на прямой
+    double middlePoint1 = (firstCenterPoint.getX() + secondCenterPoint.getX()) / 2.0;
+    double middlePoint2 = (firstCenterPoint.getY() + secondCenterPoint.getY()) / 2.0;
+    Point d(middlePoint1, middlePoint2);
+    /// Получение разности координат
+    double coordinate1 = firstCenterPoint.getX() - secondCenterPoint.getX();
+    double coordinate2 = firstCenterPoint.getY() - secondCenterPoint.getY();
+    /// Координаты направляющего вектора на первой прямой
+    Vector vector1(-coordinate1, -coordinate2);
+    /// Координаты направлябщего вектора прямой, через которую будут искаться решения
+    Vector vector2(-coordinate2, coordinate1);
+    /// Создаем умный указатель на неё и передаем вычисленные значения
+    std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(middlePoint1, middlePoint2, Vector(vector2.getX(), vector2.getY())));
+    /// Вычисляем точки пересечения прямой с этими окружностями
+    std::shared_ptr<CalculationResult> points1 = Intersection(line, ptr1);
+    std::shared_ptr<CalculationResult> points2 = Intersection(line, ptr2);
+    /// Добавляем из первой, т.к. точки одинаковы
+    points.push_back(Point(points1->solution[0].getX(), points1->solution[0].getY()));
+    points.push_back(Point(points1->solution[1].getX(), points1->solution[1].getY()));
+    std::shared_ptr<CalculationResult> t(new CalculationResult);
+    t->type = COINCIDENCE;
+    t->solution = points;
+    return t;
   }
 };
 

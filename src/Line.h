@@ -1,9 +1,13 @@
 ﻿#pragma once
 
+#include <stdexcept>
+
 #include <Export.h>
 #include <Curve.h>
 #include <Vector.h>
 #include <Point.h>
+
+const double EPS_NORM = 1.0e-7;
 
 /// Класс линия - задается точкой и направлением.
 class Line : public Curve
@@ -16,7 +20,12 @@ public:
   Line(double x, double y, Vector direction)
   : Curve(x, y),
     myDirection(direction)
-  {}
+  {
+    if (myDirection.getSquaredNorm() < EPS_NORM * EPS_NORM)
+    {
+      throw std::invalid_argument("Invalid direction");
+    }
+  }
 
   /// Виртуальный переопределенный константный метод, который возвращает точку в зависимости от параметра.
   Intersection_EXPORT virtual Point PointCalcul(double t) const override;

@@ -32,8 +32,8 @@ struct CalculationResult
   /// Конструктор, у которого тип по умолчанию - NO_INTERSECTION.
   CalculationResult() : type(NO_INTERSECTION) {};
 
-  std::vector<Point> solution; /// \param solution Вектор точек - найденные решения.
-  CalculatoreType type;        /// \param type     Параметр, показывающий состояние из перечисления.
+  std::vector<Point> solution; ///< param solution Вектор точек - найденные решения.
+  CalculatoreType type;        ///< param type     Параметр, показывающий состояние из перечисления.
 };
 
 /// Общий интерфейс для нахождения точек пересечения

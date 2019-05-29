@@ -59,18 +59,18 @@ public:
     return summ;
   }
 
-  /// Нормализация вектора.
+  /// \result Нормализованный вектор.
   Vector Normalize()
   {
-    const double length = getNorm(); /// \param length   Длина заданного вектора.
-    return Multiply(1.0 / length);   /// \param Multiply Результат - нормализованный вектор.
+    const double length = getNorm();
+    return Multiply(1.0 / length);
   }
 
 private:
 
-  /**
-  Задание координат точки.
-  */
+  /// Х координата точки.
   double x;
+
+  /// Y координата точки.
   double y;
 };

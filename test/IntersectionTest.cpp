@@ -218,7 +218,7 @@ TEST(CircleCircleTest, OneSolutions_14)
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 
-///окружность в окружности
+///неизвестный тип кривой
 TEST(CircleCircleTest, UnsupportedCurve_15)
 {
   class DummyCurve : public Curve
@@ -241,6 +241,19 @@ TEST(CircleCircleTest, UnsupportedCurve_15)
 
   Intersections intersection;
   ASSERT_NO_THROW(intersection.Intersection(dummy, circle2));
+}
+
+TEST(Line, Construct)
+{
+  Vector v(0.0, 0.0);
+  ASSERT_ANY_THROW(Line(0.0, 0.0, v));
+}
+
+TEST(Point, ConstructEmpty)
+{
+  Point p;
+  EXPECT_NEAR(p.getX(), 0.0, EPS);
+  EXPECT_NEAR(p.getY(), 0.0, EPS);
 }
 
 int main(int argc, char** argv)

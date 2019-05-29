@@ -14,7 +14,7 @@ public:
   /// \param y         Координата y точки.
   /// \param direction Вектор направления линии.
   Line(double x, double y, Vector direction)
-    : Curve(x, y),
+  : Curve(x, y),
     myDirection(direction)
   {}
 

@@ -51,14 +51,19 @@ public:
   {
     return Vector(x * scalar, y * scalar);
   }
-   //  + summ (Vector){тек + переданный};
+
+  /// Сумма двух векторов.
+  Vector summ(const Vector& p)
+  {
+    Vector summ = Vector(x + p.getX(), y + p.getY());
+    return summ;
+  }
+
   /// Нормализация вектора.
-  /// \param length   Длина заданного вектора.
-  /// \param Multiply Результат - нормализованный вектор.
   Vector Normalize()
   {
-    const double length = getNorm();
-    return Multiply(1.0 / length);
+    const double length = getNorm(); /// \param length   Длина заданного вектора.
+    return Multiply(1.0 / length);   /// \param Multiply Результат - нормализованный вектор.
   }
 
 private:

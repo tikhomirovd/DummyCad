@@ -41,6 +41,7 @@ public:
     return y;
   }
 
+  /// Расстояние между двумя точками.
   double distance(const Point& p)
   {
     double distance = sqrt(pow(x - p.getX(), 2) + pow(y - p.getX(), 2));

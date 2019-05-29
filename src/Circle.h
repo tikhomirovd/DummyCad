@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+// Includes from Core.
 #include <Export.h>
 #include <Curve.h>
 #include <Vector.h>

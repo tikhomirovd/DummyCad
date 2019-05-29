@@ -1,41 +1,49 @@
-﻿#include <vector>
+﻿// Include self.
+#include <Intersection.h>
+
+// Includes from STL.
+#include <vector>
 #include <memory>
 #include <math.h>
 
+// Includes from Core.
 #include <Point.h>
 #include <Curve.h>
 #include <Vector.h>
-#include <Intersection.h>
 #include <Line.h>
 #include <Circle.h>
 
 static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
 
+//=============================================================================
+//function : Intersection
+//purpose  : общий интерфейс для методов пересечения
+//=============================================================================
 std::shared_ptr<CalculationResult> Intersections::Intersection(std::shared_ptr<Curve> ptr1, std::shared_ptr<Curve> ptr2)
 {
   std::vector<Point> result;
 
   std::shared_ptr<Line> linePtr1 = std::dynamic_pointer_cast<Line>(ptr1);
   std::shared_ptr<Line> linePtr2 = std::dynamic_pointer_cast<Line>(ptr2);
-  std::shared_ptr<Circle> CirclePtr1 = std::dynamic_pointer_cast<Circle>(ptr1);
-  std::shared_ptr<Circle> CirclePtr2 = std::dynamic_pointer_cast<Circle>(ptr2);
+  std::shared_ptr<Circle> circlePtr1 = std::dynamic_pointer_cast<Circle>(ptr1);
+  std::shared_ptr<Circle> circlePtr2 = std::dynamic_pointer_cast<Circle>(ptr2);
 
   if (linePtr1 && linePtr2)
   {
     return SolveLineLine(linePtr1, linePtr2);
   }
-  else if (linePtr1 && CirclePtr2)
+  else if (linePtr1 && circlePtr2)
   {
-    return SolveCircleLine(CirclePtr2, linePtr1);
+    return SolveCircleLine(circlePtr2, linePtr1);
   }
-  else if (CirclePtr1 && linePtr2)
+  else if (circlePtr1 && linePtr2)
   {
-    return SolveCircleLine(CirclePtr1, linePtr2);
+    return SolveCircleLine(circlePtr1, linePtr2);
   }
-  else if (CirclePtr1 && CirclePtr2)
+  else if (circlePtr1 && circlePtr2)
   {
-    return SolveCircleCircle(CirclePtr1, CirclePtr2);
+    return SolveCircleCircle(circlePtr1, circlePtr2);
   }
   else
   {
@@ -45,10 +53,12 @@ std::shared_ptr<CalculationResult> Intersections::Intersection(std::shared_ptr<C
   }
 }
 
+//=============================================================================
+//function : SolveLineLine
+//purpose  : Реализация метода - найти точку пересечения 2 прямых
+//=============================================================================
 std::shared_ptr<CalculationResult> Intersections::SolveLineLine(std::shared_ptr<Line> ptr1, std::shared_ptr<Line> ptr2)
 {
-  /// Реализация метода - найти точку пересечения 2 прямых
-
   std::vector<Point> point;
   Point firstLinePoint = ptr1->getCurvePoint();
   /// Получение направляющего вектора первой прямой
@@ -63,7 +73,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveLineLine(std::shared_ptr<
   /// Решаем систему y-p2*t=y0 ; y-p21*t=y01; determinant1 = 1*(-p21)-(-p2)*1
   if (fabs(determinant1) < EPS || fabs(determinant2) < EPS)
   {
-    if (firstLinePoint.distance(secondLinePoint) < pow(EPS,2) && (direction1.summ(direction2)).getSquaredNorm() < pow(EPS, 2))
+    if (firstLinePoint.distance(secondLinePoint) < pow(EPS, 2) && (direction1.summ(direction2)).getSquaredNorm() < pow(EPS, 2))
     {
       std::shared_ptr<CalculationResult> t(new CalculationResult);
       t->type = COINCIDENCE;
@@ -85,10 +95,12 @@ std::shared_ptr<CalculationResult> Intersections::SolveLineLine(std::shared_ptr<
   }
 }
 
+//=============================================================================
+//function : SolveCircleCircle
+//purpose  : Реализация метода - найти точку/и пересечения двух окружностей
+//=============================================================================
 std::shared_ptr<CalculationResult> Intersections::SolveCircleCircle(std::shared_ptr<Circle> ptr1, std::shared_ptr<Circle> ptr2)
 {
-  ///реализация метода - найти точку/и пересечения двух окружностей
-
   std::vector<Point> points;
   Point firstCenterPoint = ptr1->getCurvePoint();
   Point secondCenterPoint = ptr2->getCurvePoint();
@@ -183,10 +195,12 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleCircle(std::shared_
   }
 };
 
+//=============================================================================
+//function : SolveCircleLine
+//purpose  : Реализация метода - найти точку/и пересечения прямой и окружности
+//=============================================================================
 std::shared_ptr<CalculationResult> Intersections::SolveCircleLine(std::shared_ptr<Circle> ptr1, std::shared_ptr<Line> ptr2)
 {
-  /// реализация метода - найти точку/и пересечения прямой и окружности
-
   std::vector<Point> points;
   Point circleCenterPoint = ptr1->getCurvePoint();
   /// Получение радиуса

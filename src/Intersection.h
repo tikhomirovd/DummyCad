@@ -1,8 +1,10 @@
 ﻿#pragma once
 
+// Includes from STL.
 #include <vector>
 #include <memory>
 
+// Includes from Core.
 #include <Export.h>
 #include <Point.h>
 #include <Curve.h>
@@ -14,7 +16,7 @@
 class Line;
 class Circle;
 
-/// Перечисление для всех случаев кривых
+///  Перечисление для всех случаев кривых
 /// \param NO_INTERSECTION   Нет пересечения кривых - нет решения.
 /// \param COINCIDENCE       Полное совпадение кривых.
 /// \param SOLUTION          Есть пересечение кривых - решение найдено.

@@ -1,4 +1,5 @@
-﻿#include <Line.h>
+﻿// Include self.
+#include <Line.h>
 
 Point Line::PointCalcul(double t) const
 {

@@ -1,7 +1,9 @@
 ﻿#pragma once
 
+// Includes from STL.
 #include <stdexcept>
 
+// Includes from Core.
 #include <Export.h>
 #include <Curve.h>
 #include <Vector.h>
@@ -21,16 +23,17 @@ public:
   : Curve(x, y),
     myDirection(direction)
   {
+    /// Исключение генерируется приситуации с нулевым направлением.
     if (myDirection.getSquaredNorm() < EPS_NORM * EPS_NORM)
     {
       throw std::invalid_argument("Invalid direction");
     }
   }
 
-  /// Виртуальный переопределенный константный метод, который возвращает точку в зависимости от параметра.
+  /// Метод, который возвращает точку в зависимости от параметра.
   Intersection_EXPORT virtual Point PointCalcul(double t) const override;
 
-  /// Виртуальный переопределенный константный метод, который определяет вектор касательной к линии.
+  /// Метод, который определяет вектор касательной к линии.
   Intersection_EXPORT virtual Vector Gradient(double t) const  override;
 
   /// Метод определяет замкнутость линии.
@@ -38,6 +41,7 @@ public:
   {
     return false;
   }
+
   /// Метод возвращает направляющий вектор линии.
   const Vector& getDirection() const
   {

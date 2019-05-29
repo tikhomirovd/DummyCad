@@ -1,11 +1,13 @@
-﻿/// GoogleTest includes
+﻿// GoogleTest includes
 #pragma warning(disable : 4251)
 #pragma warning(disable : 4275)
 #include <gtest/gtest.h>
 
+// Includes from STL.
 #include <vector>
 #include <memory>
 
+// Includes from Core.
 #include <Intersection.h>
 #include <Curve.h>
 #include <Vector.h>
@@ -16,13 +18,14 @@
 static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
 
+// Определяется допуск для решений.
 static const double THE_TOLERANCE = 1.e-7;
 
-/// одна точка пересечения двух прямых
-TEST(LineLineTest, OneSolution_01) 
+// Одна точка пересечения двух прямых
+TEST(LineLineTest, OneSolution_01)
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector( 1.0, 0.0)));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector( 0.0, 1.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(0.0, 1.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -33,11 +36,11 @@ TEST(LineLineTest, OneSolution_01)
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 
-/// одна точка пересечения двух прямых 
-TEST(LineLineTest, OneSolution_02) 
+// Одна точка пересечения двух прямых 
+TEST(LineLineTest, OneSolution_02)
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector( 0.0, 2.0)));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, -1.0, Vector( 2.0, 0.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector(0.0, 2.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, -1.0, Vector(2.0, 0.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -47,11 +50,11 @@ TEST(LineLineTest, OneSolution_02)
   ASSERT_NEAR(result->solution[0].getY(), -1.0, THE_TOLERANCE);
 }
 
-///нет точек пересечения прямых
-TEST(LineLineTest, ZeroSolutions_03) 
+// Нет точек пересечения прямых
+TEST(LineLineTest, ZeroSolutions_03)
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector( 1.0, 0.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector(1.0, 0.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -59,11 +62,11 @@ TEST(LineLineTest, ZeroSolutions_03)
   ASSERT_EQ(result->solution.size(), 0);
 }
 
-///прямые совпадают
-TEST(LineLineTest, ZeroSolutions_04) 
+// Прямые совпадают
+TEST(LineLineTest, ZeroSolutions_04)
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
-  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector( 1.0, 0.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(straid1, straid2);
@@ -71,10 +74,10 @@ TEST(LineLineTest, ZeroSolutions_04)
   ASSERT_EQ(result->solution.size(), 0);
 }
 
-///две точки пересечения прямой и окружности
-TEST(LineCircleTest, TwoSolution_05) 
+// Две точки пересечения прямой и окружности
+TEST(LineCircleTest, TwoSolutions_05)
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector( 0.0, 2.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector(0.0, 2.0)));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
 
   Intersections intersection;
@@ -87,10 +90,10 @@ TEST(LineCircleTest, TwoSolution_05)
   ASSERT_NEAR(result->solution[1].getY(), 4.0, THE_TOLERANCE);
 }
 
-///одна точка пересечения прямой и окуржности
-TEST(LineCircleTest, OneSolution_06) 
+// Одна точка пересечения прямой и окуржности
+TEST(LineCircleTest, OneSolution_06)
 {
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector( 5.0, 0.0)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector(5.0, 0.0)));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
 
   Intersections intersection;
@@ -101,12 +104,12 @@ TEST(LineCircleTest, OneSolution_06)
   ASSERT_NEAR(result->solution[0].getY(), 3.0, THE_TOLERANCE);
 }
 
-///нет точек пересечения прямой и окружности
-TEST(LineCircleTest, ZeroSolution_07) 
+// Нет точек пересечения прямой и окружности
+TEST(LineCircleTest, ZeroSolutions_07)
 {
   double A = 6.0, B = 0.0, C = 0.0, D = 3.0, E = 2.0;
 
-  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(A, B, Vector( C, D)));
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(A, B, Vector(C, D)));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(E, C, D));
 
   Intersections intersection;
@@ -115,8 +118,8 @@ TEST(LineCircleTest, ZeroSolution_07)
   ASSERT_EQ(result->solution.size(), 0);
 }
 
-///две точки пересечения окружностей
-TEST(CircleCircleTest, TwoSolutions_08) 
+// Две точки пересечения окружностей
+TEST(CircleCircleTest, TwoSolutions_08)
 {
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(5, 4, 3));
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(9, 7, 3));
@@ -131,8 +134,8 @@ TEST(CircleCircleTest, TwoSolutions_08)
   ASSERT_NEAR(result->solution[1].getY(), 4.4971469271551863, THE_TOLERANCE);
 }
 
-///одна точка пересечения окружностей
-TEST(CircleCircleTest, OneSolutions_09) 
+// Одна точка пересечения окружностей
+TEST(CircleCircleTest, OneSolution_09)
 {
   double A = 3.0, B = 0.0, C = 3.0, D = 9.0;
 
@@ -147,8 +150,8 @@ TEST(CircleCircleTest, OneSolutions_09)
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 
-///одна точка пересечения окружностей с нецелочисленными радиусами
-TEST(CircleCircleTest, OneSolutions_10) 
+// Одна точка пересечения окружностей с нецелочисленными радиусами
+TEST(CircleCircleTest, OneSolution_10)
 {
   std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 3.5));
   std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 2.5));
@@ -161,8 +164,8 @@ TEST(CircleCircleTest, OneSolutions_10)
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 
-///нет точек пересечения у двух окружностей
-TEST(CircleCircleTest, ZeroSolutions_11) 
+// Нет точек пересечения у двух окружностей
+TEST(CircleCircleTest, ZeroSolutions_11)
 {
   double A = 3.0, B = 0.0, C = 3.0, D = 9.0, E = 2.0;
 
@@ -175,8 +178,8 @@ TEST(CircleCircleTest, ZeroSolutions_11)
   ASSERT_EQ(result->solution.size(), 0);
 }
 
-///концентрич-е окружности разного радиуса
-TEST(CircleCircleTest, OneSolutions_12) 
+// Концентрич-е окружности разного радиуса
+TEST(CircleCircleTest, OneSolution_12)
 {
   double A = 4.0, B = 1.0, C = 0.0, D = 3.0;
 
@@ -189,8 +192,8 @@ TEST(CircleCircleTest, OneSolutions_12)
   ASSERT_EQ(result->solution.size(), 0);
 }
 
-///концентрич-е окружности одинакового радиуса
-TEST(CircleCircleTest, OneSolutions_13) 
+// Концентрич-е окружности одинакового радиуса
+TEST(CircleCircleTest, OneSolution_13)
 {
   double A = 4.0, B = 1.0, C = 0.0;
 
@@ -202,8 +205,8 @@ TEST(CircleCircleTest, OneSolutions_13)
   ASSERT_EQ(result->solution.size(), 0);
 }
 
-///окружность в окружности
-TEST(CircleCircleTest, OneSolutions_14) 
+// Окружность в окружности
+TEST(CircleCircleTest, OneSolution_14)
 {
   double A = 4.0, B = 2.0, C = 0.0;
 
@@ -218,7 +221,7 @@ TEST(CircleCircleTest, OneSolutions_14)
   ASSERT_NEAR(result->solution[0].getY(), 0.0, THE_TOLERANCE);
 }
 
-///неизвестный тип кривой
+// Неизвестный тип кривой
 TEST(CircleCircleTest, UnsupportedCurve_15)
 {
   class DummyCurve : public Curve
@@ -241,19 +244,6 @@ TEST(CircleCircleTest, UnsupportedCurve_15)
 
   Intersections intersection;
   ASSERT_NO_THROW(intersection.Intersection(dummy, circle2));
-}
-
-TEST(Line, Construct)
-{
-  Vector v(0.0, 0.0);
-  ASSERT_ANY_THROW(Line(0.0, 0.0, v));
-}
-
-TEST(Point, ConstructEmpty)
-{
-  Point p;
-  EXPECT_NEAR(p.getX(), 0.0, EPS);
-  EXPECT_NEAR(p.getY(), 0.0, EPS);
 }
 
 int main(int argc, char** argv)

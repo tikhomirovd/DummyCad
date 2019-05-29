@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+// Includes from Core.
 #include <Vector.h>
 #include <Point.h>
 
@@ -30,6 +31,5 @@ protected:
 
   /// Защищенный конструктор - для того, чтобы только наследники могли создать экземпляр класса.
   Curve(double x, double y) : point(x, y)
-  {
-  }
+  {}
 };

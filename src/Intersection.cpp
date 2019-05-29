@@ -62,9 +62,8 @@ std::shared_ptr<CalculationResult> Intersections::SolveLineLine(std::shared_ptr<
 
   /// Решаем систему y-p2*t=y0 ; y-p21*t=y01; determinant1 = 1*(-p21)-(-p2)*1
   if (fabs(determinant1) < EPS || fabs(determinant2) < EPS)
-  {    // на сумме сделать норму
-    if (firstLinePoint.distance(secondLinePoint) < pow(EPS,2)
-      && (direction1.summ(direction2)).getSquaredNorm() < pow(EPS, 2))
+  {
+    if (firstLinePoint.distance(secondLinePoint) < pow(EPS,2) && (direction1.summ(direction2)).getSquaredNorm() < pow(EPS, 2))
     {
       std::shared_ptr<CalculationResult> t(new CalculationResult);
       t->type = COINCIDENCE;

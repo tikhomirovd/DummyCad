@@ -125,7 +125,6 @@ TEST(CircleCircleTest, TwoSolutions_08)
   std::shared_ptr<CalculationResult> result = intersection.Intersection(circle1, circle2);
 
   ASSERT_EQ(result->solution.size(), 2);
-  /// найти точки пересечения двух окружностей
   ASSERT_NEAR(result->solution[0].getX(), 6.2478601953663899, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[0].getY(), 6.5028530728448137, THE_TOLERANCE);
   ASSERT_NEAR(result->solution[1].getX(), 7.7521398046336101, THE_TOLERANCE);

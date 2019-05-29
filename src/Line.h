@@ -16,6 +16,7 @@ class Line : public Curve
 {
 public:
 
+  /// Исключение генерируется при ситуации с нулевым направлением.
   /// \param x         Координата x точки.
   /// \param y         Координата y точки.
   /// \param direction Вектор направления линии.
@@ -23,7 +24,6 @@ public:
   : Curve(x, y),
     myDirection(direction)
   {
-    /// Исключение генерируется приситуации с нулевым направлением.
     if (myDirection.getSquaredNorm() < EPS_NORM * EPS_NORM)
     {
       throw std::invalid_argument("Invalid direction");
@@ -34,7 +34,7 @@ public:
   Intersection_EXPORT virtual Point PointCalcul(double t) const override;
 
   /// Метод, который определяет вектор касательной к линии.
-  Intersection_EXPORT virtual Vector Gradient(double t) const  override;
+  Intersection_EXPORT virtual Vector Gradient(double t) const override;
 
   /// Метод определяет замкнутость линии.
   bool ClosedCurve() const override

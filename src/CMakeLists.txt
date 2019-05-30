@@ -6,5 +6,4 @@ foreach(_mode ${CMAKE_CONFIGURATION_TYPES})
   add_test_environment("${_mode}" "${CMAKE_CURRENT_BINARY_DIR}/${_mode}")
 endforeach()
 
-target_include_directories(CurveExec PUBLIC ${OpenCASCADE_INCLUDE_DIR})
 

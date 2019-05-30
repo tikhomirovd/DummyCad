@@ -17,9 +17,9 @@ add_subdirectory(src)
 add_subdirectory(test)
 
 add_executable(CurveExec main.cpp)
-target_include_directories(CurveExec PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_include_directories(CurveExec PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src" ${OpenCASCADE_INCLUDE_DIR})
+
 target_link_libraries(CurveExec Curve)
 install(TARGETS CurveExec DESTINATION ${CMAKE_INSTALL_PREFIX})
 
-include_directories("/home/dimas/OpenCascade7.3.0/include/opencascade")
 

@@ -275,8 +275,6 @@ TEST(IntersectionTest, LineLineEquivalent)
     Handle(Geom2d_Line) aLineCascade = new Geom2d_Line(aPoint1, aDirLine1);
     
     Geom2dAPI_InterCurveCurve anInter = Geom2dAPI_InterCurveCurve(aLineCascade, aLineCascade);
-
-    cout << anInter.NbSegments();
     
     
     ASSERT_EQ(testLine.CurrentStatus(), Intersection::EQUAL);

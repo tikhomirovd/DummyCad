@@ -97,9 +97,11 @@ TEST(LineTest, LineValueTest)
     
     aLineCascade.D0(t, anAns);
     
+    Point aLineValue = aLine.Value(t);
     
-    ASSERT_NEAR(aLine.Value(t).X(), anAns.X(), TOL);
-    ASSERT_NEAR(aLine.Value(t).Y(), anAns.Y(), TOL);
+    
+    ASSERT_NEAR(aLineValue.X(), anAns.X(), TOL);
+    ASSERT_NEAR(aLineValue.Y(), anAns.Y(), TOL);
     
 }
 
@@ -172,9 +174,11 @@ TEST(CircleTest, CircleValueTest)
     
     aCircleCascade.D0(t, aPntAns);
     
+    Point aCircleValue = aCircle.Value(t);
     
-    ASSERT_NEAR(aCircle.Value(t).X(), aPntAns.X(), TOL);
-    ASSERT_NEAR(aCircle.Value(t).Y(), aPntAns.Y(), TOL);
+    
+    ASSERT_NEAR(aCircleValue.X(), aPntAns.X(), TOL);
+    ASSERT_NEAR(aCircleValue.Y(), aPntAns.Y(), TOL);
     
     
 }

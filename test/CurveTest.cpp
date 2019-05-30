@@ -84,7 +84,7 @@ TEST(LineTest, LineValueTest)
     
     Point aPoint(x1, y1, z1);
     Point aDirect(x2, y2, z2);
-    aDirect.Normalize();
+
     
     Line aLine(aPoint, aDirect);
     
@@ -133,7 +133,6 @@ TEST(LineTest, LineTangent)
     
     Point aPoint(x1, y1, z1);
     Point aDirect(x2, y2, z2);
-    aDirect.Normalize();
     
     Line aLine(aPoint, aDirect);
     
@@ -431,8 +430,6 @@ TEST(IntersectionTest, LineCircleNotInter)
     Point aD = Point(1, 5, 8);
     Point aO1 = Point(100, 200, -100);
     double aRadius = 5;
-    
-    aD.Normalize();
     
     shared_ptr<Line> aLine(new Line(aO, aD));
     shared_ptr<Circle> aCircle(new Circle(aO1, aRadius));

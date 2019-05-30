@@ -9,6 +9,7 @@ Line::Line(const Point &theCenter, const Point &theDirect)
 {
     myCenter = theCenter;
     myDirect = theDirect;
+    myDirect.Normalize();
 }
 
 Point Line::Value(double t) const

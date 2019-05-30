@@ -9,7 +9,6 @@
 #include <Line.h>
 
 static const double EPS = 1.e-10;
-static const double THE_TOLERANCE = 1.e-7;
 
 // Нулевое направление у линии
 TEST(Line, Construct)

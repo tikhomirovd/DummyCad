@@ -23,10 +23,10 @@ class Circle;
 /// \param UNSUPPORTED_CURVE Кривая задана некорректно/ нет случая обработки заданной кривой.
 enum CalculatoreType 
 { 
-NO_INTERSECTION, 
-COINCIDENCE,
-SOLUTION, 
-UNSUPPORTED_CURVE,
+  NO_INTERSECTION,
+  COINCIDENCE,
+  SOLUTION,
+  UNSUPPORTED_CURVE,
 };
 
 struct CalculationResult 

@@ -15,7 +15,6 @@
 #include <Line.h>
 #include <Circle.h>
 
-static const double M_PI = 3.141592653589793;
 static const double EPS = 1.e-10;
 
 // Определяется допуск для решений.

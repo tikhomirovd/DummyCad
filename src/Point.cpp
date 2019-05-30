@@ -49,7 +49,7 @@ void Point::SetCoord(double x, double y, double z)
     
 }
 
-void Point::Norm()
+void Point::Normalize()
 {
     
     double aLen = sqrt(pow(myCoordX,2) + pow(myCoordY, 2));

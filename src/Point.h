@@ -61,7 +61,7 @@ public:
      * \return  Точка \f$ \{A_x + B_x, A_y + B_y, A_z + B_z \} \f$
      */
      
-    void Norm();
+    void Normalize();
     
     friend const Point operator+(const Point &a, const Point &b)
     {

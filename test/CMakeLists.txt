@@ -8,4 +8,4 @@ target_link_libraries(CurveTest ${GTEST_BOTH_LIBRARIES} Curve ${OpenCASCADE_LIBR
 gtest_add_tests(CurveTest "" AUTO)
 set_test_environment(CurveTest)
 
-include_directories("/home/dimas/OpenCascade7.3.0/include/opencascade")
+target_include_directories(CurveExec PUBLIC ${OpenCASCADE_INCLUDE_DIR})

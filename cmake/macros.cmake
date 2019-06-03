@@ -71,19 +71,19 @@ function(set_test_environment TEST_NAME)
     endforeach()
   endforeach()
 
-#  # Replace *.user file for debugging unit tests in Visual Studio
-#  if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-#    set(_user_file_template "unittest.vcxproj.user.in")
-#    foreach(_path ${CMAKE_MODULE_PATH})
-#      if(EXISTS "${_path}/${_user_file_template}")
-#        set(_user_file_template "${_path}/${_user_file_template}")
-#        break()
-#      endif()
-#    endforeach()
-#
-#    configure_file("${_user_file_template}"
-#                   "${CMAKE_CURRENT_BINARY_DIR}/${TEST_NAME}.vcxproj.user")
-#  endif()
+  # Replace *.user file for debugging unit tests in Visual Studio
+  if(".${CMAKE_CXX_COMPILER_ID}." STREQUAL ".MSVC.")
+    set(_user_file_template "unittest.vcxproj.user.in")
+    foreach(_path ${CMAKE_MODULE_PATH})
+      if(EXISTS "${_path}/${_user_file_template}")
+        set(_user_file_template "${_path}/${_user_file_template}")
+        break()
+      endif()
+    endforeach()
+
+    configure_file("${_user_file_template}"
+                   "${CMAKE_CURRENT_BINARY_DIR}/${TEST_NAME}.vcxproj.user")
+  endif()
 
 endfunction(set_test_environment)
 

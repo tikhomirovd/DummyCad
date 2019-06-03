@@ -16,6 +16,9 @@
 # performance of this software, and specifically disclaims any responsibility 
 # for any damages, special or consequential, connected with its use. 
 
+# Third parties
+set(3RDPARTY_DIR "" CACHE PATH "Path to 3rd-parties directory")
+
 # OCCT required version
 set(3RDPARTY_OCCT_VERSION "7.3.0" CACHE STRING "Required version of OpenCASCADE Technology")
 
@@ -25,7 +28,7 @@ if(NOT "${3RDPARTY_OCCT_DIR}")
 
   if(3RDPARTY_DIR)
     # search OCCT config file in the third parties directory
-    set (loc_OCCT_CONFIG)
+    set(loc_OCCT_CONFIG)
     file(GLOB_RECURSE loc_OCCT_CONFIG "${3RDPARTY_DIR}/*/OpenCASCADEConfig.cmake")
     if(NOT loc_OCCT_CONFIG)
       set(loc_OCCT_CONFIG "3RDPARTY_OCCT_CONFIG_FILE-NOTFOUND")
@@ -44,9 +47,9 @@ if(NOT "${3RDPARTY_OCCT_DIR}")
 
 endif()
 
-if(NOT EXISTS "${3RDPARTY_OCCT_DIR}")
-  message(FATAL_ERROR "3RDPARTY_OCCT_DIR variable is NOT specified")
-endif()
+#if(NOT EXISTS "${3RDPARTY_OCCT_DIR}")
+#  message(FATAL_ERROR "3RDPARTY_OCCT_DIR variable is NOT specified")
+#endif()
 
 if(NOT ("${3RDPARTY_OCCT_DIR_PREV}" STREQUAL "${3RDPARTY_OCCT_DIR}"))
   # discard previously stored OCCT variables

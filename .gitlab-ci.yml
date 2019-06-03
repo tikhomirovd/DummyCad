@@ -5,8 +5,17 @@ before_script:
   - apk add freeimage openssh --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
 
 stages:
+  - dependencies
   - build
   - test
+
+build-occt:
+  stage: dependencies
+  script:
+    - git clone gitolite@git.dev.opencascade.org:occt occt
+    - git checkout tags/V7_3_0
+    - cmake -B buildOCCT -S occt
+    - cmake --build buildOCCT --target install
 
 build:
   stage: build

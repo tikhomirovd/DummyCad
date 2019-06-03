@@ -1,4 +1,8 @@
-image: alpine-dummycad:latest
+image: alpine:latest
+
+before_script:
+  - apk add build-base cmake git gtest doxygen graphviz freetype tcl tk
+  - apk add freeimage openssh --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
 
 stages:
   - build

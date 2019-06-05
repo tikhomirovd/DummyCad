@@ -200,6 +200,8 @@ TEST(Circle, SolutionForOCCT_8)
 
   std::shared_ptr<Curve> circle = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
 
+  Point x1 = circle->PointCalcul(2.0);
+
   ASSERT_NEAR(circle->PointCalcul(2).getX(), aPointFirst.X(), THE_TOLERANCE);
   ASSERT_NEAR(circle->PointCalcul(2).getY(), aPointFirst.Y(), THE_TOLERANCE);
 }
@@ -208,8 +210,8 @@ TEST(Circle, SolutionForOCCT_8)
 TEST(CircleCircle, SolutionsForOCCT_9)
 {
 
-  Geom2d_Circle aCircleOCCT1 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 1.0);
-  Geom2d_Circle aCircleOCCT2 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(1.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 1.0);
+  Geom2d_Circle aCircleOCCT1 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(5.0, 4.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
+  Geom2d_Circle aCircleOCCT2 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(9.0, 7.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
 
   Handle(Geom2d_Circle) aCircleOCCTNew1 = new Geom2d_Circle(aCircleOCCT1);
   Handle(Geom2d_Circle) aCircleOCCTNew2 = new Geom2d_Circle(aCircleOCCT2);
@@ -221,8 +223,8 @@ TEST(CircleCircle, SolutionsForOCCT_9)
   gp_Pnt2d rez1 = result.Point(1);
   gp_Pnt2d rez2 = result.Point(2);
 
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(0.0, 0.0, 1.0));
-  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(1.0, 0.0, 1.0));
+  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(5, 4, 3));
+  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(9, 7, 3));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> results = intersection.Intersection(circle1, circle2);
@@ -231,38 +233,6 @@ TEST(CircleCircle, SolutionsForOCCT_9)
   ASSERT_NEAR(results->solution[1].getY(), rez1.Y(), THE_TOLERANCE);
   ASSERT_NEAR(results->solution[0].getX(), rez2.X(), THE_TOLERANCE);
   ASSERT_NEAR(results->solution[0].getY(), rez2.Y(), THE_TOLERANCE);
-}
-
-// Пересечение окружности и прямой / сравнение решения (две точки)
-TEST(LineCircle, SolutionsForOCCT_forCircleCircle)
-{
-  // задание окружности1 OCCT
-  Geom2d_Circle aCircleOCCT1 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 1.0);
-  // задание линии OCCT
-  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(0.5, 0.0), gp_Dir2d(gp_Vec2d(0.0, -1.0)));
-
-  Handle(Geom2d_Circle) aCircleOCCT11 = new Geom2d_Circle(aCircleOCCT1);
-  Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineOCCT);
-
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
-
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCT11, aLine1);
-
-  gp_Pnt2d rez1 = result.Point(1);
-  gp_Pnt2d rez2 = result.Point(2);
-
-  // задание линии моего метода
-  std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(0.5, 0.0, Vector(0.0, -1.0)));
-  // задание окружности моего метода
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(0.0, 0.0, 1.0));
-
-  Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line, circle1);
-
-  ASSERT_NEAR(results->solution[0].getX(), rez1.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getY(), rez1.Y(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[1].getX(), rez2.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[1].getY(), rez2.Y(), THE_TOLERANCE);
 }
 
 // Одна точка пересечения окружностей
@@ -283,43 +253,10 @@ TEST(CircleCircle, SolutionForOCCT_10)
   Intersections intersection;
   std::shared_ptr<CalculationResult> results = intersection.Intersection(circle1, circle2);
 
-  Standard_Integer aNbSegments = aResult.NbSegments();
-  ASSERT_GE(aNbSegments, 2);
+  gp_Pnt2d rez1 = aResult.Point(1);
 
-  aResult.Segment(1, aCircleOCCTNew1, aCircleOCCTNew2);
-
-  Standard_Real aF1 = aCircleOCCTNew1->FirstParameter();
-  Standard_Real aL1 = aCircleOCCTNew1->LastParameter();
-
-  Standard_Real aF2 = aCircleOCCTNew2->FirstParameter();
-  Standard_Real aL2 = aCircleOCCTNew2->LastParameter();
-
-  Standard_Real aDifference1 = aL1 - aF1;
-  Standard_Real aDifference2 = aL2 - aF2;
-
-  Standard_Real aAverage1 = (aF1 + aL1)*0.5;
-  Standard_Real aAverage2 = (aF2 + aL2)*0.5;
-
-  aResult.Segment(2, aCircleOCCTNew1, aCircleOCCTNew2);
-
-  Standard_Real aFF1 = aCircleOCCTNew1->FirstParameter();
-  Standard_Real aLL1 = aCircleOCCTNew1->LastParameter();
-
-  Standard_Real aFF2 = aCircleOCCTNew2->FirstParameter();
-  Standard_Real aLL2 = aCircleOCCTNew2->LastParameter();
-
-  Standard_Real aDifference11 = aLL1 - aFF1;
-  Standard_Real aDifference22 = aLL2 - aFF2;
-
-  Standard_Real aAverage11 = (aFF1 + aLL1)*0.5;
-  Standard_Real aAverage22 = (aFF2 + aLL2)*0.5;
-  // библиотека каскада не смогу найти точку пересечения двух окружностей (6,0)
-  ASSERT_NE(results->solution[0].getX(), aAverage1);
-  ASSERT_NE(results->solution[0].getY(), aAverage11);
-  ASSERT_NEAR(aAverage1, 6.2828966323055999, THE_TOLERANCE);
-  ASSERT_NEAR(aAverage2, 3.1418813285600047, THE_TOLERANCE);
-  ASSERT_NEAR(aAverage11, 0.00028867487398587244, THE_TOLERANCE);
-  ASSERT_NEAR(aAverage22, 3.1413039786195824, THE_TOLERANCE);
+  ASSERT_NEAR(results->solution[0].getX(), rez1.X(), THE_TOLERANCE);
+  ASSERT_NEAR(results->solution[0].getY(), rez1.Y(), THE_TOLERANCE);
 }
 
 // Нет точек пересечения окружностей

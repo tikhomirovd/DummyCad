@@ -127,10 +127,10 @@ TEST(CircleCircleTest, TwoSolutions_08)
   std::shared_ptr<CalculationResult> result = intersection.Intersection(circle1, circle2);
 
   ASSERT_EQ(result->solution.size(), 2);
-  ASSERT_NEAR(result->solution[0].getX(), 6.2478601953663899, THE_TOLERANCE);
-  ASSERT_NEAR(result->solution[0].getY(), 6.5028530728448137, THE_TOLERANCE);
-  ASSERT_NEAR(result->solution[1].getX(), 7.7521398046336101, THE_TOLERANCE);
-  ASSERT_NEAR(result->solution[1].getY(), 4.4971469271551863, THE_TOLERANCE);
+  ASSERT_NEAR(result->solution[0].getX(), 6.0050125628933797, THE_TOLERANCE);
+  ASSERT_NEAR(result->solution[0].getY(), 6.8266499161421601, THE_TOLERANCE);
+  ASSERT_NEAR(result->solution[1].getX(), 7.9949874371066203, THE_TOLERANCE);
+  ASSERT_NEAR(result->solution[1].getY(), 4.1733500838578399, THE_TOLERANCE);
 }
 
 // Одна точка пересечения окружностей
@@ -166,10 +166,8 @@ TEST(CircleCircleTest, OneSolution_10)
 // Нет точек пересечения у двух окружностей
 TEST(CircleCircleTest, ZeroSolutions_11)
 {
-  double A = 3.0, B = 0.0, C = 3.0, D = 9.0, E = 2.0;
-
-  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, B, E));
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(D, B, C));
+  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 2.0));
+  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 3.0));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(circle1, circle2);
@@ -182,8 +180,8 @@ TEST(CircleCircleTest, OneSolution_12)
 {
   double A = 4.0, B = 1.0, C = 0.0, D = 3.0;
 
-  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, C, B));
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(A, C, D));
+  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(4.0, 0.0, 1.0));
+  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(4.0, 0.0, 3.0));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(circle1, circle2);
@@ -194,10 +192,8 @@ TEST(CircleCircleTest, OneSolution_12)
 // Концентрич-е окружности одинакового радиуса
 TEST(CircleCircleTest, OneSolution_13)
 {
-  double A = 4.0, B = 1.0, C = 0.0;
-
-  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(A, C, B));
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(A, C, B));
+  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(4.0, 0.0, 1.0));
+  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(4.0, 0.0, 1.0));
 
   Intersections intersection;
   std::shared_ptr<CalculationResult> result = intersection.Intersection(circle1, circle2);

@@ -26,5 +26,6 @@ Vector Circle::Gradient(double t) const
 //=============================================================================
 Point Circle::PointCalcul(double t) const
 {
-  return Point(Radius * cos(t), Radius * sin(t));
+  return Point(point.getX() + Radius * cos(t),
+               point.getY() + Radius * sin(t));
 }

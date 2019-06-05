@@ -181,7 +181,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleCircle(std::shared_
     /// Координаты направлябщего вектора прямой, через которую будут искаться решения
     Vector vector2(-coordinate2, coordinate1);
     /// Создаем умный указатель на неё и передаем вычисленные значения
-    std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(middlePoint1, middlePoint2, Vector(vector2.getX(), vector2.getY())));
+    std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(middlePoint1, middlePoint2, vector2));
     /// Вычисляем точки пересечения прямой с этими окружностями
     std::shared_ptr<CalculationResult> points1 = Intersection(line, ptr1);
     std::shared_ptr<CalculationResult> points2 = Intersection(line, ptr2);
@@ -227,8 +227,8 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleLine(std::shared_pt
   /// Прямая проходит через центр окружности - 2 точки
   if (fabs(distance) < EPS)
   {
-    Point ty = str.PointCalcul(radius);
-    Point ty2 = str.PointCalcul(-radius);
+    Point ty = str.PointCalcul(-radius);
+    Point ty2 = str.PointCalcul(+radius);
     points.push_back(Point(ty.getX(), ty.getY()));
     points.push_back(Point(ty2.getX(), ty2.getY()));
     std::shared_ptr<CalculationResult> t(new CalculationResult);
@@ -242,7 +242,7 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleLine(std::shared_pt
     if (fabs(distance - radius) < EPS)
     {
       Line str1(firstLinePoint.getX(), firstLinePoint.getY(), Vector(z.getX(), z.getY()));
-      Point ty = str1.PointCalcul(-decartDot);
+      Point ty = str1.PointCalcul(decartDot);
       points.push_back(Point(ty.getX(), ty.getY()));
       std::shared_ptr<CalculationResult> t(new CalculationResult);
       t->type = COINCIDENCE;
@@ -256,18 +256,12 @@ std::shared_ptr<CalculationResult> Intersections::SolveCircleLine(std::shared_pt
       {
         /// Находим координаты на нашей прямой в точке 1
         Point parameter = str.PointCalcul(1);
-        /// Расчитывает расстояние от найденной точки до центра заданной окружности
-        double distance = sqrt(pow(parameter.getX() - circleCenterPoint.getX(), 2) + pow(parameter.getY() - circleCenterPoint.getY(), 2));
-        /// Находим расстояние от начальной точки до точки на прямой
-        double rastDotParametr = sqrt(pow(radius, 2) - pow(distance, 2));
-        /// Вычисляем параметр через соотношение через который найдем точки пересечения 
-        double parametr2 = rastDot / rastDotParametr;
         /// Ищем точку с найденным параметром
-        Point point1 = str.PointCalcul(parametr2);
+        Point point1 = str.PointCalcul(-rastDot);
         points.push_back(Point(point1.getX(), point1.getY()));
         if (rastDot < radius + EPS)
         {
-          Point point2 = str.PointCalcul(-parametr2);
+          Point point2 = str.PointCalcul(rastDot);
           points.push_back(Point(point2.getX(), point2.getY()));
           std::shared_ptr<CalculationResult> t(new CalculationResult);
           t->type = COINCIDENCE;

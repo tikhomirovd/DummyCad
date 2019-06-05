@@ -1,0 +1,125 @@
+﻿#include <gtest/gtest.h>
+
+// Includes from Core.
+
+#include <memory>
+#include <Circle.h>
+#include <Intersection.h>
+#include <Curve.h>
+#include <Vector.h>
+#include <Point.h>
+#include <Line.h>
+#include <Geom2d_Line.hxx>
+#include <Geom2d_Circle.hxx>
+#include <Geom2d_Point.hxx>
+#include <Geom2d_Vector.hxx>
+#include <Geom2d_Curve.hxx>
+#include <Geom2d_Geometry.hxx>
+#include <Geom2dAPI_InterCurveCurve.hxx>
+
+static const double THE_TOLERANCE = 1.e-7;
+
+// метод пересечения двух линий и сравнение полученных решений (одна точка пересечения)
+TEST(Line, SolutionForOCCT_1)
+{
+  // задание точки
+  gp_Pnt2d aPointFirst = gp_Pnt2d(0.0,0.0);
+  // задание вектора
+  gp_Dir2d aVectorFirst = gp_Dir2d(gp_Vec2d(1.0,0.0));
+  // задание точки
+  gp_Pnt2d aPointSecond = gp_Pnt2d(0.0, 0.0);
+  // задание вектора
+  gp_Dir2d aVectorSecond = gp_Dir2d(gp_Vec2d(0.0, 1.0));
+  // задание линии1 OCCT
+  Geom2d_Line aLineFirst = Geom2d_Line(aPointFirst, aVectorFirst);
+  // задание линии2 OCCT
+  Geom2d_Line aLineSecond = Geom2d_Line(aPointSecond, aVectorSecond);
+  // задание линии1 
+  std::shared_ptr<Curve> straid1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> straid2 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(0.0, 1.0)));
+
+  Intersections intersection;
+  std::shared_ptr<CalculationResult> results = intersection.Intersection(straid1, straid2);
+ //////////////////////////////////////////////////////////////////////////////////////////////
+  Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineFirst);
+  Handle(Geom2d_Line) aLine2 = new Geom2d_Line(aLineSecond);
+
+  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
+
+  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aLine1, aLine2);
+
+  gp_Pnt2d ans = result.Point(1);
+
+  ASSERT_NEAR(results->solution[0].getX(), ans.X(), THE_TOLERANCE);
+  ASSERT_NEAR(results->solution[0].getY(), ans.Y(), THE_TOLERANCE);
+}
+
+TEST(Line, SolutionForOCCT_5)
+{
+  // задание точки
+  gp_Pnt2d aPointOCCT = gp_Pnt2d(0.0, 3.0);
+  // задание вектора
+  gp_Dir2d aVectorSecond = gp_Dir2d(gp_Vec2d(0.0, 1.0));
+
+  // задание определения координатной плоскости
+  gp_Ax2d aCoordinateSystem = gp_Ax2d(aPointFirst, aVectorFirst);
+
+  // задание окружности1 OCCT
+  Geom2d_Circle aCircleOCCT = Geom2d_Circle(aCoordinateSystem, 3.0);
+  // задание линии OCCT
+  Geom2d_Line aLineOCCT = Geom2d_Line(aPointOCCT, aVectorSecond);
+
+  Handle(Geom2d_Circle) aCircleOCCT1 = new Geom2d_Circle(aCircleOCCT);
+  Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineOCCT);
+
+  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
+
+  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCT1, aLine1);
+
+  gp_Pnt2d rez1 = result.Point(1);
+  gp_Pnt2d rez2 = result.Point(2);
+
+  // задание линии моего метода
+  std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector(5.0, 0.0)));
+  // задание окружности моего метода
+  std::shared_ptr<Curve> circle = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
+
+  Intersections intersection;
+  std::shared_ptr<CalculationResult> results = intersection.Intersection(line, circle);
+
+  ASSERT_NEAR(results->solution[0].getX(), rez1.X(), THE_TOLERANCE);
+  ASSERT_NEAR(results->solution[0].getY(), rez1.Y(), THE_TOLERANCE);
+  ASSERT_NEAR(results->solution[1].getX(), rez2.X(), THE_TOLERANCE);
+  ASSERT_NEAR(results->solution[1].getY(), rez2.Y(), THE_TOLERANCE);
+}
+
+TEST(Line, SolutionForOCCT_2)
+{
+  // задание точки
+  gp_Pnt2d aPointFirst;
+
+  ASSERT_NEAR(aPointFirst.X(), 0.0, THE_TOLERANCE);
+  ASSERT_NEAR(aPointFirst.Y(), 0.0, THE_TOLERANCE);
+}
+
+TEST(Line, SolutionForOCCT_3)
+{
+  gp_Dir2d aVectorFirst(0.0, 0.0);
+  Geom2d_Line aLineFirst = Geom2d_Line(gp_Pnt2d(1.0, 1.0), aVectorFirst);
+  ASSERT_ANY_THROW(Geom2d_Line(gp_Pnt2d(1.0, 1.0), aVectorFirst));
+}
+
+//сравнение точек в зависимости от параметра моего метода и метода OCCT
+/*TEST(Line, SolutionForOCCT_4)
+{
+  // задание линии OCCT
+  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(1.0, 1.0), gp_Dir2d(1.0, 0.0));
+  // задание линии моего метода
+  std::shared_ptr<Line> aline = std::shared_ptr<Line>(new Line(1.0,1.0, Vector(1.0, 0.0)));
+
+  aLineOCCT.D0(5.0, gp_Pnt2d(1.0, 1.0));
+  Point f (aLineOCCT.D0(5.0, gp_Pnt2d(1.0, 1.0)).X, aLineOCCT.D0(5.0, gp_Pnt2d(1.0, 1.0)).Y);
+  Point s (aline->PointCalcul(5.0).getX(), aline->PointCalcul(5.0).getY());
+
+  ASSERT_EQ(aLineOCCT.D0(5.0, gp_Pnt2d(1.0, 1.0)), s);
+} */

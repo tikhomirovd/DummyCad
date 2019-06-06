@@ -381,8 +381,8 @@ TEST(IntersectionTest, LineCirclePoints2)
     gp_Pnt2d anAns1 = anInter.Point(1);
     
     
-    ASSERT_NEAR(fabs(aTestLine.FirstPoint().X()), anAns1.X(), TOL);
-    ASSERT_NEAR(fabs(aTestLine.FirstPoint().Y()), anAns1.Y(), TOL);
+    ASSERT_NEAR(aTestLine.FirstPoint().X(), anAns1.X(), TOL);
+    ASSERT_NEAR(aTestLine.FirstPoint().Y(), anAns1.Y(), TOL);
     
     
 }

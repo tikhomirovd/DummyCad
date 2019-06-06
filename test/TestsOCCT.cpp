@@ -1,25 +1,27 @@
-﻿#include <gtest/gtest.h>
+﻿// GoogleTest includes
+#pragma warning(disable : 4251)
+#pragma warning(disable : 4275)
+#include <gtest/gtest.h>
 
+// Includes from STL.
 #include <memory>
 
+// Includes from Core.
 #include <Circle.h>
 #include <Intersection.h>
 #include <Curve.h>
-#include <Vector.h>
-#include <Point.h>
 #include <Line.h>
 
+// Includes from Cascade.
 #include <Geom2d_Line.hxx>
 #include <Geom2d_Circle.hxx>
-#include <Geom2d_Point.hxx>
-#include <Geom2d_Vector.hxx>
 #include <Geom2d_Curve.hxx>
 #include <Geom2dAPI_InterCurveCurve.hxx>
 
 static const double THE_TOLERANCE = 1.e-7;
 
-// метод пересечения двух линий и сравнение полученных решений (одна точка пересечения)
-TEST(LineLine, SolutionForOCCT_1)
+// Метод пересечения двух линий и сравнение полученных решений (одна точка пересечения)
+TEST(LineLine, OneSolutionForOCCT_01)
 {
   // задание линии1 OCCT
   Geom2d_Line aLineFirst = Geom2d_Line(gp_Pnt2d(0.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0)));
@@ -29,25 +31,26 @@ TEST(LineLine, SolutionForOCCT_1)
   Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineFirst);
   Handle(Geom2d_Line) aLine2 = new Geom2d_Line(aLineSecond);
 
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aLine1, aLine2);
 
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aLine1, aLine2);
-
-  gp_Pnt2d rez = result.Point(1);
+  // берем результат по индексу
+  gp_Pnt2d aRez = aResult.Point(1);
 
   // задание линий моего метода
-  std::shared_ptr<Curve> line1 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(1.0, 0.0)));
-  std::shared_ptr<Curve> line2 = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(0.0, 1.0)));
+  std::shared_ptr<Curve> LineOne = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> LineTwo = std::shared_ptr<Line>(new Line(0.0, 0.0, Vector(0.0, 1.0)));
 
+  // обращаемся к методу пересечения
   Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line1, line2);
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(LineOne, LineTwo);
 
-  ASSERT_NEAR(results->solution[0].getX(), rez.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getY(), rez.Y(), THE_TOLERANCE);
+  ASSERT_NEAR(Result->solution[0].getX(), aRez.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Result->solution[0].getY(), aRez.Y(), THE_TOLERANCE);
 }
 
 // Нет пересечения двух линий / сравнение решения
-TEST(LineLine, SolutionForOCCT_2)
+TEST(LineLine, NoSolutionForOCCT_02)
 {
   // задание линии1 OCCT
   Geom2d_Line aLineFirst = Geom2d_Line(gp_Pnt2d(0.0, 5.0), gp_Dir2d(gp_Vec2d(1.0, 0.0)));
@@ -57,22 +60,22 @@ TEST(LineLine, SolutionForOCCT_2)
   Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineFirst);
   Handle(Geom2d_Line) aLine2 = new Geom2d_Line(aLineSecond);
 
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
-
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aLine1, aLine2);
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aLine1, aLine2);
 
   // задание линий моего метода
-  std::shared_ptr<Curve> line1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
-  std::shared_ptr<Curve> line2 = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> LineOne = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> LineTwo = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector(1.0, 0.0)));
 
+  // обращаемся к методу пересечения
   Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line1, line2);
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(LineOne, LineTwo);
 
-  ASSERT_EQ(results->solution.size(), result.NbPoints());
+  ASSERT_EQ(Result->solution.size(), aResult.NbPoints());
 }
 
 // Линии совпадают / сравнение решения
-TEST(LineLine, SolutionForOCCT_3)
+TEST(LineLine, CoincidenceSolutionForOCCT_03)
 {
   // задание линии1 OCCT
   Geom2d_Line aLineFirst = Geom2d_Line(gp_Pnt2d(0.0, 5.0), gp_Dir2d(gp_Vec2d(1.0, 0.0)));
@@ -82,105 +85,22 @@ TEST(LineLine, SolutionForOCCT_3)
   Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineFirst);
   Handle(Geom2d_Line) aLine2 = new Geom2d_Line(aLineSecond);
 
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
-
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aLine1, aLine2);
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aLine1, aLine2);
 
   // задание линий моего метода
-  std::shared_ptr<Curve> line1 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
-  std::shared_ptr<Curve> line2 = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> LineOne = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
+  std::shared_ptr<Curve> LineTwo = std::shared_ptr<Line>(new Line(0.0, 5.0, Vector(1.0, 0.0)));
 
+  // обращаемся к методу пересечения
   Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line1, line2);
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(LineOne, LineTwo);
 
-  ASSERT_EQ(results->solution.size(), result.NbPoints());
-}
-
-// Пересечение окружности и прямой / сравнение решения (две точки)
-TEST(LineCircle, SolutionsForOCCT_4)
-{
-  // задание окружности1 OCCT
-  Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(2.0, 1.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
-  // задание линии OCCT
-  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(2.0, 0.0), gp_Dir2d(gp_Vec2d(0.0, 2.0)));
-
-  Handle(Geom2d_Circle) aCircleOCCT1 = new Geom2d_Circle(aCircleOCCT);
-  Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineOCCT);
-
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
-
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCT1, aLine1);
-
-  gp_Pnt2d rez1 = result.Point(1);
-  gp_Pnt2d rez2 = result.Point(2);
-
-  // задание линии моего метода
-  std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector(0.0, 2.0)));
-  // задание окружности моего метода
-  std::shared_ptr<Curve> circle = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
-
-  Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line, circle);
-
-  ASSERT_NEAR(results->solution[1].getX(), rez1.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[1].getY(), rez1.Y(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getX(), rez2.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getY(), rez2.Y(), THE_TOLERANCE);
-}
-
-// Пересечение окружности и прямой / сравнение решения (одна точка)
-TEST(LineCircle, SolutionsForOCCT_5)
-{
-  // задание окружности1 OCCT
-  Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(2.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
-  // задание линии OCCT
-  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(0.0, 3.0), gp_Dir2d(gp_Vec2d(5.0, 0.0)));
-
-  Handle(Geom2d_Circle) aCircleOCCT1 = new Geom2d_Circle(aCircleOCCT);
-  Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineOCCT);
-
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
-
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCT1, aLine1);
-
-  gp_Pnt2d rez1 = result.Point(1);
-
-  std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector(5.0, 0.0)));
-  std::shared_ptr<Curve> circle = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
-
-  Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line, circle);
-
-  ASSERT_NEAR(results->solution[0].getX(), rez1.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getY(), rez1.Y(), THE_TOLERANCE);
-}
-
-// Нет пересечения окружности и прямой / сравнение решения
-TEST(LineCircle, SolutionsForOCCT_6)
-{
-  // задание окружности1 OCCT
-  Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(2.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
-  // задание линии OCCT
-  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(6.0, 0.0), gp_Dir2d(gp_Vec2d(0.0, 3.0)));
-
-  Handle(Geom2d_Circle) aCircleOCCT1 = new Geom2d_Circle(aCircleOCCT);
-  Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineOCCT);
-
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
-
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCT1, aLine1);
-
-  std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(6.0, 0.0, Vector(0.0, 3.0)));
-  std::shared_ptr<Curve> circle = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
-
-  Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line, circle);
-
-  ASSERT_EQ(results->solution.size(), result.NbPoints());
+  ASSERT_EQ(Result->solution.size(), aResult.NbPoints());
 }
 
 // Точка, заданная по умолчанию
-TEST(Line, SolutionForOCCT_7)
+TEST(Line, ParameterSolutionForOCCT_04)
 {
   // задание точки
   gp_Pnt2d aPointFirst;
@@ -189,157 +109,348 @@ TEST(Line, SolutionForOCCT_7)
   ASSERT_NEAR(aPointFirst.Y(), 0.0, THE_TOLERANCE);
 }
 
-// Тест на соответствие точек в зависимоти от параметра
-TEST(Circle, SolutionForOCCT_8)
+// Пересечение окружности и прямой / сравнение решения (две точки)
+TEST(LineCircle, TwoSolutionsForOCCT_05)
+{
+  // задание окружности OCCT
+  Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(2.0, 1.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
+  // задание линии OCCT
+  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(2.0, 0.0), gp_Dir2d(gp_Vec2d(0.0, 2.0)));
+
+  Handle(Geom2d_Circle) aCircleForOCCT = new Geom2d_Circle(aCircleOCCT);
+  Handle(Geom2d_Line) aLineForOCCT = new Geom2d_Line(aLineOCCT);
+
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aCircleForOCCT, aLineForOCCT);
+
+  // берем результаты по индексам
+  gp_Pnt2d aRez1 = aResult.Point(1);
+  gp_Pnt2d aRez2 = aResult.Point(2);
+
+  // задание линии моего метода
+  std::shared_ptr<Curve> myLine = std::shared_ptr<Line>(new Line(2.0, 0.0, Vector(0.0, 2.0)));
+  // задание окружности моего метода
+  std::shared_ptr<Curve> myCircle = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
+
+  // обращаемся к методу пересечения
+  Intersections intersection;
+  std::shared_ptr<CalculationResult> Results = intersection.Intersection(myLine, myCircle);
+
+  ASSERT_NEAR(Results->solution[1].getX(), aRez1.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[1].getY(), aRez1.Y(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[0].getX(), aRez2.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[0].getY(), aRez2.Y(), THE_TOLERANCE);
+}
+
+// Пересечение окружности и прямой / сравнение решения (одна точка)
+TEST(LineCircle, OneSolutionForOCCT_06)
+{
+  // задание окружности OCCT
+  Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(2.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
+  // задание линии OCCT
+  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(0.0, 3.0), gp_Dir2d(gp_Vec2d(5.0, 0.0)));
+
+  Handle(Geom2d_Circle) aCircleForOCCT = new Geom2d_Circle(aCircleOCCT);
+  Handle(Geom2d_Line) aLineForOCCT = new Geom2d_Line(aLineOCCT);
+
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aCircleForOCCT, aLineForOCCT);
+
+  // берем результат по индексу
+  gp_Pnt2d aRez = aResult.Point(1);
+
+  // задание линии моего метода
+  std::shared_ptr<Curve> myLine = std::shared_ptr<Line>(new Line(0.0, 3.0, Vector(5.0, 0.0)));
+  // задание окружности моего метода
+  std::shared_ptr<Curve> myCircle = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
+
+  // обращаемся к методу пересечения
+  Intersections intersection;
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(myLine, myCircle);
+
+  ASSERT_NEAR(Result->solution[0].getX(), aRez.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Result->solution[0].getY(), aRez.Y(), THE_TOLERANCE);
+}
+
+// Нет пересечения окружности и прямой / сравнение решения
+TEST(LineCircle, NoSolutionForOCCT_07)
+{
+  // задание окружности OCCT
+  Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(2.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
+  // задание линии OCCT
+  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(6.0, 0.0), gp_Dir2d(gp_Vec2d(0.0, 3.0)));
+
+  Handle(Geom2d_Circle) aCircleForOCCT = new Geom2d_Circle(aCircleOCCT);
+  Handle(Geom2d_Line) aLineForOCCT = new Geom2d_Line(aLineOCCT);
+
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aCircleForOCCT, aLineForOCCT);
+
+  // задание линии моего метода
+  std::shared_ptr<Curve> myLine = std::shared_ptr<Line>(new Line(6.0, 0.0, Vector(0.0, 3.0)));
+  // задание окружности моего метода
+  std::shared_ptr<Curve> myCircle = std::shared_ptr<Circle>(new Circle(2.0, 0.0, 3.0));
+
+  // обращаемся к методу пересечения
+  Intersections intersection;
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(myLine, myCircle);
+
+  ASSERT_EQ(Result->solution.size(), aResult.NbPoints());
+}
+
+// Пересечение окружности и прямой / сравнение решения (две точки)
+TEST(LineCircle, TwoSolutionsForOCCT_08)
+{
+  // задание окружности OCCT
+  Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 1.0);
+  // задание линии OCCT
+  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(0.5, 0.0), gp_Dir2d(gp_Vec2d(0.0, -1.0)));
+
+  Handle(Geom2d_Circle) aCircleForOCCT = new Geom2d_Circle(aCircleOCCT);
+  Handle(Geom2d_Line) aLineForOCCT = new Geom2d_Line(aLineOCCT);
+
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aCircleForOCCT, aLineForOCCT);
+
+  // берем результаты по индексу
+  gp_Pnt2d aRezOne = aResult.Point(1);
+  gp_Pnt2d aRezTwo = aResult.Point(2);
+
+  // задание линии моего метода
+  std::shared_ptr<Curve> myLine = std::shared_ptr<Line>(new Line(0.5, 0.0, Vector(0.0, -1.0)));
+  // задание окружности моего метода
+  std::shared_ptr<Curve> myCircle = std::shared_ptr<Circle>(new Circle(0.0, 0.0, 1.0));
+
+  // обращаемся к методу пересечения
+  Intersections intersection;
+  std::shared_ptr<CalculationResult> Results = intersection.Intersection(myLine, myCircle);
+
+  ASSERT_NEAR(Results->solution[0].getX(), aRezOne.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[0].getY(), aRezOne.Y(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[1].getX(), aRezTwo.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[1].getY(), aRezTwo.Y(), THE_TOLERANCE);
+}
+
+// Тест на соответствие точек в зависимоти от заданного параметра
+TEST(Circle, ParameterSolutionForOCCT_09)
 {
   // задание окружности
   Geom2d_Circle aCircleOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(2.0, 1.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
 
+  // задание точки, в которой будет хранится результат
   gp_Pnt2d aPointFirst;
+  // вычисление точки в зависимости от переданного параметра
   aCircleOCCT.D0(2.0, aPointFirst);
 
-  std::shared_ptr<Curve> circle = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
+  // задание окружности моего метода
+  std::shared_ptr<Curve> myCircle = std::shared_ptr<Circle>(new Circle(2.0, 1.0, 3.0));
 
-  ASSERT_NEAR(circle->PointCalcul(2).getX(), aPointFirst.X(), THE_TOLERANCE);
-  ASSERT_NEAR(circle->PointCalcul(2).getY(), aPointFirst.Y(), THE_TOLERANCE);
+  ASSERT_NEAR(myCircle->PointCalcul(2).getX(), aPointFirst.X(), THE_TOLERANCE);
+  ASSERT_NEAR(myCircle->PointCalcul(2).getY(), aPointFirst.Y(), THE_TOLERANCE);
 }
 
 // Две точки пересечения окружностей
-TEST(CircleCircle, SolutionsForOCCT_9)
+TEST(CircleCircle, TwoSolutionsForOCCT_10)
 {
-
+  // задание окружности1
   Geom2d_Circle aCircleOCCT1 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 1.0);
+  // задание окружности2
   Geom2d_Circle aCircleOCCT2 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(1.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 1.0);
 
-  Handle(Geom2d_Circle) aCircleOCCTNew1 = new Geom2d_Circle(aCircleOCCT1);
-  Handle(Geom2d_Circle) aCircleOCCTNew2 = new Geom2d_Circle(aCircleOCCT2);
+  Handle(Geom2d_Circle) aCircleOneForOCCT = new Geom2d_Circle(aCircleOCCT1);
+  Handle(Geom2d_Circle) aCircleTwoForOCCT = new Geom2d_Circle(aCircleOCCT2);
 
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aCircleOneForOCCT, aCircleTwoForOCCT);
 
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCTNew1, aCircleOCCTNew2);
+  // берем результаты по индексу
+  gp_Pnt2d aRezOne = aResult.Point(1);
+  gp_Pnt2d aRezTwo = aResult.Point(2);
 
-  gp_Pnt2d rez1 = result.Point(1);
-  gp_Pnt2d rez2 = result.Point(2);
+  // задание окружности1 моего метода
+  std::shared_ptr<Curve> CircleOne = std::shared_ptr<Circle>(new Circle(0.0, 0.0, 1.0));
+  // задание окружности2 моего метода
+  std::shared_ptr<Curve> CircleTwo = std::shared_ptr<Circle>(new Circle(1.0, 0.0, 1.0));
 
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(0.0, 0.0, 1.0));
-  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(1.0, 0.0, 1.0));
-
+   // обращаемся к методу пересечения
   Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(circle1, circle2);
+  std::shared_ptr<CalculationResult> Results = intersection.Intersection(CircleOne, CircleTwo);
 
-  ASSERT_NEAR(results->solution[1].getX(), rez1.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[1].getY(), rez1.Y(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getX(), rez2.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getY(), rez2.Y(), THE_TOLERANCE);
-}
-
-// Пересечение окружности и прямой / сравнение решения (две точки)
-TEST(LineCircle, SolutionsForOCCT_forCircleCircle)
-{
-  // задание окружности1 OCCT
-  Geom2d_Circle aCircleOCCT1 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 1.0);
-  // задание линии OCCT
-  Geom2d_Line aLineOCCT = Geom2d_Line(gp_Pnt2d(0.5, 0.0), gp_Dir2d(gp_Vec2d(0.0, -1.0)));
-
-  Handle(Geom2d_Circle) aCircleOCCT11 = new Geom2d_Circle(aCircleOCCT1);
-  Handle(Geom2d_Line) aLine1 = new Geom2d_Line(aLineOCCT);
-
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
-
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCT11, aLine1);
-
-  gp_Pnt2d rez1 = result.Point(1);
-  gp_Pnt2d rez2 = result.Point(2);
-
-  // задание линии моего метода
-  std::shared_ptr<Curve> line = std::shared_ptr<Line>(new Line(0.5, 0.0, Vector(0.0, -1.0)));
-  // задание окружности моего метода
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(0.0, 0.0, 1.0));
-
-  Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(line, circle1);
-
-  ASSERT_NEAR(results->solution[0].getX(), rez1.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[0].getY(), rez1.Y(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[1].getX(), rez2.X(), THE_TOLERANCE);
-  ASSERT_NEAR(results->solution[1].getY(), rez2.Y(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[1].getX(), aRezOne.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[1].getY(), aRezOne.Y(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[0].getX(), aRezTwo.X(), THE_TOLERANCE);
+  ASSERT_NEAR(Results->solution[0].getY(), aRezTwo.Y(), THE_TOLERANCE);
 }
 
 // Одна точка пересечения окружностей
-TEST(CircleCircle, SolutionForOCCT_10)
+TEST(CircleCircle, OneSolutionForOCCT_11)
 {
-  Geom2d_Circle aCircleOCCT1 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(3.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
-  Geom2d_Circle aCircleOCCT2 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(9.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
+  // задание окружности1 OCCT
+  Geom2d_Circle aCircleOneOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(3.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
+  // задание окружности2 OCCT
+  Geom2d_Circle aCircleTwoOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(9.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
 
-  Handle(Geom2d_Circle) aCircleOCCTNew1 = new Geom2d_Circle(aCircleOCCT1);
-  Handle(Geom2d_Circle) aCircleOCCTNew2 = new Geom2d_Circle(aCircleOCCT2);
+  Handle(Geom2d_Circle) aCircleOneForOCCT = new Geom2d_Circle(aCircleOneOCCT);
+  Handle(Geom2d_Circle) aCircleTwoForOCCT = new Geom2d_Circle(aCircleTwoOCCT);
 
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult(aCircleOneForOCCT, aCircleTwoForOCCT);
 
-  Geom2dAPI_InterCurveCurve aResult(aCircleOCCTNew1, aCircleOCCTNew2);
+  // задание окружности2 моего метода
+  std::shared_ptr<Curve> CircleTwo = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 3.0));
+  // задание окружности1 моего метода
+  std::shared_ptr<Curve> CircleOne = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 3.0));
 
-  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 3.0));
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 3.0));
-
+  // обращаемся к методу пересечения
   Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(circle1, circle2);
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(CircleOne, CircleTwo);
 
+  // получаем колличество сегментов, которые находит библиотека каскада
   Standard_Integer aNbSegments = aResult.NbSegments();
   ASSERT_GE(aNbSegments, 2);
 
-  aResult.Segment(1, aCircleOCCTNew1, aCircleOCCTNew2);
+  // получаем результаты первого сегмента
+  aResult.Segment(1, aCircleOneForOCCT, aCircleTwoForOCCT);
 
-  Standard_Real aF1 = aCircleOCCTNew1->FirstParameter();
-  Standard_Real aL1 = aCircleOCCTNew1->LastParameter();
+  // получение параметров с первой окружности
+  Standard_Real aFOne = aCircleOneForOCCT->FirstParameter();
+  Standard_Real aLOne = aCircleOneForOCCT->LastParameter();
 
-  Standard_Real aF2 = aCircleOCCTNew2->FirstParameter();
-  Standard_Real aL2 = aCircleOCCTNew2->LastParameter();
+  // получение параметров со второй окружности
+  Standard_Real aFTwo = aCircleTwoForOCCT->FirstParameter();
+  Standard_Real aLTwo = aCircleTwoForOCCT->LastParameter();
 
-  Standard_Real aDifference1 = aL1 - aF1;
-  Standard_Real aDifference2 = aL2 - aF2;
+  // получаем разность координат
+  Standard_Real aDifferenceOne = aLOne - aFOne;
+  Standard_Real aDifferenceTwo = aLTwo - aFTwo;
 
-  Standard_Real aAverage1 = (aF1 + aL1)*0.5;
-  Standard_Real aAverage2 = (aF2 + aL2)*0.5;
+  // усредняем значение параметров
+  Standard_Real aAverageOne = (aFOne + aLOne)*0.5;
+  Standard_Real aAverageTwo = (aFTwo + aLTwo)*0.5;
 
-  aResult.Segment(2, aCircleOCCTNew1, aCircleOCCTNew2);
+  // получаем результаты второго сегмента
+  aResult.Segment(2, aCircleOneForOCCT, aCircleTwoForOCCT);
 
-  Standard_Real aFF1 = aCircleOCCTNew1->FirstParameter();
-  Standard_Real aLL1 = aCircleOCCTNew1->LastParameter();
+  // получение параметров с первой окружности
+  Standard_Real aFFOne = aCircleOneForOCCT->FirstParameter();
+  Standard_Real aLLOne = aCircleOneForOCCT->LastParameter();
 
-  Standard_Real aFF2 = aCircleOCCTNew2->FirstParameter();
-  Standard_Real aLL2 = aCircleOCCTNew2->LastParameter();
+  // получение параметров со второй окружности
+  Standard_Real aFFTwo = aCircleTwoForOCCT->FirstParameter();
+  Standard_Real aLLTwo = aCircleTwoForOCCT->LastParameter();
 
-  Standard_Real aDifference11 = aLL1 - aFF1;
-  Standard_Real aDifference22 = aLL2 - aFF2;
+  // получаем разность координат
+  Standard_Real aDifferenceOneOne = aLLOne - aFFOne;
+  Standard_Real aDifferenceTwoTwo = aLLTwo - aFFTwo;
 
-  Standard_Real aAverage11 = (aFF1 + aLL1)*0.5;
-  Standard_Real aAverage22 = (aFF2 + aLL2)*0.5;
-  // библиотека каскада не смогу найти точку пересечения двух окружностей (6,0)
-  ASSERT_NE(results->solution[0].getX(), aAverage1);
-  ASSERT_NE(results->solution[0].getY(), aAverage11);
-  ASSERT_NEAR(aAverage1, 6.2828966323055999, THE_TOLERANCE);
-  ASSERT_NEAR(aAverage2, 3.1418813285600047, THE_TOLERANCE);
-  ASSERT_NEAR(aAverage11, 0.00028867487398587244, THE_TOLERANCE);
-  ASSERT_NEAR(aAverage22, 3.1413039786195824, THE_TOLERANCE);
+  // усредняем значение параметров
+  Standard_Real aAverageOneOne = (aFFOne + aLLOne)*0.5;
+  Standard_Real aAverageTwoTwo = (aFFTwo + aLLTwo)*0.5;
+
+  // библиотека каскада не смогла найти точку пересечения двух окружностей (6,0)
+  // возвращается сегмент с неточными точками
+
+  // доказываем несоответствие результатов моего метода и решения библиотека каскада
+  ASSERT_NE(Result->solution[0].getX(), aAverageOne);
+  ASSERT_NE(Result->solution[0].getY(), aAverageOneOne);
+
+  ASSERT_NEAR(aAverageOne, 6.2828966323055999, THE_TOLERANCE);
+  ASSERT_NEAR(aAverageTwo, 3.1418813285600047, THE_TOLERANCE);
+  ASSERT_NEAR(aAverageOneOne, 0.00028867487398587244, THE_TOLERANCE);
+  ASSERT_NEAR(aAverageTwoTwo, 3.1413039786195824, THE_TOLERANCE);
 }
 
 // Нет точек пересечения окружностей
-TEST(CircleCircle, SolutionForOCCT_11)
+TEST(CircleCircle, NoSolutionForOCCT_12)
 {
-  Geom2d_Circle aCircleOCCT1 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(3.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 2.0);
-  Geom2d_Circle aCircleOCCT2 = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(9.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
+  // задание окружности1 OCCT
+  Geom2d_Circle aCircleOneOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(3.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 2.0);
+  // задание окружности2 OCCT
+  Geom2d_Circle aCircleTwoOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(9.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.0);
 
-  Handle(Geom2d_Circle) aCircleOCCTNew1 = new Geom2d_Circle(aCircleOCCT1);
-  Handle(Geom2d_Circle) aCircleOCCTNew2 = new Geom2d_Circle(aCircleOCCT2);
+  Handle(Geom2d_Circle) aCircleOneForOCCT = new Geom2d_Circle(aCircleOneOCCT);
+  Handle(Geom2d_Circle) aCircleTwoForOCCT = new Geom2d_Circle(aCircleTwoOCCT);
 
-  Geom2dAPI_InterCurveCurve aGeom2dAPI_InterCurveCurve;
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aCircleOneForOCCT, aCircleTwoForOCCT);
 
-  Geom2dAPI_InterCurveCurve result = Geom2dAPI_InterCurveCurve(aCircleOCCTNew1, aCircleOCCTNew2);
+  // задание окружности2 моего метода
+  std::shared_ptr<Curve> CircleTwo = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 2.0));
+  // задание окружности1 моего метода
+  std::shared_ptr<Curve> CircleOne = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 3.0));
 
-  std::shared_ptr<Curve> circle2 = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 2.0));
-  std::shared_ptr<Curve> circle1 = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 3.0));
-
+  // обращаемся к методу пересечения
   Intersections intersection;
-  std::shared_ptr<CalculationResult> results = intersection.Intersection(circle1, circle2);
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(CircleOne, CircleTwo);
 
-  ASSERT_EQ(results->solution.size(), result.NbPoints());
+  ASSERT_EQ(Result->solution.size(), aResult.NbPoints());
+}
+
+// Одна точка пересечения окружностей с нецелочисленными радиусами
+TEST(CircleCircle, OneSolutionForOCCT_13)
+{
+  // задание окружности1 OCCT
+  Geom2d_Circle aCircleOneOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(3.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 3.5);
+  // задание окружности2 OCCT
+  Geom2d_Circle aCircleTwoOCCT = Geom2d_Circle(gp_Ax2d(gp_Pnt2d(9.0, 0.0), gp_Dir2d(gp_Vec2d(1.0, 0.0))), 2.5);
+
+  Handle(Geom2d_Circle) aCircleOneForOCCT = new Geom2d_Circle(aCircleOneOCCT);
+  Handle(Geom2d_Circle) aCircleTwoForOCCT = new Geom2d_Circle(aCircleTwoOCCT);
+
+  // обращаемся к методу пересечения
+  Geom2dAPI_InterCurveCurve aResult = Geom2dAPI_InterCurveCurve(aCircleOneForOCCT, aCircleTwoForOCCT);
+
+  // получаем колличество сегментов, которые находит библиотека каскада
+  Standard_Integer aNbSegments = aResult.NbSegments();
+  ASSERT_GE(aNbSegments, 2);
+
+  // получение параметров с первой окружности
+  Standard_Real aFOne = aCircleOneForOCCT->FirstParameter();
+  Standard_Real aLOne = aCircleOneForOCCT->LastParameter();
+
+  // получение параметров со второй окружности
+  Standard_Real aFTwo = aCircleTwoForOCCT->FirstParameter();
+  Standard_Real aLTwo = aCircleTwoForOCCT->LastParameter();
+
+  // получаем разность координат
+  Standard_Real aDifferenceOne = aLOne - aFOne;
+  Standard_Real aDifferenceTwo = aLTwo - aFTwo;
+
+  // усредняем значение параметров
+  Standard_Real aAverageOne = (aFOne + aLOne)*0.5;
+  Standard_Real aAverageTwo = (aFTwo + aLTwo)*0.5;
+
+  // получаем результаты второго сегмента
+  aResult.Segment(2, aCircleOneForOCCT, aCircleTwoForOCCT);
+
+  // получение параметров с первой окружности
+  Standard_Real aFFOne = aCircleOneForOCCT->FirstParameter();
+  Standard_Real aLLOne = aCircleOneForOCCT->LastParameter();
+
+  // получение параметров со второй окружности
+  Standard_Real aFFTwo = aCircleTwoForOCCT->FirstParameter();
+  Standard_Real aLLTwo = aCircleTwoForOCCT->LastParameter();
+
+  // получаем разность координат
+  Standard_Real aDifferenceOneOne = aLLOne - aFFOne;
+  Standard_Real aDifferenceTwoTwo = aLLTwo - aFFTwo;
+
+  // усредняем значение параметров
+  Standard_Real aAverageOneOne = (aFFOne + aLLOne)*0.5;
+  Standard_Real aAverageTwoTwo = (aFFTwo + aLLTwo)*0.5;
+
+  // библиотека каскада не смогла найти точку пересечения двух окружностей (6.5,0)
+  // возвращается сегмент с неточными точками
+
+  // задание окружности2 моего метода
+  std::shared_ptr<Curve> CircleTwo = std::shared_ptr<Circle>(new Circle(3.0, 0.0, 3.5));
+  // задание окружности1 моего метода
+  std::shared_ptr<Curve> CircleOne = std::shared_ptr<Circle>(new Circle(9.0, 0.0, 2.5));
+
+  // обращаемся к методу пересечения
+  Intersections intersection;
+  std::shared_ptr<CalculationResult> Result = intersection.Intersection(CircleOne, CircleTwo);
+
+  ASSERT_NE(Result->solution[0].getX(), aAverageOne);
+  ASSERT_NE(Result->solution[0].getY(), aAverageOneOne);
 }

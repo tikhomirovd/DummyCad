@@ -7,10 +7,6 @@
 #include <Intersection.cpp>
 
 
-
-using namespace std;
-
-
 int main()
 {
     Point O = Point(3, 4, 5);

@@ -77,13 +77,13 @@ TEST(PointTest, OperatorSumScaler)
 
 TEST(LineTest, LineValueTest)
 {
-    double x1 = 1.0, y1 = 2.0, z1 = 3.0;
-    double x2 = 3.0, y2 = 4.0, z2 = 3.0;
+    double x1 = 1.0, y1 = 2.0;
+    double x2 = 3.0, y2 = 4.0;
     double t = 2.0;
     
     
-    Point aPoint(x1, y1, z1);
-    Point aDirect(x2, y2, z2);
+    Point aPoint(x1, y1);
+    Point aDirect(x2, y2);
 
     
     Line aLine(aPoint, aDirect);
@@ -126,13 +126,13 @@ TEST(LineTest, LineIsClosedTest)
 
 TEST(LineTest, LineTangent)
 {
-    double x1 = 1.0, y1 = 2.0, z1 = 3.0;
-    double x2 = 2.0, y2 = 3.0, z2 = 3.0;
+    double x1 = 1.0, y1 = 2.0;
+    double x2 = 2.0, y2 = 3.0;
     double t = 2.0;
     
     
-    Point aPoint(x1, y1, z1);
-    Point aDirect(x2, y2, z2);
+    Point aPoint(x1, y1);
+    Point aDirect(x2, y2);
     
     Line aLine(aPoint, aDirect);
     

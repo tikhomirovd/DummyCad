@@ -146,8 +146,10 @@ TEST(LineTest, LineTangent)
     
     aLineCascade.D1(t, aPntAns, aVecAns);
     
-    ASSERT_NEAR(aLine.Tangent(t).X(), aVecAns.X(), TOL);
-    ASSERT_NEAR(aLine.Tangent(t).Y(), aVecAns.Y(), TOL);
+    Point aLineTangent = aLine.Tangent(t);
+    
+    ASSERT_NEAR(aLineTangent.X(), aVecAns.X(), TOL);
+    ASSERT_NEAR(aLineTangent.Y(), aVecAns.Y(), TOL);
     
 }
 

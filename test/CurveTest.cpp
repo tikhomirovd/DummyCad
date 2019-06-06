@@ -226,9 +226,11 @@ TEST(CircleTest, CircleTangent)
     
     aCircleCascade.D1(t, aPntAns, aVecAns);
     
+    Point aCircleTangent = aCircle.Tangent(t);
     
-    ASSERT_NEAR(aCircle.Tangent(t).X(), aVecAns.X(), TOL);
-    ASSERT_NEAR(aCircle.Tangent(t).Y(), aVecAns.Y(), TOL);
+    
+    ASSERT_NEAR(aCircleTangent.X(), aVecAns.X(), TOL);
+    ASSERT_NEAR(aCircleTangent.Y(), aVecAns.Y(), TOL);
     
 }
 
